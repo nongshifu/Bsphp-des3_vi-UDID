@@ -46,6 +46,7 @@ static NSString* YZ000;//验证机器码是否是
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dict) {
             描述 = dict[@"response"][@"data"];
+            NSLog(@"描述=%@",描述);
             NSArray *arr = [描述 componentsSeparatedByString:@"\n"];
             DQTC=arr[0];
             UDIDORIDFA=arr[1];
@@ -112,7 +113,8 @@ static NSString* YZ000;//验证机器码是否是
                                         }
                                     });
                                     //验证公告
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    static dispatch_once_t onceToken;
+                                    dispatch_once(&onceToken, ^{
                                         [NSObject gonggao];//公告
                                     });
                                     //验证通过后在这里启动你的辅助
@@ -149,7 +151,7 @@ static NSString* YZ000;//验证机器码是否是
             
         }
     } myfailure:^(NSError *error) {
-        
+        NSLog(@"error=%@",error);
     }];
 }
 
@@ -335,11 +337,9 @@ static NSString* YZ000;//验证机器码是否是
      {
         NSError*error;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&error];
-//        NSLog(@"error=%@",error);
         if (dict)
         {
             NSString *dataString = dict[@"response"][@"data"];
-//            NSLog(@"dataString=%@",dataString);
             NSRange range = [dataString rangeOfString:@"|1081|"];
             if (range.location != NSNotFound)
             {
@@ -498,14 +498,9 @@ static NSString* YZ000;//验证机器码是否是
                 }
             } myfailure:^(NSError *error)
              {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
-                               {
-                    [NSObject CodeConfig];
-                });
+                
             }];
         });
-        
-        
         
     }];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
