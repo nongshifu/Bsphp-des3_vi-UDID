@@ -47,27 +47,9 @@
 		6021E328289F866E00E2E121 /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E298289F866E00E2E121 /* AFHTTPSessionManager.h */; };
 		6021E330289F866F00E2E121 /* QQ350722326.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2AA289F866E00E2E121 /* QQ350722326.mm */; };
 		6021E331289F866F00E2E121 /* QQ350722326.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2AB289F866E00E2E121 /* QQ350722326.h */; };
-		6021E332289F866F00E2E121 /* SCLSwitchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2AD289F866E00E2E121 /* SCLSwitchView.h */; };
-		6021E333289F866F00E2E121 /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2AE289F866E00E2E121 /* SCLTimerDisplay.m */; };
-		6021E334289F866F00E2E121 /* SCLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2AF289F866E00E2E121 /* SCLButton.h */; };
-		6021E335289F866F00E2E121 /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2B0289F866E00E2E121 /* SCLAlertViewStyleKit.m */; };
-		6021E336289F866F00E2E121 /* SCLMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2B1289F866E00E2E121 /* SCLMacros.h */; };
-		6021E337289F866F00E2E121 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2B2289F866E00E2E121 /* UIImage+ImageEffects.h */; };
-		6021E338289F866F00E2E121 /* SCLAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2B3289F866E00E2E121 /* SCLAlertView.h */; };
-		6021E339289F866F00E2E121 /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2B4289F866E00E2E121 /* SCLAlertViewResponder.m */; };
-		6021E33A289F866F00E2E121 /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2B5289F866E00E2E121 /* SCLTextView.m */; };
-		6021E33B289F866F00E2E121 /* SCLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2B6289F866E00E2E121 /* SCLSwitchView.m */; };
-		6021E33C289F866F00E2E121 /* SCLAlertViewStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2B7289F866E00E2E121 /* SCLAlertViewStyleKit.h */; };
-		6021E33D289F866F00E2E121 /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2B8289F866E00E2E121 /* SCLButton.m */; };
-		6021E33E289F866F00E2E121 /* SCLTimerDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2B9289F866E00E2E121 /* SCLTimerDisplay.h */; };
-		6021E33F289F866F00E2E121 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2BA289F866E00E2E121 /* UIImage+ImageEffects.m */; };
-		6021E340289F866F00E2E121 /* SCLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2BB289F866E00E2E121 /* SCLTextView.h */; };
-		6021E341289F866F00E2E121 /* SCLAlertViewResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = 6021E2BC289F866E00E2E121 /* SCLAlertViewResponder.h */; };
-		6021E342289F866F00E2E121 /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2BD289F866E00E2E121 /* SCLAlertView.m */; };
 		6021E348289F866F00E2E121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021E2C7289F866E00E2E121 /* main.m */; };
 		6021E34A289F878900E2E121 /* iOsGods.Cn-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 6021E349289F878900E2E121 /* iOsGods.Cn-Prefix.pch */; };
 		6021E34C289F87CE00E2E121 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6021E34B289F87CE00E2E121 /* AVFoundation.framework */; };
-		608EF17828ACF30F003E0E45 /* JRMemory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 608EF17728ACF30F003E0E45 /* JRMemory.framework */; };
 		608EF17B28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 608EF17928AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m */; };
 		608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */; };
 		608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */; };
@@ -77,6 +59,11 @@
 		8A1ADA3B228D9BD900DF45DD /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3A228D9BD900DF45DD /* libc.tbd */; };
 		8A1ADA3D228D9BF200DF45DD /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3C228D9BF100DF45DD /* libc++.tbd */; };
 		8A1ADA3F228D9C1500DF45DD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3E228D9C1500DF45DD /* CFNetwork.framework */; };
+		EA203AEA28EE15D40008CF79 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = EA203AE628EE15D40008CF79 /* MBProgressHUD.h */; };
+		EA203AEB28EE15D40008CF79 /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */; };
+		EA203AEC28EE15D40008CF79 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA203AE828EE15D40008CF79 /* MBProgressHUD.m */; };
+		EA203AED28EE15D40008CF79 /* MBProgressHUD+MJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */; };
+		EA203AEF28EE16B70008CF79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA203AEE28EE16B70008CF79 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,30 +108,12 @@
 		6021E298289F866E00E2E121 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		6021E2AA289F866E00E2E121 /* QQ350722326.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QQ350722326.mm; sourceTree = "<group>"; };
 		6021E2AB289F866E00E2E121 /* QQ350722326.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQ350722326.h; sourceTree = "<group>"; };
-		6021E2AD289F866E00E2E121 /* SCLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLSwitchView.h; sourceTree = "<group>"; };
-		6021E2AE289F866E00E2E121 /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
-		6021E2AF289F866E00E2E121 /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
-		6021E2B0289F866E00E2E121 /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
-		6021E2B1289F866E00E2E121 /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
-		6021E2B2289F866E00E2E121 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		6021E2B3289F866E00E2E121 /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
-		6021E2B4289F866E00E2E121 /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
-		6021E2B5289F866E00E2E121 /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
-		6021E2B6289F866E00E2E121 /* SCLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLSwitchView.m; sourceTree = "<group>"; };
-		6021E2B7289F866E00E2E121 /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
-		6021E2B8289F866E00E2E121 /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
-		6021E2B9289F866E00E2E121 /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
-		6021E2BA289F866E00E2E121 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		6021E2BB289F866E00E2E121 /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
-		6021E2BC289F866E00E2E121 /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
-		6021E2BD289F866E00E2E121 /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		6021E2C7289F866E00E2E121 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6021E349289F878900E2E121 /* iOsGods.Cn-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iOsGods.Cn-Prefix.pch"; sourceTree = "<group>"; };
 		6021E34B289F87CE00E2E121 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		60531FED28CB900000AEE837 /* udid.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = udid.php; sourceTree = "<group>"; };
 		60531FEE28CB900000AEE837 /* 1.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1.mobileprovision; sourceTree = "<group>"; };
 		6064C7B428D876D200ACB901 /* 说明.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "说明.png"; sourceTree = "<group>"; };
-		608EF17728ACF30F003E0E45 /* JRMemory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JRMemory.framework; sourceTree = "<group>"; };
 		608EF17928AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StichingStringkeyValue.m"; sourceTree = "<group>"; };
 		608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StichingStringkeyValue.h"; sourceTree = "<group>"; };
 		608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
@@ -154,6 +123,11 @@
 		8A1ADA3A228D9BD900DF45DD /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
 		8A1ADA3C228D9BF100DF45DD /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		8A1ADA3E228D9C1500DF45DD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		EA203AE628EE15D40008CF79 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
+		EA203AE828EE15D40008CF79 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
+		EA203AEE28EE16B70008CF79 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,10 +135,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA203AEF28EE16B70008CF79 /* QuartzCore.framework in Frameworks */,
 				6021E34C289F87CE00E2E121 /* AVFoundation.framework in Frameworks */,
 				8A1ADA3F228D9C1500DF45DD /* CFNetwork.framework in Frameworks */,
 				8A1ADA3D228D9BF200DF45DD /* libc++.tbd in Frameworks */,
-				608EF17828ACF30F003E0E45 /* JRMemory.framework in Frameworks */,
 				8A1ADA3B228D9BD900DF45DD /* libc.tbd in Frameworks */,
 				187BE2862270D52200033424 /* Metal.framework in Frameworks */,
 				194F3C5221832B860070F5BC /* MobileCoreServices.framework in Frameworks */,
@@ -191,7 +165,6 @@
 				60531FEE28CB900000AEE837 /* 1.mobileprovision */,
 				60531FED28CB900000AEE837 /* udid.php */,
 				6064C7B428D876D200ACB901 /* 说明.png */,
-				6021E2AC289F866E00E2E121 /* SCLAlertView */,
 				6021E22F289F866E00E2E121 /* Bsphp */,
 				194F3B3B218327B10070F5BC /* Frameworks */,
 				194F3B3A218327B10070F5BC /* Products */,
@@ -209,7 +182,7 @@
 		194F3B3B218327B10070F5BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				608EF17728ACF30F003E0E45 /* JRMemory.framework */,
+				EA203AEE28EE16B70008CF79 /* QuartzCore.framework */,
 				6021E34B289F87CE00E2E121 /* AVFoundation.framework */,
 				8A1ADA3C228D9BF100DF45DD /* libc++.tbd */,
 				8A1ADA3A228D9BD900DF45DD /* libc.tbd */,
@@ -232,8 +205,8 @@
 		6021E22F289F866E00E2E121 /* Bsphp */ = {
 			isa = PBXGroup;
 			children = (
-				6021E2AA289F866E00E2E121 /* QQ350722326.mm */,
 				6021E2AB289F866E00E2E121 /* QQ350722326.h */,
+				6021E2AA289F866E00E2E121 /* QQ350722326.mm */,
 				6021E269289F866E00E2E121 /* bsphp */,
 				6021E28B289F866E00E2E121 /* AFNetworking */,
 			);
@@ -243,6 +216,10 @@
 		6021E269289F866E00E2E121 /* bsphp */ = {
 			isa = PBXGroup;
 			children = (
+				EA203AE628EE15D40008CF79 /* MBProgressHUD.h */,
+				EA203AE828EE15D40008CF79 /* MBProgressHUD.m */,
+				EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */,
+				EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */,
 				60C4556628BF93480089DAEA /* TFJGVGLGKFTVCSV.h */,
 				60C4556728BF93480089DAEA /* TFJGVGLGKFTVCSV.m */,
 				6021E349289F878900E2E121 /* iOsGods.Cn-Prefix.pch */,
@@ -287,30 +264,6 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		6021E2AC289F866E00E2E121 /* SCLAlertView */ = {
-			isa = PBXGroup;
-			children = (
-				6021E2AD289F866E00E2E121 /* SCLSwitchView.h */,
-				6021E2AE289F866E00E2E121 /* SCLTimerDisplay.m */,
-				6021E2AF289F866E00E2E121 /* SCLButton.h */,
-				6021E2B0289F866E00E2E121 /* SCLAlertViewStyleKit.m */,
-				6021E2B1289F866E00E2E121 /* SCLMacros.h */,
-				6021E2B2289F866E00E2E121 /* UIImage+ImageEffects.h */,
-				6021E2B3289F866E00E2E121 /* SCLAlertView.h */,
-				6021E2BD289F866E00E2E121 /* SCLAlertView.m */,
-				6021E2B4289F866E00E2E121 /* SCLAlertViewResponder.m */,
-				6021E2B5289F866E00E2E121 /* SCLTextView.m */,
-				6021E2B6289F866E00E2E121 /* SCLSwitchView.m */,
-				6021E2B7289F866E00E2E121 /* SCLAlertViewStyleKit.h */,
-				6021E2B8289F866E00E2E121 /* SCLButton.m */,
-				6021E2B9289F866E00E2E121 /* SCLTimerDisplay.h */,
-				6021E2BA289F866E00E2E121 /* UIImage+ImageEffects.m */,
-				6021E2BB289F866E00E2E121 /* SCLTextView.h */,
-				6021E2BC289F866E00E2E121 /* SCLAlertViewResponder.h */,
-			);
-			path = SCLAlertView;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -320,30 +273,23 @@
 			files = (
 				608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */,
 				60C4556828BF93480089DAEA /* TFJGVGLGKFTVCSV.h in Headers */,
+				EA203AEA28EE15D40008CF79 /* MBProgressHUD.h in Headers */,
 				6021E331289F866F00E2E121 /* QQ350722326.h in Headers */,
 				6021E31E289F866E00E2E121 /* AFURLSessionManager.h in Headers */,
 				6021E301289F866E00E2E121 /* Config.h in Headers */,
-				6021E33E289F866F00E2E121 /* SCLTimerDisplay.h in Headers */,
 				6021E34A289F878900E2E121 /* iOsGods.Cn-Prefix.pch in Headers */,
-				6021E332289F866F00E2E121 /* SCLSwitchView.h in Headers */,
 				6021E303289F866E00E2E121 /* DES3Util.h in Headers */,
+				EA203AED28EE15D40008CF79 /* MBProgressHUD+MJ.h in Headers */,
 				6021E319289F866E00E2E121 /* NSString+URLCode.h in Headers */,
 				6021E31C289F866E00E2E121 /* AFSecurityPolicy.h in Headers */,
 				6021E31F289F866E00E2E121 /* AFURLRequestSerialization.h in Headers */,
 				608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */,
 				6021E322289F866E00E2E121 /* AFURLResponseSerialization.h in Headers */,
 				6021E31D289F866E00E2E121 /* AFNetworkReachabilityManager.h in Headers */,
-				6021E338289F866F00E2E121 /* SCLAlertView.h in Headers */,
 				6021E328289F866E00E2E121 /* AFHTTPSessionManager.h in Headers */,
-				6021E33C289F866F00E2E121 /* SCLAlertViewStyleKit.h in Headers */,
-				6021E337289F866F00E2E121 /* UIImage+ImageEffects.h in Headers */,
-				6021E341289F866F00E2E121 /* SCLAlertViewResponder.h in Headers */,
-				6021E340289F866F00E2E121 /* SCLTextView.h in Headers */,
-				6021E336289F866F00E2E121 /* SCLMacros.h in Headers */,
 				6021E325289F866E00E2E121 /* AFNetworking.h in Headers */,
 				6021E302289F866E00E2E121 /* NetWorkingApiClient.h in Headers */,
 				6021E30C289F866E00E2E121 /* NSString+Tools.h in Headers */,
-				6021E334289F866F00E2E121 /* SCLButton.h in Headers */,
 				6021E306289F866E00E2E121 /* NSString+MD5.h in Headers */,
 				6021E314289F866E00E2E121 /* LRKeychain.h in Headers */,
 			);
@@ -422,31 +368,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				6021E321289F866E00E2E121 /* AFHTTPSessionManager.m in Sources */,
+				EA203AEB28EE15D40008CF79 /* MBProgressHUD+MJ.m in Sources */,
 				6021E317289F866E00E2E121 /* NetWorkingApiClient.m in Sources */,
 				60C4556928BF93480089DAEA /* TFJGVGLGKFTVCSV.m in Sources */,
 				6021E30D289F866E00E2E121 /* Config.m in Sources */,
 				6021E304289F866E00E2E121 /* LRKeychain.m in Sources */,
-				6021E33F289F866F00E2E121 /* UIImage+ImageEffects.m in Sources */,
-				6021E33B289F866F00E2E121 /* SCLSwitchView.m in Sources */,
 				6021E324289F866E00E2E121 /* AFURLRequestSerialization.m in Sources */,
+				EA203AEC28EE15D40008CF79 /* MBProgressHUD.m in Sources */,
 				6021E320289F866E00E2E121 /* AFURLResponseSerialization.m in Sources */,
 				6021E2FB289F866E00E2E121 /* NSString+Tools.m in Sources */,
-				6021E33A289F866F00E2E121 /* SCLTextView.m in Sources */,
 				6021E330289F866F00E2E121 /* QQ350722326.mm in Sources */,
 				608EF18028AD01C4003E0E45 /* MF_Base64Additions.m in Sources */,
 				6021E309289F866E00E2E121 /* NSString+URLCode.m in Sources */,
 				6021E313289F866E00E2E121 /* NSString+MD5.m in Sources */,
-				6021E339289F866F00E2E121 /* SCLAlertViewResponder.m in Sources */,
 				6021E323289F866E00E2E121 /* AFURLSessionManager.m in Sources */,
 				6021E316289F866E00E2E121 /* DES3Util.m in Sources */,
 				6021E327289F866E00E2E121 /* AFSecurityPolicy.m in Sources */,
 				608EF17B28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m in Sources */,
-				6021E33D289F866F00E2E121 /* SCLButton.m in Sources */,
 				6021E326289F866E00E2E121 /* AFNetworkReachabilityManager.m in Sources */,
 				6021E348289F866F00E2E121 /* main.m in Sources */,
-				6021E333289F866F00E2E121 /* SCLTimerDisplay.m in Sources */,
-				6021E342289F866F00E2E121 /* SCLAlertView.m in Sources */,
-				6021E335289F866F00E2E121 /* SCLAlertViewStyleKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

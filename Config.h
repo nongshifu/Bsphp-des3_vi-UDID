@@ -1,20 +1,20 @@
 #import <Foundation/Foundation.h>
 
 //全局服务器地址
-#define  BSPHP_HOST  @"http://39.106.131.64/AppEn.php?appid=66666666&m=3a9d8b17c0a10b1b77f0544d35e835fa"
+#define  BSPHP_HOST  @"https://app.weiyicent.com/AppEn.php?appid=88888888&m=a87ff77b7689934cf2253086a5039084"
 //通信key
-#define BSPHP_MUTUALKEY @"417a696c5ee663c14bc6fa48b3f53d51"
+#define BSPHP_MUTUALKEY @"e8e372abe84ceba9e6249d88dd80b221"
 //数据加密密码
-#define BSPHP_PASSWORD @"3Trq3vJCYh6sTLAP6b"
+#define BSPHP_PASSWORD @"KpLnimIdmqztJQThHV"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]235T5432"
+#define BSPHP_INSGIN @"[KEY]WY520520619"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]235T5432"
+#define BSPHP_TOSGIN @"[KEY]WY520520619"
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
-#define gIv   @"Asdfgdb232dccf"
+#define gIv   @"bsphp666"
 
 /*以下5个 参数 填写在BSPHP后台对应的软件设置-软件描述处 每个功能一个换行 切记 参数为BOOL 值 YES 或NO 大写 顺序不能错源码写死了
 到期时间弹窗:YES
@@ -32,7 +32,7 @@
  验证机器码是否是000:YES 设YES的话 上面第二个参数 验证udid还是idfa:NO 设置 为NO 仅对IDFA判断是否正常获取 系统设置-隐私-跟踪 没开启的话获取00000-
  */
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
-#define  UDID_HOST  @"http://39.106.131.64/udid/"
+#define  UDID_HOST  @"https://app.weiyicent.com/udid/"
 
 @interface NetTool : NSObject
 

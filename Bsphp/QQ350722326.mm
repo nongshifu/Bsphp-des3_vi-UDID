@@ -9,12 +9,12 @@
 #import "LRKeychain.h"
 #import <WebKit/WebKit.h>
 #import <UIKit/UIKit.h>
-#import "SCLAlertView.h"
+
 #import "NSString+MD5.h"
 #import "Config.h"
-#import "SCLAlertView.h"
-#import <AdSupport/ASIdentifierManager.h>
 
+#import <AdSupport/ASIdentifierManager.h>
+#import "MBProgressHUD.h"
 #include <sys/sysctl.h>
 #include <string>
 #import <dlfcn.h>
@@ -24,6 +24,9 @@ static NSString* UDIDORIDFA;//验证udid还是idfa
 static NSString* YZBB;//验证版本更新
 static NSString* GZB;//过直播
 static NSString* YZ000;//验证机器码是否是
+static UITextField *textField;
+static UIView *view;
+static UIView *aview;
 @implementation NSObject (checkStatus)
 
 -(void)Bsphp{
@@ -96,24 +99,34 @@ static NSString* YZ000;//验证机器码是否是
                             if (arr.count >= 6)
                             {
                                 if(![dataString containsString:[NSObject getIDFA]]){
-                                    [NSObject CodeConfig];
-                                    [NSObject showAlertMsg:@"授权错误，机器码不正确\n联系管理员解绑或更换卡密" error:NO];
+                                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                                    hud.mode = MBProgressHUDModeText;
+                                    hud.label.text = @"授权错误，机器码不正确\n联系管理员解绑或更换卡密";
+                                    hud.userInteractionEnabled = NO;
+                                    [hud hideAnimated:YES afterDelay:3.5f];
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                        [self CodeConfig];
+                                    });
                                 }else{
                                     if ([DQTC containsString:@"YES"]) {
                                         NSString *showMsg = [NSString stringWithFormat:@"授权成功，到期时间\n %@", arr[4]];
-                                        SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-                                        [alert addTimerToButtonIndex:0 reverse:YES];
-                                        [alert showSuccess:nil title:@"授权提示" subTitle:showMsg closeButtonTitle:@"确定" duration:3];
+                                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                                        hud.mode = MBProgressHUDModeText;
+                                        hud.label.text =showMsg;
+                                        hud.userInteractionEnabled = NO;
+                                        [hud hideAnimated:YES afterDelay:3.5f];
+                                        
                                     }
                                     //验证版本
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    static dispatch_once_t onceToken;
+                                    dispatch_once(&onceToken, ^{
                                         if([YZBB containsString:@"YES"]){
                                             //验证通过后验证版本 和公告
                                             [NSObject loadbanben];
                                         }
                                     });
+                                    
                                     //验证公告
-                                    static dispatch_once_t onceToken;
                                     dispatch_once(&onceToken, ^{
                                         [NSObject gonggao];//公告
                                     });
@@ -126,8 +139,14 @@ static NSString* YZ000;//验证机器码是否是
                         }
                         else
                         {
+                            
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                            hud.mode = MBProgressHUDModeText;
+                            hud.label.text = dataString;
+                            hud.userInteractionEnabled = NO;
+                            [hud hideAnimated:YES afterDelay:3.5f];
                             //验证时间
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                            {
                                 [NSObject CodeConfig];
                             });
@@ -135,7 +154,12 @@ static NSString* YZ000;//验证机器码是否是
                     }
                 } myfailure:^(NSError *error)
                  {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.label.text = [NSString stringWithFormat:@"%@",error];
+                    hud.userInteractionEnabled = NO;
+                    [hud hideAnimated:YES afterDelay:3.5f];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                    {
                         [NSObject CodeConfig];
                     });
@@ -143,7 +167,7 @@ static NSString* YZ000;//验证机器码是否是
             }
             else
             {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                {
                     [NSObject CodeConfig];
                 });
@@ -181,25 +205,27 @@ static NSString* YZ000;//验证机器码是否是
                 NSString *version = dict[@"response"][@"data"];
                 BOOL result = [version isEqualToString:localv];
                 if (!result){
-                    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                    [alert addTimerToButtonIndex:0 reverse:YES];
-                    [alert addButton:@"确定" actionBlock:^{
-                        NSString*url=[NSObject getnew];
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            exit(0);
-                        });
-                    }];
-                    [alert showWarning:@"温馨提示" subTitle:(@"发现新版本 请更新") closeButtonTitle:nil duration:0.0f];
+                    
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.label.text =@"请更新新版,5秒后闪退";
+                    hud.userInteractionEnabled = NO;
+                    [hud hideAnimated:YES afterDelay:3.5f];
+                   
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        exit(0);
+                    });
                 }
             }
         } myfailure:^(NSError *error) {
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-             [alert addTimerToButtonIndex:0 reverse:YES];
-             [alert showWarning:@"温馨提示" subTitle:(@"网络连接失败！请重启应用！") closeButtonTitle:nil duration:0.0f];
-             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             exit(0);
-             });
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text =@"网络链接失败";
+            hud.userInteractionEnabled = NO;
+            [hud hideAnimated:YES afterDelay:3.5f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            exit(0);
+            });
         }];
     });
 }
@@ -229,9 +255,7 @@ static NSString* YZ000;//验证机器码是否是
                 vdate = dict[@"response"][@"data"];
             }
         } myfailure:^(NSError *error) {
-            SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-             [alert addTimerToButtonIndex:0 reverse:YES];
-             [alert showWarning:@"温馨提示" subTitle:(@"网络连接失败！请重启应用！") closeButtonTitle:nil duration:0.0f];
+            
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
              exit(0);
              });
@@ -265,15 +289,20 @@ static NSString* YZ000;//验证机器码是否是
                 if (dict) {
                     NSString *message = dict[@"response"][@"data"];
                     if (message.length>2 ) {
-                        SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                        [alert addTimerToButtonIndex:0 reverse:YES];
-                        [alert showWarning:@"公告" subTitle:message closeButtonTitle:@"确定" duration:10.0f];
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                        hud.mode = MBProgressHUDModeText;
+                        hud.label.text =message;
+                        hud.userInteractionEnabled = NO;
+                        [hud hideAnimated:YES afterDelay:3.5f];
                     }
                 }
             } myfailure:^(NSError *error) {
-                SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                [alert addTimerToButtonIndex:0 reverse:YES];
-                [alert showWarning:@"温馨提示" subTitle:(@"公告信息获取失败请重启应用!") closeButtonTitle:@"确定" duration:0.0f];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text =@"网络链接失败";
+                hud.userInteractionEnabled = NO;
+                [hud hideAnimated:YES afterDelay:3.5f];
+                
             }];
         });
     });
@@ -282,37 +311,74 @@ static NSString* YZ000;//验证机器码是否是
 /**
  激活弹窗
  */
+static int tag;
 - (void)CodeConfig
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        SCLAlertView *alertx = [[SCLAlertView alloc] initWithNewWindow];
-        SCLTextView *evenField = [alertx addTextField:@"请输入或粘贴激活码"];
-        [alertx addButton:@"粘贴激活码" validationBlock:^BOOL{
-            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            evenField.text =pasteboard.string;
-            return NO;
-        }actionBlock:^{}];
-        [alertx addButton:@"授权" validationBlock:^BOOL{ if (evenField.text.length == 0)
-        {
-            SCLAlertView *alertxx = [[SCLAlertView alloc] initWithNewWindow];
-            [alertxx showEdit:@"激活码不能为空" subTitle:nil closeButtonTitle:nil duration:2.0f];
-            return NO;
-        }else{
-            [self YzCode:evenField.text finish:nil];
-            return YES;
-        }
-            
-        }actionBlock:^{}];
-        NSString*udid=[[NSUserDefaults standardUserDefaults] objectForKey:@"udid"];
-        NSString *showMsg = [NSString stringWithFormat:@"请输入激活码并点击授权\n%@",udid];
-        [alertx showEdit:@"请先授权" subTitle:showMsg closeButtonTitle:nil duration:0.0f];
-    });
+    tag=0;
+    NSLog(@"8888");
     
+    UIWindow*Win=[UIApplication sharedApplication].windows.lastObject;
+    view=[[UIView alloc] init];
+    view.layer.cornerRadius = 15;
+    float x=[UIScreen mainScreen].bounds.size.width;
+    float y=[UIScreen mainScreen].bounds.size.height;
+    view.frame=CGRectMake(x/2-150, y/2-200, 300, 180);
+    view.backgroundColor=[UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:0.98];
+    view.layer.borderWidth = 1;
+    view.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1].CGColor;
+    
+    UILabel*uil=[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 300, 40)];
+    uil.text=@"请输入激活码";
+    uil.textColor = [UIColor blackColor];
+    uil.textAlignment=NSTextAlignmentCenter;
+    uil.font= [UIFont fontWithName:@"Helvetica-Bold" size:20];
+    //设置字体大小适应label宽度
+    uil.adjustsFontSizeToFitWidth = YES;
+    [view addSubview:uil];
+    
+    
+    textField=[[UITextField alloc] init];
+    textField.frame=CGRectMake(30, uil.frame.size.height+20, 240, 40);
+    textField.placeholder=[[NSString alloc] initWithFormat:@"请输入激活码"];
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.layer.cornerRadius=8.0f;
+    textField.layer.masksToBounds=YES;
+    textField.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:0.98];
+    textField.layer.borderColor=[[UIColor colorWithRed:1 green:1 blue:1 alpha:1] CGColor];
+    textField.layer.borderWidth= 5.0f;
+    [view addSubview:textField];
+    
+    UILabel*uil3=[[UILabel alloc] initWithFrame:CGRectMake(0, uil.frame.size.height+textField.frame.size.height+50, 300, 40)];
+    uil3.text=@"授权验证";
+    uil3.textColor=[UIColor colorWithRed:0 green:0.2 blue:1 alpha:1];
+    uil3.textAlignment=NSTextAlignmentCenter;
+    uil3.font= [UIFont fontWithName:@"Arial" size:20];
+    //设置字体大小适应label宽度
+    uil3.adjustsFontSizeToFitWidth = YES;
+    uil3.userInteractionEnabled=YES;
+    
+    UITapGestureRecognizer *labelTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(labelTouchUpInside)];
+    [uil3 addGestureRecognizer:labelTapGestureRecognizer];
+    [view addSubview:uil3];
+    
+    //横线
+    
+    UIView *view2=[[UIView alloc] init];
+    view2.layer.cornerRadius = 15;
+    view2.frame=CGRectMake(5, view.frame.size.height-60, 295, 2);
+    view2.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.05];
+    
+    [view addSubview:view2];
+    [Win addSubview:view];
+    
+
 }
+
 /**
  验证逻辑
  */
-- (void)YzCode:(NSString *)code finish:(void (^)(NSDictionary *done))finish
+- (void)YzCode:(NSString *)code
 {
     //授权码验证
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -354,19 +420,25 @@ static NSString* YZ000;//验证机器码是否是
                 {
                     
                     NSString *showMsg = [NSString stringWithFormat:@"到期时间: %@", arr[4]];
-                    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                    [alert addButton:@"确定" actionBlock:^{
-                        exit(0);
-                    }];
-                    [alert showEdit:@"验证成功！重启游戏生效" subTitle:showMsg closeButtonTitle:nil duration:0];
-                    
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.label.text =showMsg;
+                    hud.userInteractionEnabled = NO;
+                    [hud hideAnimated:YES afterDelay:3.5f];
                 }
             }
             else
             {
                 NSString *messageStr = dict[@"response"][@"data"];
-                [self CodeConfig];
-                [self showAlertMsg:messageStr error:NO];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text =messageStr;
+                hud.userInteractionEnabled = NO;
+                [hud hideAnimated:YES afterDelay:3.5f];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self CodeConfig];
+                });
+                
             }
         }
         else{
@@ -380,18 +452,21 @@ static NSString* YZ000;//验证机器码是否是
 /**
  提示条
  */
--(void)showAlertMsg:(NSString*)提示 error:(BOOL)是否闪退
+
+-(void)labelTouchUpInside
 {
-    SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-    [alert addTimerToButtonIndex:0 reverse:YES];
-    [alert addButton:@"确定" actionBlock:^{
-        if (是否闪退==YES) {
-            exit(0);
+    NSLog(@"1111=%@  tag=%d",textField.text,tag);
+    if (tag==0) {
+        if (textField.text==nil || textField.text.length<2) {
+            [self CodeConfig];
+        }else{
+            [view removeFromSuperview];
+            [NSObject YzCode:textField.text];
         }
-    }];
-    [alert showError:nil subTitle:提示 closeButtonTitle:nil duration:0];
-   
+    }
+    
 }
+
 /**
  获取设备码IDFA 刷机变 升级变 -设置-隐私-限制广告跟踪 开关 变 UDID 永久不变 推荐
  */
@@ -439,11 +514,12 @@ static NSString* YZ000;//验证机器码是否是
         UDID= as.advertisingIdentifier.UUIDString;
         if ([YZ000 containsString:@"YES"]) {
             if ([UDID containsString:@"0000-00"]) {
-                SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-                [alert addButton:@"确定" actionBlock:^{
-                    exit(0);
-                }];
-                [alert showInfo:@"获取机器码失败" subTitle:@"ios13系统：设置-隐私-广告-关闭限制广告跟踪\n\nios14-15系统：设置-隐私-跟踪-开启允许App跟踪\n\n友情提示：请按照以上指引操作！这个是获取机器码操作，并不涉及什么隐私，无需担心！" closeButtonTitle:nil duration:0];
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text =@"机器码获取失败";
+                hud.userInteractionEnabled = NO;
+                [hud hideAnimated:YES afterDelay:3.5f];
                 
             }
         }
