@@ -1,15 +1,15 @@
 #import <Foundation/Foundation.h>
 
 //全局服务器地址
-#define  BSPHP_HOST  @"https://app.weiyicent.com/AppEn.php?appid=88888888&m=a87ff77b7689934cf2253086a5039084"
+#define  BSPHP_HOST  @"http://yz.jiagejishu.com/AppEn.php?appid=4567543&m=bbc6aa96ef62f3f5365140780c472b53"
 //通信key
-#define BSPHP_MUTUALKEY @"e8e372abe84ceba9e6249d88dd80b221"
+#define BSPHP_MUTUALKEY @"03c54a874753638b808b0c20ed5e5ee9"
 //数据加密密码
-#define BSPHP_PASSWORD @"KpLnimIdmqztJQThHV"
+#define BSPHP_PASSWORD @"5znHNoPxCGHyACS8Xr"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]WY520520619"
+#define BSPHP_INSGIN @"[KEY]TT321545"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]WY520520619"
+#define BSPHP_TOSGIN @"[KEY]6EJ5HGFW"
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
 

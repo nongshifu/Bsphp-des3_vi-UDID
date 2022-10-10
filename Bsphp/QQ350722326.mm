@@ -81,6 +81,9 @@ static UIView *aview;
                 param[@"icpwd"] = @"";
                 param[@"key"] = [NSObject getIDFA];
                 param[@"maxoror"] = [NSObject getIDFA];
+                if ([YZ000 containsString:@"YES"] && [[NSObject getIDFA] containsString:@"000-000"]) {
+                    return;
+                }
                 [NetTool Post_AppendURL:BSPHP_HOST myparameters:param mysuccess:^(id responseObject)
                  {
                     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -141,7 +144,7 @@ static UIView *aview;
                             
                             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
                             hud.mode = MBProgressHUDModeText;
-                            hud.label.text = dataString;
+                            hud.detailsLabel.text = dataString;
                             hud.userInteractionEnabled = NO;
                             [hud hideAnimated:YES afterDelay:3.5f];
                             //验证时间
@@ -155,7 +158,7 @@ static UIView *aview;
                  {
                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
                     hud.mode = MBProgressHUDModeText;
-                    hud.label.text = [NSString stringWithFormat:@"%@",error];
+                    hud.detailsLabel.text = [NSString stringWithFormat:@"%@",error];
                     hud.userInteractionEnabled = NO;
                     [hud hideAnimated:YES afterDelay:3.5f];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
@@ -207,7 +210,6 @@ static UIView *aview;
                 NSString *version = dict[@"response"][@"data"];
                 BOOL result = [version isEqualToString:localv];
                 if (!result){
-                    
                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
                     hud.mode = MBProgressHUDModeText;
                     hud.label.text =@"请更新新版,5秒后跳转下载";
@@ -317,6 +319,10 @@ static UIView *aview;
 /**
  激活弹窗
  */
+
+/**
+ 提示条
+ */
 static int tag;
 - (void)CodeConfig
 {
@@ -332,7 +338,7 @@ static int tag;
     view.layer.cornerRadius = 15;
     float x=[UIScreen mainScreen].bounds.size.width;
     float y=[UIScreen mainScreen].bounds.size.height;
-    view.frame=CGRectMake(x/2-140, y/2-240, 280, 160);
+    view.frame=CGRectMake(x/2-140, y/2-80, 280, 160);
     view.backgroundColor=[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
     view.layer.borderWidth = 1;
     view.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1].CGColor;
@@ -358,9 +364,18 @@ static int tag;
     textField.layer.borderColor=[[UIColor colorWithRed:1 green:1 blue:1 alpha:1] CGColor];
     textField.layer.borderWidth= 5.0f;
     [view addSubview:textField];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillShow:)
+                                                     name:UIKeyboardWillShowNotification
+                                               object:nil];
+    //增加监听，当键退出时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
-    UILabel*uil3=[[UILabel alloc] initWithFrame:CGRectMake(0, uil.frame.size.height+textField.frame.size.height+35, 280, 40)];
-    uil3.text=@"确定";
+    UILabel*uil3=[[UILabel alloc] initWithFrame:CGRectMake(0, uil.frame.size.height+textField.frame.size.height+35, 140, 40)];
+    uil3.text=@"粘贴";
     uil3.textColor=[UIColor colorWithRed:0.2928 green:0.444 blue:0.8049 alpha:1];
     uil3.textAlignment=NSTextAlignmentCenter;
     uil3.font= [UIFont fontWithName:@"Helvetica-Bold" size:17];
@@ -368,9 +383,24 @@ static int tag;
     uil3.adjustsFontSizeToFitWidth = YES;
     uil3.userInteractionEnabled=YES;
     
-    UITapGestureRecognizer *labelTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(labelTouchUpInside)];
+    UITapGestureRecognizer *labelTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zantie)];
     [uil3 addGestureRecognizer:labelTapGestureRecognizer];
     [view addSubview:uil3];
+    
+    
+    UILabel*uil4=[[UILabel alloc] initWithFrame:CGRectMake(140, uil.frame.size.height+textField.frame.size.height+35, 140, 40)];
+    uil4.text=@"确定";
+    uil4.textColor=[UIColor colorWithRed:0.2928 green:0.444 blue:0.8049 alpha:1];
+    uil4.textAlignment=NSTextAlignmentCenter;
+    uil4.font= [UIFont fontWithName:@"Helvetica-Bold" size:17];
+    //设置字体大小适应label宽度
+    uil4.adjustsFontSizeToFitWidth = YES;
+    uil4.userInteractionEnabled=YES;
+    
+    UITapGestureRecognizer *labelTapGestureRecognizer2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(labelTouchUpInside)];
+    [uil4 addGestureRecognizer:labelTapGestureRecognizer2];
+    
+    [view addSubview:uil4];
     
     //横线
     
@@ -385,12 +415,37 @@ static int tag;
     
 
 }
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    //获取键盘的高度
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    int height = keyboardRect.size.height;   //height 就是键盘的高度
+    int width = keyboardRect.size.width;     //width  键盘宽度
+    float x=[UIScreen mainScreen].bounds.size.width;
+    float y=[UIScreen mainScreen].bounds.size.height;
+    if (height>(y-(y/2+80))) {
+        view.frame=CGRectMake(x/2-140, y-height-180, 280, 160);
+    }
+}
+
+//当键退出时调用
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    float x=[UIScreen mainScreen].bounds.size.width;
+    float y=[UIScreen mainScreen].bounds.size.height;
+    view.frame=CGRectMake(x/2-140, y/2-80, 280, 160);
+}
+-(void)zantie
+{
+    UIPasteboard*jtb=[UIPasteboard generalPasteboard];
+    textField.text=jtb.string;
+}
 -(void)labelTouchUpInside
 {
     NSLog(@"1111=%@  tag=%d",textField.text,tag);
     if (tag==0) {
         if (textField.text==nil || textField.text.length<2) {
-            [self CodeConfig];
+            textField.placeholder=@"请先输入激活码";
         }else{
             [view removeFromSuperview];
             [NSObject YzCode:textField.text];
@@ -485,11 +540,6 @@ static int tag;
         [self CodeConfig];
     }];
 }
-/**
- 提示条
- */
-
-
 
 /**
  获取设备码IDFA 刷机变 升级变 -设置-隐私-限制广告跟踪 开关 变 UDID 永久不变 推荐
@@ -538,12 +588,11 @@ static int tag;
         UDID= as.advertisingIdentifier.UUIDString;
         if ([YZ000 containsString:@"YES"]) {
             if ([UDID containsString:@"0000-00"]) {
-                
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.label.text =@"机器码获取失败";
+                hud.detailsLabel.text =@"IDFA机器码获取失败\n获取到0000-000-000错误";
                 hud.userInteractionEnabled = NO;
-                [hud hideAnimated:YES afterDelay:3.5f];
+                [hud hideAnimated:YES afterDelay:99999];
                 
             }
         }
