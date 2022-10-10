@@ -100,22 +100,29 @@ static NSString* YZ000;//验证机器码是否是
                             if (arr.count >= 6)
                             {
                                 if(![dataString containsString:[NSObject getIDFA]]){
-                                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                                    hud.mode = MBProgressHUDModeText;
-                                    hud.detailsLabel.text = @"授权错误，机器码不正确\n联系管理员解绑或更换卡密";
-                                    hud.userInteractionEnabled = NO;
-                                    [hud hideAnimated:YES afterDelay:3.5f];
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                        [self processActivate];
-                                    });
-                                }else{
-                                    if ([DQTC containsString:@"YES"]) {
-                                        NSString *showMsg = [NSString stringWithFormat:@"授权成功,到期时间\n %@", arr[4]];
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
                                         hud.mode = MBProgressHUDModeText;
-                                        hud.detailsLabel.text =showMsg;
-                                        hud.userInteractionEnabled = YES;
+                                        hud.detailsLabel.text = @"授权错误，机器码不正确\n联系管理员解绑或更换卡密";;
+                                        hud.userInteractionEnabled = NO;
                                         [hud hideAnimated:YES afterDelay:3];
+                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            [self processActivate];
+                                        });
+                                    });
+                                    
+                                    
+                                }else{
+                                    if ([DQTC containsString:@"YES"]) {
+                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            NSString *showMsg = [NSString stringWithFormat:@"授权成功,到期时间\n %@", arr[4]];
+                                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                                            hud.mode = MBProgressHUDModeText;
+                                            hud.detailsLabel.text =showMsg;
+                                            hud.userInteractionEnabled = YES;
+                                            [hud hideAnimated:YES afterDelay:3];
+                                        });
+                                       
                                     }
                                     
                                     //验证版本
@@ -139,30 +146,33 @@ static NSString* YZ000;//验证机器码是否是
                         }
                         else
                         {
-                            
-                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                            hud.mode = MBProgressHUDModeText;
-                            hud.detailsLabel.text = dataString;
-                            hud.userInteractionEnabled = NO;
-                            [hud hideAnimated:YES afterDelay:3.5f];
-                            //验证时间
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
-                                           {
-                                [NSObject processActivate];
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                                hud.mode = MBProgressHUDModeText;
+                                hud.detailsLabel.text = dataString;
+                                hud.userInteractionEnabled = NO;
+                                [hud hideAnimated:YES afterDelay:3];
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    [self processActivate];
+                                });
                             });
+                            
+                            
                         }
                     }
                 } myfailure:^(NSError *error)
                  {
-                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                    hud.mode = MBProgressHUDModeText;
-                    hud.detailsLabel.text = [NSString stringWithFormat:@"%@",error];
-                    hud.userInteractionEnabled = NO;
-                    [hud hideAnimated:YES afterDelay:3.5f];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
-                                   {
-                        [NSObject processActivate];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                        hud.mode = MBProgressHUDModeText;
+                        hud.detailsLabel.text = [NSString stringWithFormat:@"%@",error];;
+                        hud.userInteractionEnabled = NO;
+                        [hud hideAnimated:YES afterDelay:5];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self processActivate];
+                        });
                     });
+                    
                 }];
             }
             else
@@ -294,12 +304,13 @@ static NSString* YZ000;//验证机器码是否是
                 if (dict) {
                     NSString *message = dict[@"response"][@"data"];
                     if (message.length>2 ) {
-                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                        hud.mode = MBProgressHUDModeText;
-                        hud.detailsLabel.text =message;
-                        hud.userInteractionEnabled = NO;
-                        [hud hideAnimated:YES afterDelay:3.5f];
-                        
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                            hud.mode = MBProgressHUDModeText;
+                            hud.detailsLabel.text =message;
+                            hud.userInteractionEnabled = NO;
+                            [hud hideAnimated:YES afterDelay:5.5f];
+                        });
                     }
                 }
             } myfailure:^(NSError *error) {
@@ -323,19 +334,19 @@ static NSString* YZ000;//验证机器码是否是
  */
 - (void)processActivate
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            exit(0);
-        });
-    });
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            exit(0);
+//        });
+//    });
 //
     NSString *CONFIRM = @"激活";
     NSString *CANCEL = @"购买";
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"验证激活" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:CONFIRM, nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     UITextField *txtName = [alert textFieldAtIndex:0];
-    txtName.placeholder = @"请30秒内输入激活码";
+    txtName.placeholder = @"请输入激活码";
 //    txtName.borderStyle = UITextBorderStyleRoundedRect;
     txtName.clearButtonMode = UITextFieldViewModeAlways;
     txtName.layer.masksToBounds=YES;
@@ -362,8 +373,8 @@ static NSString* YZ000;//验证机器码是否是
     }
     else
     {
-//        NSString*url=@"https://docs.qingque.cn/d/home/eZQAHRSyp_qEQuRPiX4TkAXqi?identityId=1r3gqGopOS4";
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+        NSString*url=@"https://docs.qingque.cn/d/home/eZQAHRSyp_qEQuRPiX4TkAXqi?identityId=1r3gqGopOS4";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
         [self processActivate];
     }
     
@@ -412,38 +423,44 @@ static NSString* YZ000;//验证机器码是否是
                 if (arr.count >= 6)
                 {
                     if(![dataString containsString:[NSObject getIDFA]]){
-                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                        hud.mode = MBProgressHUDModeText;
-                        hud.detailsLabel.text = @"授权错误，机器码不正确\n联系管理员解绑或更换卡密";
-                        hud.userInteractionEnabled = NO;
-                        [hud hideAnimated:YES afterDelay:3.5f];
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self processActivate];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                            hud.mode = MBProgressHUDModeText;
+                            hud.detailsLabel.text = @"授权错误，机器码不正确\n联系管理员解绑或更换卡密";
+                            hud.userInteractionEnabled = NO;
+                            [hud hideAnimated:YES afterDelay:3];
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [self processActivate];
+                            });
                         });
+                        
                     }else{
-                        NSString *showMsg = [NSString stringWithFormat:@"授权成功-到期时间\n%@\n重启App生效", arr[4]];
-                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                        hud.mode = MBProgressHUDModeText;
-                        hud.detailsLabel.text =showMsg;
-                        hud.userInteractionEnabled = NO;
-                        [hud hideAnimated:YES afterDelay:3.5f];
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            exit(0);
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            NSString *showMsg = [NSString stringWithFormat:@"授权成功-到期时间\n%@", arr[4]];
+                            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                            hud.mode = MBProgressHUDModeText;
+                            hud.detailsLabel.text =showMsg;
+                            hud.userInteractionEnabled = NO;
+                            [hud hideAnimated:YES afterDelay:5.0f];
                         });
+                        
                     }
                 }
             }
             else
             {
-                NSString *messageStr = dict[@"response"][@"data"];
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-                hud.mode = MBProgressHUDModeText;
-                hud.label.text =messageStr;
-                hud.userInteractionEnabled = NO;
-                [hud hideAnimated:YES afterDelay:3.5f];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self processActivate];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    NSString *messageStr = dict[@"response"][@"data"];
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.label.text =messageStr;
+                    hud.userInteractionEnabled = YES;
+                    [hud hideAnimated:YES afterDelay:3];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self processActivate];
+                    });
                 });
+                
                 
             }
         }
