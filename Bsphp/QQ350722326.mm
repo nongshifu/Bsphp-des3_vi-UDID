@@ -24,12 +24,10 @@ static NSString* UDIDORIDFA;//验证udid还是idfa
 static NSString* YZBB;//验证版本更新
 static NSString* GZB;//过直播
 static NSString* YZ000;//验证机器码是否是
-static UITextField *textField;
-static UIView *view;
-static UIView *aview;
 @implementation NSObject (checkStatus)
 
 -(void)Bsphp{
+    NSLog(@"1111111");
     static NSString*描述;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] =@"miao.in";
@@ -108,7 +106,7 @@ static UIView *aview;
                                     hud.userInteractionEnabled = NO;
                                     [hud hideAnimated:YES afterDelay:3.5f];
                                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                        [self CodeConfig];
+                                        [self processActivate];
                                     });
                                 }else{
                                     if ([DQTC containsString:@"YES"]) {
@@ -117,7 +115,7 @@ static UIView *aview;
                                         hud.mode = MBProgressHUDModeText;
                                         hud.detailsLabel.text =showMsg;
                                         hud.userInteractionEnabled = YES;
-                                        [hud hideAnimated:YES afterDelay:2];
+                                        [hud hideAnimated:YES afterDelay:3];
                                     }
                                     
                                     //验证版本
@@ -128,7 +126,7 @@ static UIView *aview;
                                             [NSObject loadbanben];
                                         }
                                     });
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                         [NSObject gonggao];//公告
                                     });
                                     
@@ -150,7 +148,7 @@ static UIView *aview;
                             //验证时间
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                            {
-                                [NSObject CodeConfig];
+                                [NSObject processActivate];
                             });
                         }
                     }
@@ -163,7 +161,7 @@ static UIView *aview;
                     [hud hideAnimated:YES afterDelay:3.5f];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                    {
-                        [NSObject CodeConfig];
+                        [NSObject processActivate];
                     });
                 }];
             }
@@ -171,7 +169,7 @@ static UIView *aview;
             {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                {
-                    [NSObject CodeConfig];
+                    [NSObject processActivate];
                 });
             }
             
@@ -179,7 +177,7 @@ static UIView *aview;
     } myfailure:^(NSError *error) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                        {
-            [NSObject CodeConfig];
+            [NSObject processActivate];
         });
     }];
 }
@@ -323,133 +321,50 @@ static UIView *aview;
 /**
  提示条
  */
-static int tag;
-- (void)CodeConfig
+- (void)processActivate
 {
-    tag=0;
-    NSLog(@"8888");
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            exit(0);
+        });
+    });
     
-    UIWindow*Win=[UIApplication sharedApplication].windows.lastObject;
-    Win.userInteractionEnabled=YES;
-    UIView*viewaa=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    viewaa.userInteractionEnabled=YES;
-    view=[[UIView alloc] init];
-    view.userInteractionEnabled=YES;
-    view.layer.cornerRadius = 15;
-    float x=[UIScreen mainScreen].bounds.size.width;
-    float y=[UIScreen mainScreen].bounds.size.height;
-    view.frame=CGRectMake(x/2-140, y/2-80, 280, 160);
-    view.backgroundColor=[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
-    view.layer.borderWidth = 1;
-    view.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1].CGColor;
-    
-    UILabel*uil=[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 280, 40)];
-    uil.text=@"请输入激活码";
-    uil.textColor = [UIColor blackColor];
-    uil.textAlignment=NSTextAlignmentCenter;
-    uil.font= [UIFont fontWithName:@"Helvetica-Bold" size:17];
-    //设置字体大小适应label宽度
-    uil.adjustsFontSizeToFitWidth = YES;
-    [view addSubview:uil];
+    NSString *CONFIRM = @"激活";
+    NSString *CANCEL = @"取消";
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"验证激活" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:CONFIRM, nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    UITextField *txtName = [alert textFieldAtIndex:0];
+    txtName.placeholder = @"请30秒内输入激活码";
+//    txtName.borderStyle = UITextBorderStyleRoundedRect;
+    txtName.clearButtonMode = UITextFieldViewModeAlways;
+    txtName.layer.masksToBounds=YES;
+    [alert show];
     
     
-    textField=[[UITextField alloc] init];
-    textField.frame=CGRectMake(20, uil.frame.size.height+20, 240, 40);
-    textField.placeholder=[[NSString alloc] initWithFormat:@"请输入激活码"];
-    textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.clearButtonMode = UITextFieldViewModeAlways;
-    textField.layer.cornerRadius=8.0f;
-    textField.layer.masksToBounds=YES;
-    textField.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
-    textField.layer.borderColor=[[UIColor colorWithRed:1 green:1 blue:1 alpha:1] CGColor];
-    textField.layer.borderWidth= 5.0f;
-    [view addSubview:textField];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification
-                                               object:nil];
-    //增加监听，当键退出时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    UILabel*uil3=[[UILabel alloc] initWithFrame:CGRectMake(0, uil.frame.size.height+textField.frame.size.height+35, 140, 40)];
-    uil3.text=@"粘贴";
-    uil3.textColor=[UIColor colorWithRed:0.2928 green:0.444 blue:0.8049 alpha:1];
-    uil3.textAlignment=NSTextAlignmentCenter;
-    uil3.font= [UIFont fontWithName:@"Helvetica-Bold" size:17];
-    //设置字体大小适应label宽度
-    uil3.adjustsFontSizeToFitWidth = YES;
-    uil3.userInteractionEnabled=YES;
-    
-    UITapGestureRecognizer *labelTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zantie)];
-    [uil3 addGestureRecognizer:labelTapGestureRecognizer];
-    [view addSubview:uil3];
-    
-    
-    UILabel*uil4=[[UILabel alloc] initWithFrame:CGRectMake(140, uil.frame.size.height+textField.frame.size.height+35, 140, 40)];
-    uil4.text=@"确定";
-    uil4.textColor=[UIColor colorWithRed:0.2928 green:0.444 blue:0.8049 alpha:1];
-    uil4.textAlignment=NSTextAlignmentCenter;
-    uil4.font= [UIFont fontWithName:@"Helvetica-Bold" size:17];
-    //设置字体大小适应label宽度
-    uil4.adjustsFontSizeToFitWidth = YES;
-    uil4.userInteractionEnabled=YES;
-    
-    UITapGestureRecognizer *labelTapGestureRecognizer2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(labelTouchUpInside)];
-    [uil4 addGestureRecognizer:labelTapGestureRecognizer2];
-    
-    [view addSubview:uil4];
-    
-    //横线
-    
-    UIView *view2=[[UIView alloc] init];
-    view2.layer.cornerRadius = 15;
-    view2.frame=CGRectMake(5, view.frame.size.height-50, 270, 1.5);
-    view2.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.05];
-    
-    [view addSubview:view2];
-    [viewaa addSubview:view];
-    [Win addSubview:viewaa];
-    
-
 }
-- (void)keyboardWillShow:(NSNotification *)aNotification {
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;   //height 就是键盘的高度
-    int width = keyboardRect.size.width;     //width  键盘宽度
-    float x=[UIScreen mainScreen].bounds.size.width;
-    float y=[UIScreen mainScreen].bounds.size.height;
-    if (height>(y-(y/2+80))) {
-        view.frame=CGRectMake(x/2-140, y-height-180, 280, 160);
-    }
-}
-
-//当键退出时调用
-- (void)keyboardWillHide:(NSNotification *)aNotification {
-    float x=[UIScreen mainScreen].bounds.size.width;
-    float y=[UIScreen mainScreen].bounds.size.height;
-    view.frame=CGRectMake(x/2-140, y/2-80, 280, 160);
-}
--(void)zantie
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    UIPasteboard*jtb=[UIPasteboard generalPasteboard];
-    textField.text=jtb.string;
-}
--(void)labelTouchUpInside
-{
-    NSLog(@"1111=%@  tag=%d",textField.text,tag);
-    if (tag==0) {
-        if (textField.text==nil || textField.text.length<2) {
-            textField.placeholder=@"请先输入激活码";
-        }else{
-            [view removeFromSuperview];
-            [NSObject YzCode:textField.text];
+    NSString *CONFIRM = @"激活";
+    NSString *btnTitle = [alertView buttonTitleAtIndex:buttonIndex];
+    if (YES == [btnTitle isEqualToString:CONFIRM])
+    {
+        UITextField *tf = [alertView textFieldAtIndex:0];
+        
+        if (nil == tf.text || 0 == tf.text.length)
+        {
+            [self processActivate];
+            return ;
         }
+        [NSObject YzCode:tf.text];
+       
+        
+    }
+    else
+    {
+//        NSString*url=@"https://docs.qingque.cn/d/home/eZQAHRSyp_qEQuRPiX4TkAXqi?identityId=1r3gqGopOS4";
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+        [self processActivate];
     }
     
 }
@@ -503,7 +418,7 @@ static int tag;
                         hud.userInteractionEnabled = NO;
                         [hud hideAnimated:YES afterDelay:3.5f];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self CodeConfig];
+                            [self processActivate];
                         });
                     }else{
                         NSString *showMsg = [NSString stringWithFormat:@"授权成功-到期时间\n%@\n重启App生效", arr[4]];
@@ -527,17 +442,17 @@ static int tag;
                 hud.userInteractionEnabled = NO;
                 [hud hideAnimated:YES afterDelay:3.5f];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self CodeConfig];
+                    [self processActivate];
                 });
                 
             }
         }
         else{
-            [self CodeConfig];
+            [self processActivate];
         }
     } myfailure:^(NSError *error)
      {
-        [self CodeConfig];
+        [self processActivate];
     }];
 }
 
@@ -641,7 +556,7 @@ static int tag;
                         //验证时间
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
                                        {
-                            [NSObject CodeConfig];
+                            [NSObject processActivate];
                         });
                     }
                 }
