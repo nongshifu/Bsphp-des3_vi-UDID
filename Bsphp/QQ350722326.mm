@@ -329,9 +329,9 @@ static NSString* YZ000;//验证机器码是否是
             exit(0);
         });
     });
-    
+//
     NSString *CONFIRM = @"激活";
-    NSString *CANCEL = @"取消";
+    NSString *CANCEL = @"购买";
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"验证激活" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:CONFIRM, nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     UITextField *txtName = [alert textFieldAtIndex:0];
