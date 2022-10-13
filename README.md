@@ -1,7 +1,8 @@
 
 # 居于Bsphp官方源码 增加了UDID验证绑定
 ## 这里是几个基本配置 顺序不能错 大写的YES/NO  注意换行
-<img width="703" alt="说明" src="https://user-images.githubusercontent.com/31665489/190995270-eadcaa70-f8b0-45a5-bfe0-72dc53d55a69.png">
+<img width="603" alt="image" src="https://user-images.githubusercontent.com/31665489/195619138-4be6f326-53a7-43b4-91df-0839cbcf7d3e.png">
+
 
 # 这里是发布新版的下载地址
 <img width="702" alt="image" src="https://user-images.githubusercontent.com/31665489/190995465-477e9e49-f9a8-46e9-8290-b07899f4f6d6.png">
