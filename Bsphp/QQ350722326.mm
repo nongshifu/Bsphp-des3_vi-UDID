@@ -120,7 +120,7 @@ static NSString* YZ000;//验证机器码是否是
                                             hud.mode = MBProgressHUDModeText;
                                             hud.detailsLabel.text =showMsg;
                                             hud.userInteractionEnabled = YES;
-                                            [hud hideAnimated:YES afterDelay:3];
+                                            [hud hideAnimated:YES afterDelay:2];
                                         });
                                        
                                     }
@@ -441,7 +441,7 @@ static NSString* YZ000;//验证机器码是否是
                             hud.mode = MBProgressHUDModeText;
                             hud.detailsLabel.text =showMsg;
                             hud.userInteractionEnabled = NO;
-                            [hud hideAnimated:YES afterDelay:5.0f];
+                            [hud hideAnimated:YES afterDelay:2.0f];
                         });
                         
                     }
@@ -487,6 +487,7 @@ static NSString* YZ000;//验证机器码是否是
         NSString *urlSchemes = nil;
         for (NSDictionary *scheme in urlTypes) {
             urlSchemes = scheme[@"CFBundleURLSchemes"][0];
+            NSLog(@"urlSchemes=%@",urlSchemes);
         }
         NSInteger cc;
         cc=[[NSUserDefaults standardUserDefaults] integerForKey:@"cc"];
