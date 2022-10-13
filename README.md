@@ -16,4 +16,7 @@
 # 修改BSPHP 的des3加密秘钥 默认是bsphp666 里面有三处都要修改 和源码Config.h里面#define gIv 一致
 <img width="1083" alt="image" src="https://user-images.githubusercontent.com/31665489/190995838-fe2bd5bc-9953-4ac2-b0ff-ca786462ab1c.png">
 <img width="887" alt="image" src="https://user-images.githubusercontent.com/31665489/190996768-bc81aa07-e05b-4fd4-97ea-97d2e3712f95.png">
+# 由于每个app 都会生成一个描述文件 和udid文件 久了就产生缓存文件过多 可以在服务器后台 如宝塔 计划任务 设置各shell脚本 每天清理
+注意这里改成你的udid目录 
+<img width="904" alt="image" src="https://user-images.githubusercontent.com/31665489/195619823-94d60047-1686-4145-956d-c09b154db05b.png">
 
