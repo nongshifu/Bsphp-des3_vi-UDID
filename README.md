@@ -20,3 +20,6 @@
 注意这里改成你的udid目录 
 <img width="904" alt="image" src="https://user-images.githubusercontent.com/31665489/195619823-94d60047-1686-4145-956d-c09b154db05b.png">
 
+cd /www/wwwroot/myradar.cn/UDID
+find . -name '*.txt' -maxdepth 1 -type f -print -exec rm -rf {} \;
+find . -name '*.mobileconfig' -maxdepth 1 -type f -print -exec rm -rf {} \;
