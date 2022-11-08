@@ -60,10 +60,12 @@
 		8A1ADA3D228D9BF200DF45DD /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3C228D9BF100DF45DD /* libc++.tbd */; };
 		8A1ADA3F228D9C1500DF45DD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3E228D9C1500DF45DD /* CFNetwork.framework */; };
 		EA203AEA28EE15D40008CF79 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = EA203AE628EE15D40008CF79 /* MBProgressHUD.h */; };
-		EA203AEB28EE15D40008CF79 /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */; };
+		EA203AEB28EE15D40008CF79 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EA203AE728EE15D40008CF79 /* MBProgressHUD+NJ.m */; };
 		EA203AEC28EE15D40008CF79 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA203AE828EE15D40008CF79 /* MBProgressHUD.m */; };
-		EA203AED28EE15D40008CF79 /* MBProgressHUD+MJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */; };
+		EA203AED28EE15D40008CF79 /* MBProgressHUD+NJ.h in Headers */ = {isa = PBXBuildFile; fileRef = EA203AE928EE15D40008CF79 /* MBProgressHUD+NJ.h */; };
 		EA203AEF28EE16B70008CF79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA203AEE28EE16B70008CF79 /* QuartzCore.framework */; };
+		EAA9DBE7290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h in Headers */ = {isa = PBXBuildFile; fileRef = EAA9DBE5290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h */; };
+		EAA9DBE8290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA9DBE6290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,10 +126,12 @@
 		8A1ADA3C228D9BF100DF45DD /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		8A1ADA3E228D9C1500DF45DD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		EA203AE628EE15D40008CF79 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
+		EA203AE728EE15D40008CF79 /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
 		EA203AE828EE15D40008CF79 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
+		EA203AE928EE15D40008CF79 /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		EA203AEE28EE16B70008CF79 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EAA9DBE5290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+VKKeychainIDFV.h"; sourceTree = "<group>"; };
+		EAA9DBE6290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+VKKeychainIDFV.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +209,8 @@
 		6021E22F289F866E00E2E121 /* Bsphp */ = {
 			isa = PBXGroup;
 			children = (
+				EAA9DBE5290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h */,
+				EAA9DBE6290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m */,
 				6021E2AB289F866E00E2E121 /* QQ350722326.h */,
 				6021E2AA289F866E00E2E121 /* QQ350722326.mm */,
 				6021E269289F866E00E2E121 /* bsphp */,
@@ -218,8 +224,8 @@
 			children = (
 				EA203AE628EE15D40008CF79 /* MBProgressHUD.h */,
 				EA203AE828EE15D40008CF79 /* MBProgressHUD.m */,
-				EA203AE928EE15D40008CF79 /* MBProgressHUD+MJ.h */,
-				EA203AE728EE15D40008CF79 /* MBProgressHUD+MJ.m */,
+				EA203AE928EE15D40008CF79 /* MBProgressHUD+NJ.h */,
+				EA203AE728EE15D40008CF79 /* MBProgressHUD+NJ.m */,
 				60C4556628BF93480089DAEA /* TFJGVGLGKFTVCSV.h */,
 				60C4556728BF93480089DAEA /* TFJGVGLGKFTVCSV.m */,
 				6021E349289F878900E2E121 /* iOsGods.Cn-Prefix.pch */,
@@ -279,10 +285,11 @@
 				6021E301289F866E00E2E121 /* Config.h in Headers */,
 				6021E34A289F878900E2E121 /* iOsGods.Cn-Prefix.pch in Headers */,
 				6021E303289F866E00E2E121 /* DES3Util.h in Headers */,
-				EA203AED28EE15D40008CF79 /* MBProgressHUD+MJ.h in Headers */,
+				EA203AED28EE15D40008CF79 /* MBProgressHUD+NJ.h in Headers */,
 				6021E319289F866E00E2E121 /* NSString+URLCode.h in Headers */,
 				6021E31C289F866E00E2E121 /* AFSecurityPolicy.h in Headers */,
 				6021E31F289F866E00E2E121 /* AFURLRequestSerialization.h in Headers */,
+				EAA9DBE7290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h in Headers */,
 				608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */,
 				6021E322289F866E00E2E121 /* AFURLResponseSerialization.h in Headers */,
 				6021E31D289F866E00E2E121 /* AFNetworkReachabilityManager.h in Headers */,
@@ -368,10 +375,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6021E321289F866E00E2E121 /* AFHTTPSessionManager.m in Sources */,
-				EA203AEB28EE15D40008CF79 /* MBProgressHUD+MJ.m in Sources */,
+				EA203AEB28EE15D40008CF79 /* MBProgressHUD+NJ.m in Sources */,
 				6021E317289F866E00E2E121 /* NetWorkingApiClient.m in Sources */,
 				60C4556928BF93480089DAEA /* TFJGVGLGKFTVCSV.m in Sources */,
 				6021E30D289F866E00E2E121 /* Config.m in Sources */,
+				EAA9DBE8290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m in Sources */,
 				6021E304289F866E00E2E121 /* LRKeychain.m in Sources */,
 				6021E324289F866E00E2E121 /* AFURLRequestSerialization.m in Sources */,
 				EA203AEC28EE15D40008CF79 /* MBProgressHUD.m in Sources */,
@@ -473,7 +481,7 @@
 				GCC_PREFIX_HEADER = "iOsGods.Cn-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -520,7 +528,7 @@
 				GCC_PREFIX_HEADER = "iOsGods.Cn-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

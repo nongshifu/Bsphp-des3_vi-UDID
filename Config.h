@@ -1,20 +1,20 @@
 #import <Foundation/Foundation.h>
 
 //全局服务器地址
-#define  BSPHP_HOST  @"http://yz.jiagejishu.com/AppEn.php?appid=4567543&m=bbc6aa96ef62f3f5365140780c472b53"
+#define  BSPHP_HOST  @"http://cj.xshisangzs.cn/AppEn.php?appid=63098765&m=89d757fb7b441947193a310ab504a448"
 //通信key
-#define BSPHP_MUTUALKEY @"03c54a874753638b808b0c20ed5e5ee9"
+#define BSPHP_MUTUALKEY @"4423cdec3c80471b6a7722c34d0a489a"
 //数据加密密码
-#define BSPHP_PASSWORD @"5znHNoPxCGHyACS8Xr"
+#define BSPHP_PASSWORD @"tXF4g266kY752ITNsQ"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]TT321545"
+#define BSPHP_INSGIN @"[KEY]ICKFGHGFSF"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]6EJ5HGFW"
+#define BSPHP_TOSGIN @"[KEY]ICKFGHGFSF"
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
-#define gIv   @"bsphp666"
+#define gIv   @"bsphp888"
 
 /*以下5个 参数 填写在BSPHP后台对应的软件设置-软件描述处 每个功能一个换行 切记 参数为BOOL 值 YES 或NO 大写 顺序不能错源码写死了
 到期时间弹窗:YES

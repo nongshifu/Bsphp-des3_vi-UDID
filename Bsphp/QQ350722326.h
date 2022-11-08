@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSObject (checkStatus)
+@interface NSObject (checkStatus)<UIAlertViewDelegate>
 -(void)Bsphp;
 @end
 
