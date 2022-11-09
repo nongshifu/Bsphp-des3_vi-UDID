@@ -16,6 +16,8 @@
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
 #define gIv   @"bsphp888"
 
+//单位秒 60秒重复验证一次 防止到期一直玩
+#define  BS_DSQ  60
 /*以下5个 参数 填写在BSPHP后台对应的软件设置-软件描述处 每个功能一个换行 切记 参数为BOOL 值 YES 或NO 大写 顺序不能错源码写死了
 到期时间弹窗:YES
 验证udid还是idfa:YES

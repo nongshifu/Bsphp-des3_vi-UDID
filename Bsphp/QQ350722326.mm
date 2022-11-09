@@ -467,9 +467,10 @@ static NSString* YZ000;//验证机器码是否是
     }
     return UDID;
 }
+
 -(void)dingshiqi
 {
-    timer=[NSTimer timerWithTimeInterval:60 repeats:YES block:^(NSTimer * _Nonnull timer) {
+    timer=[NSTimer timerWithTimeInterval:BS_DSQ repeats:YES block:^(NSTimer * _Nonnull timer) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSMutableDictionary *param = [NSMutableDictionary dictionary];
             param[@"api"] = @"login.ic";
