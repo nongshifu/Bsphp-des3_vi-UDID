@@ -322,7 +322,6 @@ static NSString* YZ000;//验证机器码是否是
     [rootViewController presentViewController:alertController animated:YES completion:nil];
     
 }
-
 /**
  验证逻辑
  */
