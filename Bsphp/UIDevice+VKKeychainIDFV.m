@@ -78,6 +78,7 @@
     [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data] forKey:(__bridge_transfer id)kSecValueData];
     //Add item to keychain with the search dictionary
     SecItemAdd((__bridge_retained CFDictionaryRef)keychainQuery, NULL);
+    
 }
 
 - (id)load:(NSString *)service {

@@ -24,4 +24,5 @@
 + (void)hideHUDForView:(UIView *)view;
 + (MBProgressHUD *)showText:(NSString *)message HideTime:(float)hideTime;
 
+
 @end
