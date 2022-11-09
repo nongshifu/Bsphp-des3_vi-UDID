@@ -18,5 +18,4 @@
 
 +(void)removeVKKeychainIDFV;
 
-
 @end

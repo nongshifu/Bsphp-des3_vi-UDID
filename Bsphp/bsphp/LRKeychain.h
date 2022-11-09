@@ -16,5 +16,4 @@
 + (void)addKeychainData:(id)data forKey:(NSString *)key;///< 添加数据
 + (id)getKeychainDataForKey:(NSString *)key;///< 根据key获取相应的数据
 + (void)deleteKeychainDataForKey:(NSString *)key;///< 删除数据
-
 @end

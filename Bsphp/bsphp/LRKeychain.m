@@ -12,7 +12,6 @@
 #define Key_User_Password @"cn.reader.password"
 
 @implementation LRKeychain
-
 + (NSMutableDictionary *)getKeychainQuery:(NSString *)service {
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
             (__bridge id)kSecClassGenericPassword,(id)kSecClass,// 标识符(kSecAttrGeneric通常值位密码)

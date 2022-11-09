@@ -500,7 +500,6 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (nonatomic, assign) float progress;
 
-
 /**
  * Bar border line color.
  * Defaults to white [UIColor whiteColor].

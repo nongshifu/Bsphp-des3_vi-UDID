@@ -519,7 +519,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     }
 }
 
-
 #pragma mark - Layout
 
 - (void)layoutSubviews {

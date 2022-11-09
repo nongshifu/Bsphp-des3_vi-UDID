@@ -7,7 +7,6 @@
 #import "NSString+URLCode.h"
 #define TESTLog(...)  NSLog(__VA_ARGS__)
 
-
 @implementation NetTool : NSObject
 + (NSURLSessionDataTask *)__attribute__((optnone))Post_AppendURL:(NSString *)appendURL
 myparameters:(NSDictionary *)param
