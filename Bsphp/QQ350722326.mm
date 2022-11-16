@@ -32,6 +32,8 @@ static NSString* YZ000;//验证机器码是否是
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] =@"miao.in";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+    dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
     [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -39,7 +41,7 @@ static NSString* YZ000;//验证机器码是否是
     NSTimeZone * zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-    NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+    NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
     param[@"date"] = nowDateStr;
     param[@"md5"] = @"";
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -64,6 +66,8 @@ static NSString* YZ000;//验证机器码是否是
                 NSMutableDictionary *param = [NSMutableDictionary dictionary];
                 param[@"api"] = @"login.ic";
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+                dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
                 NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
                 param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -71,7 +75,7 @@ static NSString* YZ000;//验证机器码是否是
                 NSTimeZone * zone = [NSTimeZone systemTimeZone];
                 NSInteger interval = [zone secondsFromGMTForDate:date];
                 NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-                NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+                NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
                 param[@"date"] = nowDateStr;
                 param[@"md5"] = @"";
                 param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -179,6 +183,8 @@ static NSString* YZ000;//验证机器码是否是
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] =@"v.in";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+    dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
     [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -186,11 +192,11 @@ static NSString* YZ000;//验证机器码是否是
     NSTimeZone * zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-    NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+    NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
     param[@"date"] = nowDateStr;
     param[@"md5"] = @"";
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [NetTool Post_AppendURL:BSPHP_HOST myparameters:param mysuccess:^(id responseObject) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             if (dict) {
@@ -223,6 +229,8 @@ static NSString* YZ000;//验证机器码是否是
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] =@"url.in";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+    dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
     [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -230,7 +238,7 @@ static NSString* YZ000;//验证机器码是否是
     NSTimeZone * zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-    NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+    NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
     param[@"date"] = nowDateStr;
     param[@"md5"] = @"";
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -258,6 +266,8 @@ static NSString* YZ000;//验证机器码是否是
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"api"] = @"gg.in";
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+        dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
         [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
         NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
         param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -265,7 +275,7 @@ static NSString* YZ000;//验证机器码是否是
         NSTimeZone * zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate:date];
         NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-        NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+        NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
         param[@"date"] = nowDateStr;
         param[@"md5"] = @"";
         param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -273,11 +283,14 @@ static NSString* YZ000;//验证机器码是否是
             [NetTool Post_AppendURL:BSPHP_HOST myparameters:param mysuccess:^(id responseObject) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
                 if (dict) {
+                   
                     NSString *message = dict[@"response"][@"data"];
-                    if (message.length>2 ) {
+                    NSString*本地公告=[[NSUserDefaults standardUserDefaults] objectForKey:@"公告"];
+                    if (![message isEqual:本地公告]) {
+                        [[NSUserDefaults standardUserDefaults] setObject:message forKey:@"公告"];
                         [MBProgressHUD showText:message HideTime:3];
-                        
                     }
+                    
                 }
             } myfailure:^(NSError *error) {
                 [MBProgressHUD showError:@"网络链接失败" HideTime:3];
@@ -330,6 +343,8 @@ static NSString* YZ000;//验证机器码是否是
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] = @"login.ic";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+    dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
     [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -337,7 +352,7 @@ static NSString* YZ000;//验证机器码是否是
     NSTimeZone * zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-    NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+    NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
     param[@"date"] = nowDateStr;
     param[@"md5"] = @"";
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -473,6 +488,8 @@ static NSString* YZ000;//验证机器码是否是
             NSMutableDictionary *param = [NSMutableDictionary dictionary];
             param[@"api"] = @"login.ic";
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+            dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
             [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
             NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
             param[@"BSphpSeSsL"] = [dateStr MD5Digest];
@@ -480,7 +497,7 @@ static NSString* YZ000;//验证机器码是否是
             NSTimeZone * zone = [NSTimeZone systemTimeZone];
             NSInteger interval = [zone secondsFromGMTForDate:date];
             NSDate * nowDate = [date dateByAddingTimeInterval:interval];
-            NSString *nowDateStr = [[nowDate description] stringByReplacingOccurrencesOfString:@" +0000" withString:@""];
+            NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
             param[@"date"] = nowDateStr;
             param[@"md5"] = @"";
             param[@"mutualkey"] = BSPHP_MUTUALKEY;
@@ -501,6 +518,8 @@ static NSString* YZ000;//验证机器码是否是
                     
                     if(range.location != NSNotFound)
                     {
+                        [NSObject loadbanben];
+                        [NSObject gonggao];
                         return;
                     }
                     else
