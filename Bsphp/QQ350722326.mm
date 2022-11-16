@@ -112,7 +112,6 @@ static NSString* YZ000;//验证机器码是否是
                                         NSString *showMsg = [NSString stringWithFormat:@"授权成功,到期时间\n %@", arr[4]];
                                         [MBProgressHUD showSuccess:showMsg  HideTime:3];
                                         
-                                       
                                     }
                                     
                                     //验证版本
