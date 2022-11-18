@@ -129,9 +129,9 @@
  *
  *  @return 直接返回一个MBProgressHUD，需要手动关闭
  */
-+ (MBProgressHUD *)showText:(NSString *)message
++ (MBProgressHUD *)showText:(NSString *)message HideTime:(float)hideTime
 {
-    return [self showText:message toView:nil];
+    return [self showText:message toView:nil HideTime:hideTime];
 }
 
 /**
@@ -142,7 +142,7 @@
  *
  *  @return 直接返回一个MBProgressHUD，需要手动关闭
  */
-+ (MBProgressHUD *)showText:(NSString *)message toView:(UIView *)view {
++ (MBProgressHUD *)showText:(NSString *)message toView:(UIView *)view HideTime:(float)hideTime{
     if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
@@ -152,6 +152,12 @@
     hud.removeFromSuperViewOnHide = YES;
     // YES代表需要蒙版效果
     hud.dimBackground = YES;
+    if (hideTime==0) {
+        // 1秒之后再消失
+        [hud hide:YES afterDelay:9999];
+    }else{
+        [hud hide:YES afterDelay:hideTime];
+    }
     return hud;
 }
 /**
