@@ -9,8 +9,8 @@
 
 @implementation NetTool : NSObject
 + (NSURLSessionDataTask *)__attribute__((optnone))Post_AppendURL:(NSString *)appendURL
-myparameters:(NSDictionary *)param
-mysuccess:(void (^)(id responseObject))success myfailure:(void (^)(NSError *error))failure{
+parameters:(NSDictionary *)param
+success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))failure{
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
     [parameters setObject:@"ok" forKey:@"json"];
     if (param != nil) {
