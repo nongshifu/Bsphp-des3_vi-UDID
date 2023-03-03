@@ -1,28 +1,28 @@
 #import <Foundation/Foundation.h>
 
 //全局服务器地址
-#define  BSPHP_HOST  @"http://47.243.124.185/AppEn.php?appid=52013149&m=cf212ac421228d07d99e15e5af563430"
+#define  BSPHP_HOST  @"https://myradar.cn/AppEn.php?appid=467645342&m=9e8ac707e317651e741a5131be49df7d"
 //通信key
-#define BSPHP_MUTUALKEY @"f25d4d5a65462f5d9382bf32102f5573"
+#define BSPHP_MUTUALKEY @"7c316f815214a1f86a18e62394528414"
 //数据加密密码
-#define BSPHP_PASSWORD @"33h04IYWCRjNu51XHi"
+#define BSPHP_PASSWORD @"6IrQ34YSce9hrFb2X1"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]YYYYFFFFGGGG"
+#define BSPHP_INSGIN @"[KEY]RHHGFGSNGRG"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]YYYYFFFFGGGG"
+#define BSPHP_TOSGIN @"[KEY]RHHGFGSNGRG"
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
-#define JN_VERSION @"v1.0"
+#define JN_VERSION @"2.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
-#define gIv   @"yangfei555"
+#define gIv   @"Asd7480547"
 
 #define  BS_DSQ 60
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
-#define  UDID_HOST  @"http://bs.dabaitu.org/udid/"
+#define  UDID_HOST  @"https://myradar.cn/UDID/"
 
 //在激活弹窗解密提示的自住购买地址 不提示购买就留空 @""
-#define  购买地址  @""
+#define  购买地址  @"https://myradar.cn"
 /*以下5个 参数 填写在BSPHP后台对应的软件设置-软件描述处 每个功能一个换行 切记 参数为BOOL 值 YES 或NO 大写 顺序不能错源码写死了
 到期时间弹窗:YES
 验证udid还是idfa:YES

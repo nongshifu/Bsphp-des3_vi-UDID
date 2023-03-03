@@ -9,7 +9,7 @@
 #import "LRKeychain.h"
 #import <WebKit/WebKit.h>
 #import <UIKit/UIKit.h>
-
+#import "GIKeychain.h"
 #import "NSString+MD5.h"
 #import "Config.h"
 #import "SCLAlertView.h"
@@ -25,6 +25,7 @@ static NSString* YZBB;//验证版本更新
 static NSString* GZB;//过直播
 static NSString* YZ000;//验证机器码是否是
 static NSString* 弹窗类型;//验证机器码是否是
+static NSString* 公告弹窗;//验证机器码是否是
 static NSString *vdate;
 @implementation NSObject (checkStatus)
 
@@ -52,7 +53,8 @@ static NSString *vdate;
             YZBB=arr[2];
             GZB=arr[3];
             YZ000=arr[4];
-            弹窗类型=@"YES";
+            弹窗类型=arr[5];
+            公告弹窗=arr[6];
             if ([GZB containsString:@"YES"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"GZB"];
             }else{
@@ -60,7 +62,7 @@ static NSString *vdate;
             }
             NSString*getudid=[NSObject getIDFA];
             if (getudid.length>5) {
-                if([[NSUserDefaults standardUserDefaults] objectForKey:@"km"] != nil)
+                if([GIKeychain getKeychainDataForKey:@"km"] != nil)
                 {
                     NSMutableDictionary *param = [NSMutableDictionary dictionary];
                     param[@"api"] = @"login.ic";
@@ -74,7 +76,7 @@ static NSString *vdate;
                     param[@"date"] = nowDateStr;
                     param[@"md5"] = @"";
                     param[@"mutualkey"] = BSPHP_MUTUALKEY;
-                    param[@"icid"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"km"];
+                    param[@"icid"] = [GIKeychain getKeychainDataForKey:@"km"];
                     param[@"icpwd"] = @"";
                     param[@"key"] = [NSObject getIDFA];
                     param[@"maxoror"] = [NSObject getIDFA];
@@ -362,16 +364,26 @@ static NSString *vdate;
                 if (dict) {
                     NSString *message = dict[@"response"][@"data"];
                     NSString*本地公告=[[NSUserDefaults standardUserDefaults] objectForKey:@"公告"];
-                    if (![message isEqual:本地公告]) {
-                        [[NSUserDefaults standardUserDefaults] setObject:message forKey:@"公告"];
+                    if ([公告弹窗 isEqual:@"YES"]) {
                         if([弹窗类型 containsString:@"YES"]){
                             [MBProgressHUD showText:message HideTime:3];
                         }else{
                             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
                             [alert showSuccess:@"公告" subTitle:message closeButtonTitle:@"确定" duration:5.0f];
                         }
-                        
+                    }else{
+                        if (![message isEqual:本地公告]) {
+                            [[NSUserDefaults standardUserDefaults] setObject:message forKey:@"公告"];
+                            if([弹窗类型 containsString:@"YES"]){
+                                [MBProgressHUD showText:message HideTime:3];
+                            }else{
+                                SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+                                [alert showSuccess:@"公告" subTitle:message closeButtonTitle:@"确定" duration:5.0f];
+                            }
+                            
+                        }
                     }
+                    
                 }
             } failure:^(NSError *error) {
                 if([弹窗类型 containsString:@"YES"]){
@@ -468,7 +480,6 @@ static UIViewController * rootViewController;
  */
 - (void)YzCode:(NSString *)code
 {
-   
     //授权码验证
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] = @"login.ic";
@@ -496,11 +507,12 @@ static UIViewController * rootViewController;
             NSRange range = [dataString rangeOfString:@"|1081|"];
             if (range.location != NSNotFound)
             {
-                NSString *activationDID = [[NSUserDefaults standardUserDefaults]objectForKey:@"km"];
+                NSString *activationDID = [GIKeychain getKeychainDataForKey:@"km"];
                 
                 if (![activationDID isEqualToString:code])
                 {
-                    [[NSUserDefaults standardUserDefaults] setObject:code forKey:@"km"];
+                    
+                    [GIKeychain addKeychainData:code forKey:@"km"];
                 }
                 NSArray *arr = [dataString componentsSeparatedByString:@"|"];
                 if (arr.count >= 6)
@@ -675,7 +687,7 @@ static UIViewController * rootViewController;
             param[@"date"] = nowDateStr;
             param[@"md5"] = @"";
             param[@"mutualkey"] = BSPHP_MUTUALKEY;
-            param[@"icid"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"km"];
+            param[@"icid"] = [GIKeychain getKeychainDataForKey:@"km"];
             param[@"icpwd"] = @"";
             param[@"key"] = [NSObject getIDFA];
             param[@"maxoror"] = [NSObject getIDFA];

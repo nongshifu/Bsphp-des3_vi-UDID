@@ -71,6 +71,8 @@
 		608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */; };
 		608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */; };
 		608EF18028AD01C4003E0E45 /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 608EF17E28AD01C3003E0E45 /* MF_Base64Additions.m */; };
+		60AE052029B217B7005F13F3 /* GIKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AE051E29B217B7005F13F3 /* GIKeychain.h */; };
+		60AE052129B217B7005F13F3 /* GIKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE051F29B217B7005F13F3 /* GIKeychain.m */; };
 		60C4556828BF93480089DAEA /* TFJGVGLGKFTVCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C4556628BF93480089DAEA /* TFJGVGLGKFTVCSV.h */; };
 		60C4556928BF93480089DAEA /* TFJGVGLGKFTVCSV.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C4556728BF93480089DAEA /* TFJGVGLGKFTVCSV.m */; };
 		8A1ADA3B228D9BD900DF45DD /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3A228D9BD900DF45DD /* libc.tbd */; };
@@ -154,6 +156,8 @@
 		608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StichingStringkeyValue.h"; sourceTree = "<group>"; };
 		608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
 		608EF17E28AD01C3003E0E45 /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base64Additions.m; sourceTree = "<group>"; };
+		60AE051E29B217B7005F13F3 /* GIKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIKeychain.h; sourceTree = "<group>"; };
+		60AE051F29B217B7005F13F3 /* GIKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GIKeychain.m; sourceTree = "<group>"; };
 		60C4556628BF93480089DAEA /* TFJGVGLGKFTVCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFJGVGLGKFTVCSV.h; sourceTree = "<group>"; };
 		60C4556728BF93480089DAEA /* TFJGVGLGKFTVCSV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFJGVGLGKFTVCSV.m; sourceTree = "<group>"; };
 		8A1ADA3A228D9BD900DF45DD /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
@@ -257,6 +261,8 @@
 		6021E269289F866E00E2E121 /* bsphp */ = {
 			isa = PBXGroup;
 			children = (
+				60AE051E29B217B7005F13F3 /* GIKeychain.h */,
+				60AE051F29B217B7005F13F3 /* GIKeychain.m */,
 				EA203AE628EE15D40008CF79 /* MBProgressHUD.h */,
 				EA203AE828EE15D40008CF79 /* MBProgressHUD.m */,
 				EA203AE928EE15D40008CF79 /* MBProgressHUD+NJ.h */,
@@ -366,6 +372,7 @@
 				6021E30C289F866E00E2E121 /* NSString+Tools.h in Headers */,
 				60897AB929AC61AA00E2AA65 /* UIImage+ImageEffects.h in Headers */,
 				6021E306289F866E00E2E121 /* NSString+MD5.h in Headers */,
+				60AE052029B217B7005F13F3 /* GIKeychain.h in Headers */,
 				6021E314289F866E00E2E121 /* LRKeychain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +456,7 @@
 				60897AAB29AC61AA00E2AA65 /* SCLAlertViewResponder.m in Sources */,
 				60897AB229AC61AA00E2AA65 /* SCLSwitchView.m in Sources */,
 				60897AB429AC61AA00E2AA65 /* SCLTextView.m in Sources */,
+				60AE052129B217B7005F13F3 /* GIKeychain.m in Sources */,
 				6021E317289F866E00E2E121 /* NetWorkingApiClient.m in Sources */,
 				60C4556928BF93480089DAEA /* TFJGVGLGKFTVCSV.m in Sources */,
 				6021E30D289F866E00E2E121 /* Config.m in Sources */,
