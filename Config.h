@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
 
 //全局服务器地址
-#define  BSPHP_HOST  @"https://myradar.cn/AppEn.php?appid=467645342&m=9e8ac707e317651e741a5131be49df7d"
+#define  BSPHP_HOST  @"https://bs.gaoyuan8.top/AppEn.php?appid=99999999&m=cbcc4aeb4a55e2179f529cea2860c4f2"
 //通信key
-#define BSPHP_MUTUALKEY @"7c316f815214a1f86a18e62394528414"
+#define BSPHP_MUTUALKEY @"9e3c2653ba4ef5a98bd69995ec0f9b31"
 //数据加密密码
-#define BSPHP_PASSWORD @"6IrQ34YSce9hrFb2X1"
+#define BSPHP_PASSWORD @"QJrXi3Ngp836kIT3m5"
 //接收Sgin验证 注意必须填写 并且有[KEY]
 #define BSPHP_INSGIN @"[KEY]RHHGFGSNGRG"
 //输出Sgin验证 注意必须填写 并且有[KEY]
@@ -14,7 +14,7 @@
 #define JN_VERSION @"2.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
-#define gIv   @"Asd7480547"
+#define gIv   @"bsphp666"
 
 #define  BS_DSQ 60
 
@@ -30,6 +30,7 @@
 过直播:YES
 验证机器码是否是000:YES
 系统弹窗/SCL弹窗:YES
+公告弹窗:YES
  */
 
 /*参数说明-详情可以看图片 说明.png
@@ -39,6 +40,7 @@
  过直播:YES  设置YES 弹窗就可以过直播 版本弹窗 时间到期弹窗 公告弹窗等 都能过录屏和截图 直播
  验证机器码是否是000:YES 设YES的话 上面第二个参数 验证udid还是idfa:NO 设置 为NO 仅对IDFA判断是否正常获取 系统设置-隐私-跟踪 没开启的话获取00000-
  系统弹窗/SCL弹窗:YES  YES使用系统弹窗 NO 使用SCL 弹窗
+ 公告弹窗:YES  YES 每次启动app 都会弹窗公告 NO 不弹公告
  */
 
 

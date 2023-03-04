@@ -10,7 +10,6 @@
 如果需要签名 设置为1 并且准备一个ssl域名证书 如果使用宝塔面板 并且使用域名非IP
 直接打开宝塔后台 网站-设置-SSL-按要求域名解析 -使用宝塔SSL 或Let's Encrypt一键申请
 
-🆚描述文件签名说明🆚
 申请成功后 需要把密钥(KEY) 写到一个txt文本并且改后缀key  名字为key.key 放在udid.php同级目录
 
 需要把证书(PEM格式) 拆分为二
@@ -19,14 +18,19 @@
 后段部分
 从-----BEGIN CERTIFICATE-----开始到-----END CERTIFICATE-----储存为b.crt
 为a.crt 和b.crt 放在udid.php同级目录 以下 $签名=1 即可自动签名
+
+如果你使用的验证系统是直接使用IP形式作为域名 那就自己买个域名吧
+但是com cn 等后缀的顶级 域名绑定国内服务器需要备案的 只能绑定非大陆服务器 香港台湾或者国外
+可以单独买个超级便宜甚至免费那种的非大陆服务器 仅作为获取UDID使用足够的
+和BSPHP 的验证服务器分开不影响 只要修改一下 $域名="https://baidu.cn/UDID/";为你国外服务器域名即可
+
 */
-// 是否是需要签名 1需要2不需要 看上面签名说明
+// 是否是需要签名
 $签名=1;
 // 填写你UDID文件的域名和目录 如你上传到域名根目录的UDID文件夹下 填写 域名/UDID/
 $域名="https://myradar.cn/UDID/";
 // 本文件可以上传到任意二级目录或网站根目录都行
 // 二级三级目录就设置好比如 $域名="https://baidu.cn/二级目录/三级目录/ 注意尾部一定有/符号
-
 ?>
 
 <?php
@@ -49,16 +53,23 @@ if(strlen($openurl)>5){
     fclose($fp);
 }
 // UDID不为空 跳转APP打开
-if(strlen($UDID)>10){
+if(strlen($UDID)>5){
     // 储存udid
     $fp = fopen("./udid".$id.'.txt', 'w');
     fwrite($fp, $UDID);
     fclose($fp);
     
     $res = file_get_contents("./".$id.'.txt');
-    $url="Location: ".$res."://";
-    header('HTTP/1.1 301 Moved Permanently');
-    header($url);
+    if (strpos($res, 'null') !== false) {
+        $url="Location: ".$域名."udid.php?id=null";
+        header('HTTP/1.1 301 Moved Permanently');
+        header($url);
+    } else {
+        $url="Location: ".$res."://";
+        header('HTTP/1.1 301 Moved Permanently');
+        header($url);
+    }
+    
     
 }else{
     // UDID为空 创建描述文件 并提示下载描述文件
@@ -114,107 +125,73 @@ if(!is_file('1.mobileprovision')){
 }
 
 ?>
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>获取UDID</title>
-    <link rel="stylesheet" href="https://bbs.pediy.com/view/css/bootstrap.css">
-    <link rel="stylesheet" href="https://bbs.pediy.com/view/css/bootstrap-bbs.css">
-    <style>
-        button {
-            font-size : 30px;
-            width: 100%;
-            
-            
-            color: #ff0000
-            font-size: 40px;
-            
-            background-color: #00ff00;
-            border-radius: 10px
-        }
-        
-        .container {
-            width: 60%;
-            margin: 10% auto 0;
-            background-color: #f0f0f0;
-            padding: 2% 5%;
-            border-radius: 10px
-        }
-        .container2 {
-            width: 100%;
-            margin: 10% auto 0;
-            /*background-color: #f0f0f0;*/
-            padding: 10px 10px;
-            border-radius: 10px
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-            ul li {
-                line-height: 2.3
-            }
-
-        a {
-            /*font-size: 40px;*/
-            /*color: #20a53a*/
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        
-        <button type="button" nclick="下载()" id="button">获取UDID</button>
-        <br><br>
-        <h3>  安装描述文件引导，获取设备UDID</h3>
-        <ul>
-            <li>1 安装描述文件授权获取UDID时，如提示密码即您的锁屏密码</li>
-            <li>2 描述文件安装路径为 设置-通用-设备与描述文件管理</li>
-            <li>3 如果安装时间过长或者提示安装失败请直接返回App</li>
-            <li>4 下载好描述文件后请前往 系统设置-通用-设备与描述文件管理 找到并安装此描述文件</li>
-            
-        </ul>
-        <button type="button"  onclick="下载()" id="button">点我-下载描述文件</button>
-        
+<html lang="zh-cmn-Hans"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<meta name="wechat-enable-text-zoom-em" content="true">
+    <title>IOS安全防护</title>
+    
+    </head>
+    
+    <body><div class="weui-msg">
+    <div class="weui-msg__icon-area">
+        <i id="icon" class="weui-icon-warn weui-icon_msg-primary"></i>
     </div>
-<footer id="footer" style="background: #3b4348; color: #9ba4aa; height: auto;">
-    <div class="container2">
-        <div class="row text-muted small my-3 mx-0" id="web_base_company_information">
-            <div class="col-12 col-md-6">
-                ©2000-2022 UDID验证系统 技术支持：十三哥&nbsp;<br>
-<a href="https://github.com/nongshifu" target="_blank" class="text-muted">GitHub |&nbsp;</a>
-<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=&amp;site=qq&amp;menu=yes" target="_blank" class="text-muted">QQ:350722326 |&nbsp;</a>
-<a class="text-muted">微信:NongShiFu123&nbsp;</a>
-
-
-            </div>
-            <div class="col-12 col-md-6 pt-2 pt-md-0 text-md-right">
-                
-                <span><a class="text-muted">承接业务</a></span> |
-                <span><a class="text-muted">验证系统开发</a></span> |
-                <span>软件开发</span> |
-                <a class="text-muted">iOS开发</a> |
-                <a class="text-muted">越狱开发</a> |
-                <a class="text-muted">网页HTML5开发</a> <br>辅助开发<b>&nbsp;|&nbsp;</b>PHP开发&nbsp;<b>|</b><a class="text-muted" target="_blank">&nbsp;H5GG脚本开发&nbsp;</a><a class="text-muted" target="_blank">最稳的技术给你最低的价格</a>
-
-            </div>
-        </div>
-        <div style="max-height: 100px; overflow-y:auto;">
-                    </div>
+    
+    <div class="weui-msg__text-area">
+    <h2 class="weui-msg__title">UDID获取</h2>
+    <p id="text" class="weui-msg__desc">如果安装失败请重新打开游戏<br>UDID仅作为授权码绑定标识符作用<br>请按照步骤安装<br>
+    </p>
     </div>
-</footer>
-<script>
-　　function 下载(){
-　　    setTimeout("自动跳转()", 1000);
+    
+    <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+    <!--<a href="https://udid.nuosike.cn/api/url/signed.mobileconfig" role="button" class="weui-btn weui-btn_primary" style="bottom: 200px !important;" onclick="jump()">点击安装</a>-->
+    <button id="button" role="button" class="weui-btn weui-btn_primary" style="bottom: 200px !important;" onclick="jump()">点击安装</button>
+    </p>
+    
+    </div>
+    <div class="weui-msg__tips-area">
+    <p class="weui-msg__tips">承接iOS软件开发 验证对接 Php Html Js开发</p>
+    </div>
+    
+    <div class="weui-msg__extra-area">
+    <div class="weui-footer">
+    <p class="weui-footer__links">
+    <!--<a href="index.json" class="weui-wa-hotarea weui-footer__link">www.speed-v.com</a>-->
+    </p>
+    
+    <p class="weui-footer__text">Copyright ©2023 By 十三哥 WX:NongShiFu123 QQ350722326</p>
+    </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+    var jump = function() {
+        setTimeout("自动跳转()", 1000);
 　　    window.location.href="<?php echo $mobileconfig; ?>";
-　　};
-　　function 自动跳转(){
+        }
+        function 自动跳转(){
 　　    window.location.href="<?php echo $跳转; ?>";
 　　    
 　　};
-　　
 </script>
-</body>
-</html>
+<script type="text/javascript">
+
+        (function(){
+            var mingzi="<?php echo $id; ?>";
+            if(mingzi.indexOf("null") != -1 ){
+                var title=document.getElementById("button");
+                title.innerHTML='获取成功';
+                var text=document.getElementById("text");
+                text.innerHTML='请重开APP生效';
+                var icon=document.getElementById("icon");
+                icon.className ='weui-icon-success weui-icon_msg-primary';
+                
+            }
+            
+            document.write("<link rel='stylesheet'  href='example.css?id=" + Date.now() + "'>");
+            document.write("<link rel='stylesheet'  href='weui.min.css?id=" + Date.now() + "'>");
+        })();
+        </script>
+</body></html>
+

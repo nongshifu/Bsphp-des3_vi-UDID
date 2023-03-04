@@ -30,6 +30,7 @@ static NSString *vdate;
 @implementation NSObject (checkStatus)
 
 -(void)Bsphp{
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
     static NSString*描述;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"api"] =@"miao.in";
@@ -364,23 +365,12 @@ static NSString *vdate;
                 if (dict) {
                     NSString *message = dict[@"response"][@"data"];
                     NSString*本地公告=[[NSUserDefaults standardUserDefaults] objectForKey:@"公告"];
-                    if ([公告弹窗 isEqual:@"YES"]) {
+                    if ([公告弹窗 isEqual:@"YES"] && ![本地公告 isEqual:message] && message.length>2) {
                         if([弹窗类型 containsString:@"YES"]){
                             [MBProgressHUD showText:message HideTime:3];
                         }else{
                             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
                             [alert showSuccess:@"公告" subTitle:message closeButtonTitle:@"确定" duration:5.0f];
-                        }
-                    }else{
-                        if (![message isEqual:本地公告]) {
-                            [[NSUserDefaults standardUserDefaults] setObject:message forKey:@"公告"];
-                            if([弹窗类型 containsString:@"YES"]){
-                                [MBProgressHUD showText:message HideTime:3];
-                            }else{
-                                SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                                [alert showSuccess:@"公告" subTitle:message closeButtonTitle:@"确定" duration:5.0f];
-                            }
-                            
                         }
                     }
                     
@@ -438,6 +428,7 @@ static UIViewController * rootViewController;
                 userNameTextField.placeholder=@"输入为空-请先输入";
                 [NSObject CodeConfig];
             }else{
+                [GIKeychain addKeychainData:userNameTextField.text forKey:@"km"];
                 [NSObject YzCode:userNameTextField.text];
             }
             
@@ -597,12 +588,13 @@ static UIViewController * rootViewController;
             [[NSUserDefaults standardUserDefaults] setInteger:cc forKey:@"cc"];
         }
         //读取本地UDID
-        UDID=[[NSUserDefaults standardUserDefaults] objectForKey:@"udid"];
+        UDID=[GIKeychain getKeychainDataForKey:@"ssgudid"];
         //存在就返回UDID
         if (UDID.length>10) {
             if ([YZ000 containsString:@"YES"]) {
                 if ([UDID containsString:@"0000-000"]) {
-                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"udid"];
+                    
+                    [GIKeychain addKeychainData:@"" forKey:@"ssgudid"];
                     exit(0);
                 }
             }
@@ -614,42 +606,72 @@ static UIViewController * rootViewController;
         UDID = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:&error];
         if (error==nil) {
             //储存
-            [[NSUserDefaults standardUserDefaults] setObject:UDID forKey:@"udid"];
+            
+            [GIKeychain addKeychainData:UDID forKey:@"ssgudid"];
             return UDID;
         }else{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                alert.customViewColor=[UIColor systemGreenColor];
-                [alert addButton:@"安装描述文件" actionBlock:^(void) {
-                    NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
-                    NSArray *urlTypes = dict[@"CFBundleURLTypes"];
-                    NSString *urlSchemes = nil;
-                    for (NSDictionary *scheme in urlTypes) {
-                        urlSchemes = scheme[@"CFBundleURLSchemes"][0];
-                    }
-                    NSInteger cc;
-                    cc=[[NSUserDefaults standardUserDefaults] integerForKey:@"cc"];
-                    if (cc==0) {
-                        cc=arc4random() % 100000;
-                        [[NSUserDefaults standardUserDefaults] setInteger:cc forKey:@"cc"];
-                    }
-                    NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%ld&openurl=%@",UDID_HOST,cc,urlSchemes];
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if ([弹窗类型 containsString:@"YES"]) {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请先获取UDID码绑定" preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"安装描述文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
+                        NSArray *urlTypes = dict[@"CFBundleURLTypes"];
+                        NSString *urlSchemes = nil;
+                        for (NSDictionary *scheme in urlTypes) {
+                            urlSchemes = scheme[@"CFBundleURLSchemes"][0];
+                        }
+                        NSInteger cc;
+                        cc=[[NSUserDefaults standardUserDefaults] integerForKey:@"cc"];
+                        if (cc==0) {
+                            cc=arc4random() % 100000;
+                            [[NSUserDefaults standardUserDefaults] setInteger:cc forKey:@"cc"];
+                        }
+                        NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%ld&openurl=%@",UDID_HOST,cc,urlSchemes];
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            exit(0);
+                        });
+                    }]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         exit(0);
-                    });
+                    }]];
                     
-                }];
-                [alert addButton:@"退出应用" actionBlock:^(void) {
-                    exit(0);
-                }];
+                    UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                    [rootViewController presentViewController:alertController animated:YES completion:nil];
+                }else{
+                    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+                    alert.customViewColor=[UIColor systemGreenColor];
+                    [alert addButton:@"安装描述文件" actionBlock:^(void) {
+                        NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
+                        NSArray *urlTypes = dict[@"CFBundleURLTypes"];
+                        NSString *urlSchemes = nil;
+                        for (NSDictionary *scheme in urlTypes) {
+                            urlSchemes = scheme[@"CFBundleURLSchemes"][0];
+                        }
+                        NSInteger cc;
+                        cc=[[NSUserDefaults standardUserDefaults] integerForKey:@"cc"];
+                        if (cc==0) {
+                            cc=arc4random() % 100000;
+                            [[NSUserDefaults standardUserDefaults] setInteger:cc forKey:@"cc"];
+                        }
+                        NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%ld&openurl=%@",UDID_HOST,cc,urlSchemes];
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            exit(0);
+                        });
+                        
+                    }];
+                    [alert addButton:@"退出应用" actionBlock:^(void) {
+                        exit(0);
+                    }];
+                    
+                    [alert showNotice:@"温馨提示" subTitle:@"请安装描述文件\n获取绑定机器码设备" closeButtonTitle:nil duration:nil];
+                }
                 
-                [alert showNotice:@"温馨提示" subTitle:@"请安装描述文件\n获取绑定机器码设备" closeButtonTitle:nil duration:nil];
                 
                 
             });
-            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"udid"];
+            [GIKeychain addKeychainData:@"" forKey:@"ssgudid"];
         }
     }else{
         ASIdentifierManager *as = [ASIdentifierManager sharedManager];
