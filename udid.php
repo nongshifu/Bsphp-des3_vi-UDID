@@ -2,30 +2,23 @@
 
 /*
 将本文件udid.php 和1.mobileprovision 上传到域名根目录或二级目录 填写 $签名 $域名 两个配置
- 1.mobileprovision 是一个企业签名的描述文件 不能编辑 仅作为跳转 如果不上传 安装描述文件后需要手动打开设置-描述文件
- 如果上传1.mobileprovision了 安装描述文件后会自动跳转到对应描述文件 方便
+ 1.mobileprovision 是任意一个未掉签企业签名的描述文件 重命名为1.mobileprovision即可
  
 描述文件是否需要签名 1需要2不需要
 签名不签名不影响获取UDID 只是不签名安装的时候提示描述文件未签名 红色 签名就打勾绿色
 如果需要签名 设置为1 并且准备一个ssl域名证书 如果使用宝塔面板 并且使用域名非IP
 直接打开宝塔后台 网站-设置-SSL-按要求域名解析 -使用宝塔SSL 或Let's Encrypt一键申请
 
-申请成功后 需要把密钥(KEY) 写到一个txt文本并且改后缀key  名字为key.key 放在udid.php同级目录
+申请成功后SSL证书后
+需要把密钥(KEY) 写到一个txt文本并且改后缀key  名字为key.key 放在udid.php同级目录
 
-需要把证书(PEM格式) 拆分为二
-前段部分
-从-----BEGIN CERTIFICATE-----开始到-----END CERTIFICATE-----储存为a.crt
-后段部分
-从-----BEGIN CERTIFICATE-----开始到-----END CERTIFICATE-----储存为b.crt
-为a.crt 和b.crt 放在udid.php同级目录 以下 $签名=1 即可自动签名
+需要把证书(PEM格式) 写到一个txt文本并且改后缀key  pem.pem 放在udid.php同级目录
 
-如果你使用的验证系统是直接使用IP形式作为域名 那就自己买个域名吧
-但是com cn 等后缀的顶级 域名绑定国内服务器需要备案的 只能绑定非大陆服务器 香港台湾或者国外
-可以单独买个超级便宜甚至免费那种的非大陆服务器 仅作为获取UDID使用足够的
-和BSPHP 的验证服务器分开不影响 只要修改一下 $域名="https://baidu.cn/UDID/";为你国外服务器域名即可
+********注意 如果需要签名 需要吧站点对应的php版本 吧禁用函数shell_exec() 删除
+宝塔面板为例 -软件商店-已安装-PHP-设置-禁用函数 删除shell_exec()
 
 */
-// 是否是需要签名
+// 是否是需要签名 1需要 2不需要
 $签名=1;
 // 填写你UDID文件的域名和目录 如你上传到域名根目录的UDID文件夹下 填写 域名/UDID/
 $域名="https://myradar.cn/UDID/";
@@ -104,8 +97,45 @@ if(strlen($UDID)>5){
     fwrite($fp, $str);
     fclose($fp);
     if($签名==1){
+        
+        if(!is_file('b.crt')){
+            echo "不存在 就读取证书PEM 拆分储存</br>";
+            if(!is_file('pem.pem')){
+                echo "证书文件不存在 不签名</br>";
+                $mobileconfig="./".$id.'.mobileconfig';
+            }else{
+                echo "证书文件存在 读取进行拆分储存</br>";
+                $res = file_get_contents('pem.pem');
+                //拆分证书文件
+                $penarr=explode("-----END CERTIFICATE-----\n",$res);
+                //储存前段部分为a.crt
+                $fp = fopen("a.crt", 'w');
+                $acrt=$penarr[0]."-----END CERTIFICATE-----";
+                fwrite($fp, $acrt);
+                fclose($fp);
+                //储存后段部分为b.crt
+                $bcrt="";
+                for ($i = 1; $i < sizeof($penarr); $i++) {
+                     // code...
+                     $bcrt=$bcrt.$penarr[$i]."\n-----END CERTIFICATE-----";
+                }
+                $fp = fopen("b.crt", 'w');
+                $bcrt=str_ireplace("\n\n", "\n", $bcrt);
+                fwrite($fp,$bcrt );
+                fclose($fp);
+            }
+            if (strpos($res, 'null') !== false) {
+                $url="Location: ".$域名."udid.php?id=null";
+                header('HTTP/1.1 301 Moved Permanently');
+                header($url);
+                
+            }
+        }
+        
         //描述文件签名 key为网站证书key a.crt 为证书上部分 b.crt为证书下半部分
         $miss2=shell_exec("openssl smime -sign -in ".$id.".mobileconfig -out 2".$id.".mobileconfig -signer a.crt -inkey key.key  -certfile b.crt -outform der -nodetach");
+        echo $miss2;
+        
         $mobileconfig="./2".$id.'.mobileconfig';
     }else{
         $mobileconfig="./".$id.'.mobileconfig';
