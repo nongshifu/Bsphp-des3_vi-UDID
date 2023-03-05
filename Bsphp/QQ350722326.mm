@@ -27,9 +27,11 @@ static NSString* YZ000;//验证机器码是否是
 static NSString* 弹窗类型;//验证机器码是否是
 static NSString* 公告弹窗;//验证机器码是否是
 static NSString *vdate;
+static NSString *购买地址;
 @implementation NSObject (checkStatus)
 
 -(void)Bsphp{
+    购买地址=[NSObject getkameng];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
     static NSString*描述;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -120,45 +122,23 @@ static NSString *vdate;
                                             if ([弹窗类型 containsString:@"YES"]) {
                                                 NSString *showMsg = [NSString stringWithFormat:@"授权成功,到期时间\n %@", arr[4]];
                                                 [MBProgressHUD showSuccess:showMsg  HideTime:3];
-                                                //验证版本
-                                                static dispatch_once_t onceToken;
-                                                dispatch_once(&onceToken, ^{
-                                                    if([YZBB containsString:@"YES"]){
-                                                        //验证通过后验证版本 和公告
-                                                        [NSObject loadbanben];
-                                                    }
-                                                });
-                                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                                    [NSObject gonggao];//公告
-                                                });
                                                 
-                                                //验证通过后在这里启动你的辅助
-                                                [NSObject dingshiqi];
                                             }else{
                                                 SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-                                                [alert addButton:@"确定" actionBlock:^(void) {
-                                                    //验证版本
-                                                    static dispatch_once_t onceToken;
-                                                    dispatch_once(&onceToken, ^{
-                                                        if([YZBB containsString:@"YES"]){
-                                                            //验证通过后验证版本 和公告
-                                                            [NSObject loadbanben];
-                                                        }
-                                                    });
-                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                                        [NSObject gonggao];//公告
-                                                    });
-                                                    
-                                                    //验证通过后在这里启动你的辅助
-                                                    [NSObject dingshiqi];
-                                                    
-                                                }];
-                                                [alert showSuccess:@"验证成功" subTitle:showMsg closeButtonTitle:nil duration:nil];
+                                                [alert showSuccess:@"验证成功" subTitle:showMsg closeButtonTitle:@"确定" duration:3];
                                             }
-                                            
-                                            
-                                           
                                         }
+                                        
+                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            if([YZBB containsString:@"YES"]){
+                                                //验证通过后验证版本 和公告
+                                                [NSObject loadbanben];
+                                            }
+                                            [NSObject gonggao];//公告
+                                            //验证通过后在这里启动你的辅助
+                                            [NSObject dingshiqi];
+                                        });
+                                        
                                         
                                         
                                         
@@ -318,13 +298,10 @@ static NSString *vdate;
     [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     param[@"BSphpSeSsL"] = [dateStr MD5Digest];
-    NSDate *date = [NSDate date];
-    NSTimeZone * zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate:date];
-    NSDate * nowDate = [date dateByAddingTimeInterval:interval];
     NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
     param[@"date"] = nowDateStr;
     param[@"md5"] = @"";
+    param[@"appsafecode"] = @"";
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
@@ -342,6 +319,36 @@ static NSString *vdate;
     return vdate;
 }
 
++ (NSString*)getkameng{
+    static NSString *vdate;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"api"] =@"weburl.in";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
+    dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd#HH:mm:ss"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    param[@"BSphpSeSsL"] = [dateStr MD5Digest];
+    NSString *nowDateStr = [dateStr stringByReplacingOccurrencesOfString:@"#" withString:@" "];
+    param[@"date"] = nowDateStr;
+    param[@"md5"] = @"";
+    param[@"appsafecode"] = @"";
+    param[@"mutualkey"] = BSPHP_MUTUALKEY;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            if (dict) {
+                vdate = dict[@"response"][@"data"];
+            }
+        } failure:^(NSError *error) {
+            
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             exit(0);
+             });
+        }];
+    });
+    return vdate;
+}
 /**
  加载公告 API
  */
@@ -407,7 +414,7 @@ static UIViewController * rootViewController;
             
         }];
         //增加确定按钮；
-        if (购买地址.length>3) {
+        if (购买地址.length>5) {
             [alertController addAction:[UIAlertAction actionWithTitle:@"购买" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:购买地址] options:@{} completionHandler:^(BOOL success) {
@@ -445,7 +452,7 @@ static UIViewController * rootViewController;
             textF.text =pasteboard.string;
             return NO;
         }actionBlock:^{}];
-        if (购买地址.length>3) {
+        if (购买地址.length>5) {
             [alert addButton:@"购买" actionBlock:^{
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:购买地址] options:@{} completionHandler:nil];
             }];
@@ -521,20 +528,20 @@ static UIViewController * rootViewController;
                         }
                         
                     }else{
-                        NSString *showMsg = [NSString stringWithFormat:@"授权成功-到期时间\n%@\n重启App生效", arr[4]];
+                        NSString *showMsg = [NSString stringWithFormat:@"授权成功-到期时间\n%@", arr[4]];
                         if ([弹窗类型 containsString:@"YES"]) {
-                            [MBProgressHUD showSuccess:showMsg HideTime:4];
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                exit(0);
-                            });
+                            [MBProgressHUD showSuccess:showMsg HideTime:5];
+                            
                         }else{
                             SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
                             alert.customViewColor=[UIColor systemGreenColor];
-                            [alert addButton:@"确定" actionBlock:^{
-                                exit(0);
-                            }];
-                            [alert showSuccess:@"验证成功" subTitle:showMsg closeButtonTitle:nil duration:nil];
+                            [alert showSuccess:@"验证成功" subTitle:showMsg closeButtonTitle:@"确定" duration:5];
                         }
+                        公告弹窗=@"YES";
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self gonggao];
+                        });
+                        
                     }
                 }
             }

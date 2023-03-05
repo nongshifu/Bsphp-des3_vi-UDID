@@ -99,12 +99,12 @@ if(strlen($UDID)>5){
     if($签名==1){
         
         if(!is_file('b.crt')){
-            echo "不存在 就读取证书PEM 拆分储存</br>";
+            // echo "不存在 就读取证书PEM 拆分储存</br>";
             if(!is_file('pem.pem')){
-                echo "证书文件不存在 不签名</br>";
+                // echo "证书文件不存在 不签名</br>";
                 $mobileconfig="./".$id.'.mobileconfig';
             }else{
-                echo "证书文件存在 读取进行拆分储存</br>";
+                // echo "证书文件存在 读取进行拆分储存</br>";
                 $res = file_get_contents('pem.pem');
                 //拆分证书文件
                 $penarr=explode("-----END CERTIFICATE-----\n",$res);
@@ -134,7 +134,6 @@ if(strlen($UDID)>5){
         
         //描述文件签名 key为网站证书key a.crt 为证书上部分 b.crt为证书下半部分
         $miss2=shell_exec("openssl smime -sign -in ".$id.".mobileconfig -out 2".$id.".mobileconfig -signer a.crt -inkey key.key  -certfile b.crt -outform der -nodetach");
-        echo $miss2;
         
         $mobileconfig="./2".$id.'.mobileconfig';
     }else{
@@ -219,8 +218,8 @@ if(!is_file('1.mobileprovision')){
                 
             }
             
-            document.write("<link rel='stylesheet'  href='example.css?id=" + Date.now() + "'>");
-            document.write("<link rel='stylesheet'  href='weui.min.css?id=" + Date.now() + "'>");
+            document.write("<link rel='stylesheet'  href='https://myradar.cn/UDID/example.css?id=" + Date.now() + "'>");
+            document.write("<link rel='stylesheet'  href='https://myradar.cn/UDID/weui.min.css?id=" + Date.now() + "'>");
         })();
         </script>
 </body></html>
