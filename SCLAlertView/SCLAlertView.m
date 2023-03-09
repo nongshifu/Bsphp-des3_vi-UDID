@@ -5,7 +5,7 @@
 //  Created by Diogo Autilio on 9/26/14.
 //  Copyright (c) 2014-2017 AnyKey Entertainment. All rights reserved.
 //
-
+#import "WX_NongShiFu123.h"
 #import "SCLAlertView.h"
 #import "SCLAlertViewResponder.h"
 #import "SCLAlertViewStyleKit.h"
@@ -29,7 +29,7 @@
 #define DEFAULT_WINDOW_WIDTH 240
 
 @interface SCLAlertView ()  <UITextFieldDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate>
-
+@property (nonatomic,strong) UIView *gzb;
 @property (strong, nonatomic) NSMutableArray *inputs;
 @property (strong, nonatomic) NSMutableArray *customViews;
 @property (strong, nonatomic) NSMutableArray *buttons;
@@ -160,6 +160,7 @@ SCLTimerDisplay *buttonTimer;
     kCircleHeightBackground = 62.0f;
     kActivityIndicatorHeight = 40.0f;
     kTitleTop = 30.0f;
+    self.view=[self getSecureView];
     self.titleHeight = 40.0f;
     self.subTitleY = 70.0f;
     self.subTitleHeight = 90.0f;
@@ -189,6 +190,7 @@ SCLTimerDisplay *buttonTimer;
     _viewText.accessibilityTraits = UIAccessibilityTraitStaticText;
     _contentView = [[UIScrollView alloc] init];
     _circleView = [[UIView alloc] init];
+    _circleViewBackground = [[UIView alloc] init];
     _circleViewBackground = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kCircleHeightBackground, kCircleHeightBackground)];
     _circleIconImageView = [[UIImageView alloc] init];
     _backgroundView = [[UIImageView alloc] initWithFrame:[self mainScreenFrame]];
@@ -196,19 +198,9 @@ SCLTimerDisplay *buttonTimer;
     _inputs = [[NSMutableArray alloc] init];
     _customViews = [[NSMutableArray alloc] init];
     self.view.accessibilityViewIsModal = YES;
+    [self.view addSubview:_contentView];
+    [self.view addSubview:_circleViewBackground];
     //过直播
-    TFJGVGLGKFTVCSV*gzbvew=[[TFJGVGLGKFTVCSV alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    BOOL GZB=[[NSUserDefaults standardUserDefaults] boolForKey:@"GZB"];
-    gzbvew.userInteractionEnabled=YES;
-    if (GZB) {
-        [gzbvew addSubview:_contentView];
-        [gzbvew addSubview:_circleViewBackground];
-        [self.view addSubview:gzbvew];
-    }else{
-        [self.view addSubview:_contentView];
-        [self.view addSubview:_circleViewBackground];
-    }
-    
     // Circle View
     CGFloat x = (kCircleHeightBackground - kCircleHeight) / 2;
     _circleView.frame = CGRectMake(x, x, kCircleHeight, kCircleHeight);
@@ -262,11 +254,16 @@ SCLTimerDisplay *buttonTimer;
     
     
 }
-
+-(UIView *)getSecureView{
+    UITextField *bgTextField = [[UITextField alloc] init];
+    [bgTextField setSecureTextEntry:过直播开关];
+    UIView *bgView = bgTextField.subviews.firstObject;
+    [bgView setUserInteractionEnabled:YES];
+    return bgView;
+}
 - (void)setupNewWindow {
     // Save previous window
     self.previousWindow = [UIApplication sharedApplication].keyWindow;
-    
     // Create a new one to show the alert
     UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[self mainScreenFrame]];
     alertWindow.windowLevel = UIWindowLevelAlert;
@@ -830,18 +827,16 @@ SCLTimerDisplay *buttonTimer;
 - (SCLAlertViewResponder *)showTitle:(UIViewController *)vc image:(UIImage *)image color:(UIColor *)color title:(NSString *)title subTitle:(NSString *)subTitle duration:(NSTimeInterval)duration completeText:(NSString *)completeText style:(SCLAlertViewStyle)style
 {
     if(_usingNewWindow) {
-        
         self.backgroundView.frame = _SCLAlertWindow.bounds;
         
         // Add window subview
         [_SCLAlertWindow.rootViewController addChildViewController:self];
         [_SCLAlertWindow.rootViewController.view addSubview:_backgroundView];
+        
         [_SCLAlertWindow.rootViewController.view addSubview:self.view];
     } else {
         _rootViewController = vc;
-        
         [self disableInteractivePopGesture];
-        
         self.backgroundView.frame = vc.view.bounds;
         
         // Add view controller subviews
@@ -1308,6 +1303,9 @@ SCLTimerDisplay *buttonTimer;
 
 - (void)hideView
 {
+    
+    [self.view removeFromSuperview];//过直播添加的
+    
     switch (_hideAnimationType)
     {
         case SCLAlertViewHideAnimationFadeOut:

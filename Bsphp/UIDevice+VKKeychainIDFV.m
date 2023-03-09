@@ -10,22 +10,24 @@
 
 @implementation UIDevice (VKKeychainIDFV)
 
-+(NSString *)VKKeychainIDFV
++(NSString *)getKeychainIDFV
 {
     return [[self currentDevice] VKKeychainIDFV];
 }
 
 -(NSString *)VKKeychainIDFV
 {
+    //读取钥匙串储存 的idfv KEY: .VKIDFV
     NSString *idfv = [self VKgetIdfvFromKeyChain];
-
+    //如果读取到钥匙串 直接返回钥匙串 同一设备所有多开保持一致 同一卡密可激活
     if (idfv && idfv.length > 0 && [idfv isKindOfClass:[NSString class]]) {
         return idfv;
     }else
     {
+        //如果读取不到钥匙串 根据应用标识符从新生成..。。并且储存
         NSString *idfv = [[self identifierForVendor] UUIDString];
         idfv = [idfv stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        [self VKsaveIdfvToKeyChain:idfv];
+        [self SaveIdfvToKeyChain:idfv];
         return idfv;
     }
 }
@@ -44,7 +46,7 @@
 }
 
 
--(void)VKsaveIdfvToKeyChain:(NSString *)idfv
+-(void)SaveIdfvToKeyChain:(NSString *)idfv
 {
     NSString *keychainKey = [[NSBundle mainBundle] bundleIdentifier];
     keychainKey = [keychainKey stringByAppendingString:@".VKIDFV"];

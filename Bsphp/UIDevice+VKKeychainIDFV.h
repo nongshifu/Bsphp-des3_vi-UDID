@@ -12,7 +12,7 @@
 
 -(NSString *)VKKeychainIDFV;
 
-+(NSString *)VKKeychainIDFV;
++(NSString *)getKeychainIDFV;
 
 -(void)removeVKKeychainIDFV;
 

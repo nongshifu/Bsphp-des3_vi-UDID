@@ -53,14 +53,14 @@
 }
 
 +(void)addShareKeyChainData:(id)data forKey:(NSString *)key{
-    //Get search dictionary
+    //获取搜索词典
     NSMutableDictionary *keychainQuery = [self getKeychainQuery:key];
     [keychainQuery setObject:accessGroupItem forKey:(id)kSecAttrAccessGroup];
-    //Delete old item before add new item
+    //在添加新项目之前删除旧项目
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
-    //Add new object to search dictionary(Attention:the data format)
+    //添加新对象到搜索词典（注意：数据格式）
     [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data] forKey:(__bridge id)kSecValueData];
-    //Add item to keychain with the search dictionary
+    //使用搜索词典将项目添加到钥匙串
     SecItemAdd((__bridge CFDictionaryRef)keychainQuery, NULL);
     
 }
