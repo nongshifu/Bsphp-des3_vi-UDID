@@ -158,6 +158,7 @@
 		608F6C7529B771DC0058769D /* WX_NongShiFu123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WX_NongShiFu123.h; sourceTree = "<group>"; };
 		608F6C7629B771DC0058769D /* WX_NongShiFu123.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WX_NongShiFu123.m; sourceTree = "<group>"; };
 		608F6C7929B8A07D0058769D /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		609D315829BC878A00980E0D /* shiyong.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = shiyong.php; sourceTree = "<group>"; };
 		60AE051E29B217B7005F13F3 /* GIKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIKeychain.h; sourceTree = "<group>"; };
 		60AE051F29B217B7005F13F3 /* GIKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GIKeychain.m; sourceTree = "<group>"; };
 		60C4556628BF93480089DAEA /* TFJGVGLGKFTVCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFJGVGLGKFTVCSV.h; sourceTree = "<group>"; };
@@ -210,6 +211,7 @@
 				60531FEE28CB900000AEE837 /* 1.mobileprovision */,
 				60531FED28CB900000AEE837 /* udid.php */,
 				6064C7B428D876D200ACB901 /* 说明.png */,
+				609D315829BC878A00980E0D /* shiyong.php */,
 				60897A8C29AC61AA00E2AA65 /* SCLAlertView */,
 				6021E22F289F866E00E2E121 /* Bsphp */,
 				194F3B3B218327B10070F5BC /* Frameworks */,

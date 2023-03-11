@@ -55,11 +55,16 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if ([UDID_IDFV containsString:@"YES"]) {
                         [self getUDID:^{
-                            [self YZTC:@"请输入激活码"];
+                            [self shiyong:^{
+                                [self YZTC:@"请输入激活码"];
+                            }];
+                            
                         }];
                     }else{
                         [self getIDFV:^{
-                            [self YZTC:@"请输入激活码"];
+                            [self shiyong:^{
+                                [self YZTC:@"请输入激活码"];
+                            }];
                         }];
                         
                     }
@@ -81,6 +86,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         //NSLog(@"激活码弹窗KM=%@",km);
         [self yanzhengAndUseIt:km];
     }else{
+        
         if ([弹窗类型 containsString:@"YES"]) {
             //系统弹窗
             UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
@@ -206,7 +212,6 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             逻辑A=arr[5];
             逻辑B=arr[6];
             免费模式=arr[7];
-//            NSLog(@"软件信息 ==%@",软件信息);
             NSArray *arr2 = [软件描述 componentsSeparatedByString:@"\n"];
             到期时间弹窗=arr2[0];
             UDID_IDFV=arr2[1];
@@ -582,6 +587,60 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         }
     }
     
+}
+- (void)shiyong:(void (^)(void))completion{
+    if (试用模式==YES) {
+        //请求的url
+        NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@",shiyongURL,设备特征码];
+        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
+        if ([htmlStr containsString:@"没查到记录"]) {
+            //没查到记录 试用 随机生成15位卡密
+            NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
+            for (int i = 0; i < 15; i++) {
+                [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
+            }
+            NSLog(@"随机生成的码：%@", randomString);
+            
+            //开始注册卡密
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            NSString *appsafecode = [self getSystemDate];//设置一次过期判断变量
+            param[@"api"] = @"AddCardFeatures.key.ic";
+            param[@"BSphpSeSsL"] = self.baseDict[@"response"][@"data"];
+            param[@"date"] = [self getSystemDate];
+            param[@"md5"] = @"";
+            param[@"mutualkey"] = BSPHP_MUTUALKEY;
+            param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
+            param[@"maxoror"] = 设备特征码;//多开控制
+            param[@"key"] = 设备特征码;//必填,建议让用户填QQ或者联系方式这样方便联系用户(自己想象)
+            param[@"carid"] = randomString;//必填,建议让用户填QQ或者联系方式这样方便联系用户(自己想象)
+            [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                if (dict) {
+                    NSString*dataString = dict[@"response"][@"data"];
+                    if ([dataString containsString:@"|1081|"]) {
+                        NSArray *arr = [dataString componentsSeparatedByString:@"|"];
+                        NSLog(@"卡密注册成功：%@ 到期时间：%@  BS后台-软件配置-基础配置 首次使用送 ",randomString,arr[4]);
+                        //注册成功 储存到钥匙串
+                        [GIKeychain addKeychainData:randomString forKey:@"ShiSanGeKM"];
+                        completion();
+                    }else{
+                        completion();
+                    }
+                   
+                }
+            } failure:^(NSError *error) {
+                NSLog(@"注册失败：%@",error);
+                completion();
+            }];
+        }else{
+            //有查到记录 试用失败 直接回调
+            completion();
+        }
+        
+    }else{
+        completion();
+    }
 }
 - (void)getIDFV:(void (^)(void))completion
 {
