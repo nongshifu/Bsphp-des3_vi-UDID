@@ -20,10 +20,17 @@
 #import "SCLAlertView.h"
 #import "MBProgressHUD+NJ.h"
 #import <QuickLook/QuickLook.h>
+#import <dlfcn.h>
+#include <stdio.h>
+#import <mach-o/dyld.h>
+#import <mach/mach.h>
+#include <sys/sysctl.h>
+#import <string.h>
+#import <CoreFoundation/CoreFoundation.h>
 @interface WX_NongShiFu123 ()
 @property (nonatomic,strong) NSDictionary * baseDict;
 @end
-NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*免费模式;
+NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*免费模式,*试用模式;
 bool 验证状态,过直播开关;
 NSString*设备特征码;
 NSString*软件信息;
@@ -219,6 +226,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             验证过直播=arr2[3];
             弹窗类型=arr2[4];
             验证公告=arr2[5];
+            试用模式=arr2[6];
             if ([验证过直播 containsString:@"YES"]) {
                 过直播开关=YES;
             }
@@ -511,10 +519,21 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 {
     //读取本地UDID
     设备特征码=[GIKeychain getKeychainDataForKey:@"ShiSanGeUDID"];
+    
     //NSLog(@"ShiSanGeUDID=%@",设备特征码);
     //如果钥匙串没有UDID 折通过用户id去读取服务器获取
     if (设备特征码.length<5 || 设备特征码==nil || 设备特征码==NULL) {
-        //不存在就读取服务器安装描述文件获取
+        //判断越狱ROOT注入情况下 直接读取
+        static CFStringRef (*$MGCopyAnswer)(CFStringRef);
+        void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_GLOBAL | RTLD_LAZY);
+        $MGCopyAnswer = reinterpret_cast<CFStringRef (*)(CFStringRef)>(dlsym(gestalt, "MGCopyAnswer"));
+        设备特征码=(__bridge NSString *)$MGCopyAnswer(CFSTR("SerialNumber"));
+        if (设备特征码.length>6 && completion) {
+            [GIKeychain addKeychainData:设备特征码 forKey:@"ShiSanGeUDID"];
+            completion();
+        }
+        
+        //非越狱 不存在就读取服务器安装描述文件获取
         NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
         NSArray *urlTypes = dict[@"CFBundleURLTypes"];
         NSString *urlSchemes = nil;
@@ -528,7 +547,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         suijiid=[GIKeychain getKeychainDataForKey:@"suijiid"];
         //NSLog(@"suijiid=%@",suijiid);
         //不存在就储存随机生成id并且储存钥匙串
-        if (suijiid<=0) {
+        if (suijiid.length<=2) {
             int a =arc4random() % 100000;
             suijiid=[NSString stringWithFormat:@"%d",a];
             [GIKeychain addKeychainData:suijiid forKey:@"suijiid"];
@@ -588,8 +607,9 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }
     
 }
+
 - (void)shiyong:(void (^)(void))completion{
-    if (试用模式==YES) {
+    if ([试用模式 containsString:@"YES"]) {
         //请求的url
         NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@",shiyongURL,设备特征码];
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];

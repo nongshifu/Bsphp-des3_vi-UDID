@@ -8,7 +8,7 @@
 #import <QuickLook/QuickLook.h>
 #import <UIKit/UIKit.h>
 
-extern NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*免费模式;
+extern NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*免费模式,*试用模式;
 extern bool 验证状态,过直播开关;
 extern NSString*设备特征码;
 extern NSString*到期时间;

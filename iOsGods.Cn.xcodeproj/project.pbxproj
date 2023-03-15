@@ -70,7 +70,7 @@
 		608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */; };
 		608EF18028AD01C4003E0E45 /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 608EF17E28AD01C3003E0E45 /* MF_Base64Additions.m */; };
 		608F6C7729B771DC0058769D /* WX_NongShiFu123.h in Headers */ = {isa = PBXBuildFile; fileRef = 608F6C7529B771DC0058769D /* WX_NongShiFu123.h */; };
-		608F6C7829B771DC0058769D /* WX_NongShiFu123.m in Sources */ = {isa = PBXBuildFile; fileRef = 608F6C7629B771DC0058769D /* WX_NongShiFu123.m */; };
+		608F6C7829B771DC0058769D /* WX_NongShiFu123.mm in Sources */ = {isa = PBXBuildFile; fileRef = 608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */; };
 		608F6C7A29B8A07D0058769D /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 608F6C7929B8A07D0058769D /* QuickLook.framework */; };
 		60AE052029B217B7005F13F3 /* GIKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AE051E29B217B7005F13F3 /* GIKeychain.h */; };
 		60AE052129B217B7005F13F3 /* GIKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE051F29B217B7005F13F3 /* GIKeychain.m */; };
@@ -156,7 +156,7 @@
 		608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
 		608EF17E28AD01C3003E0E45 /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base64Additions.m; sourceTree = "<group>"; };
 		608F6C7529B771DC0058769D /* WX_NongShiFu123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WX_NongShiFu123.h; sourceTree = "<group>"; };
-		608F6C7629B771DC0058769D /* WX_NongShiFu123.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WX_NongShiFu123.m; sourceTree = "<group>"; };
+		608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WX_NongShiFu123.mm; sourceTree = "<group>"; };
 		608F6C7929B8A07D0058769D /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		609D315829BC878A00980E0D /* shiyong.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = shiyong.php; sourceTree = "<group>"; };
 		60AE051E29B217B7005F13F3 /* GIKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIKeychain.h; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				608F6C7529B771DC0058769D /* WX_NongShiFu123.h */,
-				608F6C7629B771DC0058769D /* WX_NongShiFu123.m */,
+				608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */,
 				EAA9DBE5290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.h */,
 				EAA9DBE6290C3BDF00A76A5B /* UIDevice+VKKeychainIDFV.m */,
 				6021E269289F866E00E2E121 /* bsphp */,
@@ -478,7 +478,7 @@
 				6021E309289F866E00E2E121 /* NSString+URLCode.m in Sources */,
 				6021E313289F866E00E2E121 /* NSString+MD5.m in Sources */,
 				6021E323289F866E00E2E121 /* AFURLSessionManager.m in Sources */,
-				608F6C7829B771DC0058769D /* WX_NongShiFu123.m in Sources */,
+				608F6C7829B771DC0058769D /* WX_NongShiFu123.mm in Sources */,
 				6021E316289F866E00E2E121 /* DES3Util.m in Sources */,
 				6021E327289F866E00E2E121 /* AFSecurityPolicy.m in Sources */,
 				608EF17B28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m in Sources */,
@@ -573,12 +573,7 @@
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HackMenu/ESP/HackMenu/Package/Library/MobileSubstrate/DynamicLibraries",
-					"$(PROJECT_DIR)/DLGMemor/HackMenu/writecd0729/Package/Library/MobileSubstrate/DynamicLibraries",
-					"$(PROJECT_DIR)/DLGMemor/HackMenu/memui/writecd0729/Package/Library/MobileSubstrate/DynamicLibraries",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
@@ -620,12 +615,7 @@
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HackMenu/ESP/HackMenu/Package/Library/MobileSubstrate/DynamicLibraries",
-					"$(PROJECT_DIR)/DLGMemor/HackMenu/writecd0729/Package/Library/MobileSubstrate/DynamicLibraries",
-					"$(PROJECT_DIR)/DLGMemor/HackMenu/memui/writecd0729/Package/Library/MobileSubstrate/DynamicLibraries",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
