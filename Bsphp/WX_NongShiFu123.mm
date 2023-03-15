@@ -47,21 +47,25 @@ static NSTimer*dsq;
  */
 
 + (void)load {
-//    [GIKeychain addKeychainData:@"2222222222" forKey:@"ShiSanGeUDID"];
+//    [GIKeychain addKeychainData:@"" forKey:@"ShiSanGeUDID"];
 //    [[WX_NongShiFu123 alloc] BSPHP];
 //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
 }
 NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗类型,*验证公告,*到期时间;
 - (void)BSPHP{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         [self getBSphpSeSsL:^{
+            
             [self getXinxi:^{
+                
                 if ([验证公告 containsString:@"YES"]) {
                     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
                 }
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if ([UDID_IDFV containsString:@"YES"]) {
                         [self getUDID:^{
+                            
                             [self shiyong:^{
                                 [self YZTC:@"请输入激活码"];
                             }];
@@ -210,6 +214,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dict) {
             软件信息=dict[@"response"][@"data"];
+            NSLog(@"软件信息=%@",软件信息);
             NSArray *arr = [软件信息 componentsSeparatedByString:@"|"];
             软件版本号=arr[0];
             软件公告=arr[1];
