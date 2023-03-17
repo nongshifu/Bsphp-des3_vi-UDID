@@ -133,7 +133,10 @@
 		6021E34B289F87CE00E2E121 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		60531FED28CB900000AEE837 /* udid.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = udid.php; sourceTree = "<group>"; };
 		60531FEE28CB900000AEE837 /* 1.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1.mobileprovision; sourceTree = "<group>"; };
-		6064C7B428D876D200ACB901 /* 说明.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "说明.png"; sourceTree = "<group>"; };
+		6084203A29C4523A00D06C8D /* 参数填写说明.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "参数填写说明.png"; sourceTree = "<group>"; };
+		6084203B29C452F100D06C8D /* 购买-更新说明图.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "购买-更新说明图.png"; sourceTree = "<group>"; };
+		6084203C29C4537700D06C8D /* BS-软件配置1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BS-软件配置1.png"; sourceTree = "<group>"; };
+		6084203D29C4537700D06C8D /* BS-软件配置2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BS-软件配置2.png"; sourceTree = "<group>"; };
 		60897A9129AC61AA00E2AA65 /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		60897A9229AC61AA00E2AA65 /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		60897A9329AC61AA00E2AA65 /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -210,8 +213,11 @@
 				6021E270289F866E00E2E121 /* Config.h */,
 				60531FEE28CB900000AEE837 /* 1.mobileprovision */,
 				60531FED28CB900000AEE837 /* udid.php */,
-				6064C7B428D876D200ACB901 /* 说明.png */,
 				609D315829BC878A00980E0D /* shiyong.php */,
+				6084203A29C4523A00D06C8D /* 参数填写说明.png */,
+				6084203B29C452F100D06C8D /* 购买-更新说明图.png */,
+				6084203C29C4537700D06C8D /* BS-软件配置1.png */,
+				6084203D29C4537700D06C8D /* BS-软件配置2.png */,
 				60897A8C29AC61AA00E2AA65 /* SCLAlertView */,
 				6021E22F289F866E00E2E121 /* Bsphp */,
 				194F3B3B218327B10070F5BC /* Frameworks */,

@@ -31,7 +31,7 @@
 @interface WX_NongShiFu123 ()
 @property (nonatomic,strong) NSDictionary * baseDict;
 @end
-NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*免费模式,*试用模式;
+NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*解绑扣除时间,*试用模式,*支持解绑;;
 bool 验证状态,过直播开关;
 NSString*设备特征码;
 NSString*软件信息;
@@ -238,7 +238,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     param[@"mutualkey"] = BSPHP_MUTUALKEY;
     param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
     param[@"md5"] = @"";
-    param[@"info"] = @"GLOBAL_V|GLOBAL_GG|GLOBAL_MIAOSHU|GLOBAL_WEBURL|GLOBAL_URL|GLOBAL_LOGICINFOA|GLOBAL_LOGICB|GLOBAL_CHARGESET";
+    param[@"info"] = @"GLOBAL_V|GLOBAL_GG|GLOBAL_MIAOSHU|GLOBAL_WEBURL|GLOBAL_URL|GLOBAL_LOGICINFOA|GLOBAL_LOGICB|GLOBAL_TURN";
     [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dict) {
@@ -252,7 +252,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             软件url地址=arr[4];
             逻辑A=arr[5];
             逻辑B=arr[6];
-            免费模式=arr[7];
+            解绑扣除时间=arr[7];
             NSArray *arr2 = [软件描述 componentsSeparatedByString:@"\n"];
             到期时间弹窗=arr2[0];
             UDID_IDFV=arr2[1];
@@ -261,6 +261,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             弹窗类型=arr2[4];
             验证公告=arr2[5];
             试用模式=arr2[6];
+            支持解绑=arr2[7];
             if ([验证过直播 containsString:@"YES"]) {
                 过直播开关=YES;
             }
@@ -493,23 +494,27 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 NSArray *arr = [dataString componentsSeparatedByString:@"|"];
                 if (arr.count >= 6)
                 {
-                    //NSLog(@"验证成功=%@",dataString);
+                    NSLog(@"验证成功=%@",dataString);
                     到期时间=arr[4];
+                    NSString*fuwuqijqm=arr[2];
                     [GIKeychain addKeychainData:km forKey:@"ShiSanGeKM"];
                     if (!验证状态) {
-                        //每次启动都弹出
-                        if ([到期时间弹窗 containsString:@"YES"]) {
-                            [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
-                        }else{
-                            BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
-                            //仅仅首次激活弹窗
-                            if (!判断是否已经弹窗过) {
+                        [self jiebangTC:fuwuqijqm void:^{
+                            //每次启动都弹出
+                            if ([到期时间弹窗 containsString:@"YES"]) {
                                 [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
-                                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
-                                //验证成功 方可执行后期功能
+                            }else{
+                                BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
+                                //仅仅首次激活弹窗
+                                if (!判断是否已经弹窗过) {
+                                    [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
+                                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
+                                    //验证成功 方可执行后期功能
+                                }
+                                
                             }
-                            
-                        }
+                        }];
+                        
                         
                     }
                     验证状态=YES;
@@ -521,6 +526,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                             }
                         }];
                         [[NSRunLoop currentRunLoop] addTimer:dsq forMode:NSRunLoopCommonModes];
+                        
                     });
                     
                 }
@@ -665,14 +671,107 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }
     
 }
+//解绑
+- (void)jiebang:(NSString*)km{
+    //参数开始组包
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    NSString *appsafecode = [self getSystemDate];//设置一次过期判断变量
+    param[@"api"] = @"setcarnot.ic";
+    param[@"BSphpSeSsL"] = self.baseDict[@"response"][@"data"];//ssl是获取的全局参数，app第一次启动时候获取的
+    param[@"date"] = [self getSystemDate];
+    param[@"md5"] = @"";
+    param[@"mutualkey"] = BSPHP_MUTUALKEY;
+    param[@"icid"] = km;
+    param[@"icpwd"] = @"";
+    param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
+    [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dict) {
+            //这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
+            if(![dict[@"response"][@"appsafecode"] isEqualToString:appsafecode]){
+                //NSLog(@"2");
+                dict[@"response"][@"data"] = @"-2000";
+            }
+            NSString *dataString = dict[@"response"][@"data"];
+            if([dataString containsString:@"成功"]){
+                [self showText:@"成功" message:dataString Exit:YES];
+            }else{
+                [self showText:@"失败" message:dataString Exit:NO];
+            }
+            
+        }
+    } failure:^(NSError *error) {
+        
+        
+    }];
+    
+}
+//解绑弹窗
+- (void)jiebangTC:(NSString*)fwqjqm void:(void (^)(void))completion
+{
+    if ([支持解绑 containsString:@"YES"]) {
+        if (![fwqjqm containsString:设备特征码]) {
+            NSInteger seconds = [解绑扣除时间 integerValue];
+            NSDateComponents *components = [[NSDateComponents alloc] init];
+            [components setSecond:seconds];
 
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDate *date = [calendar dateFromComponents:components];
+
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm:ss"];
+            NSString *timeString = [formatter stringFromDate:date];
+            
+            NSString*str=[NSString stringWithFormat:@"卡密绑定机器非本机\n本机序列号\n%@\n卡密绑定序号\n%@\n解绑将扣除时间\n%@",设备特征码,fwqjqm,timeString];
+            NSLog(@"解绑扣除时间=%@",解绑扣除时间);
+            if ([弹窗类型 containsString:@"YES"]) {
+                NSLog(@"系统弹窗时间=%@",解绑扣除时间);
+                //系统弹窗
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定解绑" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSString*km=[GIKeychain getKeychainDataForKey:@"ShiSanGeKM"];
+                    [self jiebang:km];
+                }];
+                UIAlertAction *okAction2 = [UIAlertAction actionWithTitle:@"取消退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    exit(0);
+                }];
+                [alertController addAction:okAction];
+                [alertController addAction:okAction2];
+                UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                [rootViewController presentViewController:alertController animated:YES completion:nil];
+                
+            }else{
+                //SCL弹窗
+                SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                alert.customViewColor=[UIColor systemGreenColor];
+                alert.shouldDismissOnTapOutside = NO;
+                [alert addButton:@"确定解绑" actionBlock:^{
+                    NSString*km=[GIKeychain getKeychainDataForKey:@"ShiSanGeKM"];
+                    [self jiebang:km];
+                }];
+                [alert addButton:@"取消退出" actionBlock:^{
+                    exit(0);
+                }];
+                [alert showQuestion:@"警告" subTitle:str closeButtonTitle:nil duration:0.0f];
+                
+            }
+        }else{
+            if (completion) {
+                completion();
+            }
+        }
+        
+    }
+}
 - (void)shiyong:(void (^)(void))completion{
     if ([试用模式 containsString:@"YES"]) {
         //请求的url
         NSArray *arr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
         NSArray *arr2 = [arr[1] componentsSeparatedByString:@"&m="];
         NSString* daihao=arr2[0];
-        NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
+        NSArray *arr3 = [BSPHP_HOST componentsSeparatedByString:@"AppEn.php"];
+        NSString *shiyongURL=arr3[0];
+        NSString *requestStr = [NSString stringWithFormat:@"%@shiyong.php?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
         NSLog(@"htmlStr=%@",htmlStr);
         if ([htmlStr containsString:@"没查到记录"]) {
