@@ -18,13 +18,13 @@
 #define gIv   @"Asd7480547"
 
 //定期验证 单位为秒 可以设置10分钟 几分钟看个人需求 用于动态检测版本更新 公告更新 检测是否到期 检测是否冻结 时间太短 用户多会增加服务器压力
-#define  BS_DSQ 2
+#define  BS_DSQ 600
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
 #define  UDID_HOST  @"https://myradar.cn/UDID/"
 
 //启动APP后多少秒开始验证 单位秒 ** 因为很多游戏有启动画面 启动动画 会刷新UI 刷掉弹窗 相当于没了验证 比如光遇 王者荣耀 等 要等启动动画结束才弹窗 自己测试时间
-#define BS延迟启动时间 0
+#define BS延迟启动时间 3
 
 //是否启用试用功能 YES NO
 
