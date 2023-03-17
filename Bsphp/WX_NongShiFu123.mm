@@ -501,6 +501,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                             if (!判断是否已经弹窗过) {
                                 [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
                                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
+                                //验证成功 方可执行后期功能
                             }
                             
                         }
