@@ -7,6 +7,7 @@
 //  Created by MRW on 2022/11/14.
 //  Copyright © 2019年 xiaozhou. All rights reserved.
 //
+#import <SystemConfiguration/SystemConfiguration.h>
 #import <AdSupport/AdSupport.h>
 #import "Config.h"
 #import "WX_NongShiFu123.h"
@@ -51,42 +52,65 @@ static NSTimer*dsq;
 //    [[WX_NongShiFu123 alloc] BSPHP];
 //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
 }
+- (BOOL)getNet {
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, "www.apple.com");
+    SCNetworkReachabilityFlags flags;
+    BOOL success = SCNetworkReachabilityGetFlags(reachability, &flags);
+    BOOL isReachable = success && (flags & kSCNetworkFlagsReachable);
+    BOOL needsConnection = success && (flags & kSCNetworkFlagsConnectionRequired);
+    BOOL canConnectAutomatically = success && (flags & kSCNetworkFlagsConnectionAutomatic);
+    BOOL canConnectWithoutUserInteraction = canConnectAutomatically && !(flags & kSCNetworkFlagsInterventionRequired);
+    BOOL isNetworkReachable = (isReachable && (!needsConnection || canConnectWithoutUserInteraction));
+    CFRelease(reachability);
+    
+    if (isNetworkReachable) {
+        NSLog(@"网络可用");
+        return YES;
+    } else {
+        NSLog(@"网络不可用");
+        return NO;
+    }
+    return NO;
+}
 NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗类型,*验证公告,*到期时间;
 - (void)BSPHP{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        [self getBSphpSeSsL:^{
+    BOOL NET=[self getNet];
+    if (!NET) {
+        [self showText:@"警告" message:@"网络连接失败" Exit:YES];
+    }else{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            [self getXinxi:^{
+            [self getBSphpSeSsL:^{
                 
-                if ([验证公告 containsString:@"YES"]) {
-                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
-                }
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if ([UDID_IDFV containsString:@"YES"]) {
-                        [self getUDID:^{
-                            
-                            [self shiyong:^{
-                                [self YZTC:@"请输入激活码"];
-                            }];
-                            
-                        }];
-                    }else{
-                        [self getIDFV:^{
-                            [self shiyong:^{
-                                [self YZTC:@"请输入激活码"];
-                            }];
-                        }];
-                        
+                [self getXinxi:^{
+                    
+                    if ([验证公告 containsString:@"YES"]) {
+                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
                     }
-                });
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        if ([UDID_IDFV containsString:@"YES"]) {
+                            [self getUDID:^{
+                                
+                                [self shiyong:^{
+                                    [self YZTC:@"请输入激活码"];
+                                }];
+                                
+                            }];
+                        }else{
+                            [self getIDFV:^{
+                                [self shiyong:^{
+                                    [self YZTC:@"请输入激活码"];
+                                }];
+                            }];
+                            
+                        }
+                    });
+                    
+                }];
                 
             }];
-            
-        }];
-    });
-    
-   
+        });
+    }
     
 }
 - (void)YZTC:(NSString*_Nullable)string
