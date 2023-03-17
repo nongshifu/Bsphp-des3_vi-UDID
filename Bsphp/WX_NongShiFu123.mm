@@ -48,6 +48,8 @@ static NSTimer*dsq;
  */
 
 + (void)load {
+//    [GIKeychain deleteKeychainDataForKey:@"ShiSanGeUDID"];
+    
 //    [GIKeychain addKeychainData:@"" forKey:@"ShiSanGeUDID"];
 //    [[WX_NongShiFu123 alloc] BSPHP];
 //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
@@ -649,6 +651,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         NSString* daihao=arr2[0];
         NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
+        NSLog(@"htmlStr=%@",htmlStr);
         if ([htmlStr containsString:@"没查到记录"]) {
             //没查到记录 试用 随机生成15位卡密
             NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

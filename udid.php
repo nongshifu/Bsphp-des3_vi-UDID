@@ -24,7 +24,6 @@ $签名=1;
 $域名="https://myradar.cn/UDID/";
 // 本文件可以上传到任意二级目录或网站根目录都行
 // 二级三级目录就设置好比如 $域名="https://baidu.cn/二级目录/三级目录/ 注意尾部一定有/符号
-
 ?>
 
 <?php
@@ -107,22 +106,24 @@ if(strlen($UDID)>5){
             }else{
                 // echo "证书文件存在 读取进行拆分储存</br>";
                 $res = file_get_contents('pem.pem');
+                //替换
+                $search = "/-----END CERTIFICATE-----/";
+                $replace = "-----END CERTIFICATE--------";
+                $result = preg_replace($search, $replace, $res, 1);
+                
                 //拆分证书文件
-                $penarr=explode("-----END CERTIFICATE-----\n",$res);
+                $penarr=explode("-----END CERTIFICATE--------",$result);
                 //储存前段部分为a.crt
                 $fp = fopen("a.crt", 'w');
                 $acrt=$penarr[0]."-----END CERTIFICATE-----";
+                
                 fwrite($fp, $acrt);
                 fclose($fp);
                 //储存后段部分为b.crt
-                $bcrt="";
-                for ($i = 1; $i < sizeof($penarr); $i++) {
-                     // code...
-                     $bcrt=$bcrt.$penarr[$i]."\n-----END CERTIFICATE-----";
-                }
+                $carb=$penarr[1];
                 $fp = fopen("b.crt", 'w');
-                $bcrt=str_ireplace("\n\n", "\n", $bcrt);
-                fwrite($fp,$bcrt );
+                
+                fwrite($fp,$carb );
                 fclose($fp);
             }
             if (strpos($res, 'null') !== false) {
