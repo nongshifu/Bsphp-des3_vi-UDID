@@ -337,7 +337,7 @@ SCLTimerDisplay *buttonTimer;
         //约束菜单底部 如果原始尺寸未高度超出屏幕底部 就回归原始尺寸
         _windowHeight=_titleHeight+_subTitleHeight+_buttons.count*50+_customViews.count*50+_inputs.count*50+40;
     }
-    NSLog(@"_windowHeight111=%f",_windowHeight);
+    
     self.view.frame = r;
     // Set new background frame
     CGRect newBackgroundFrame = self.backgroundView.frame;
@@ -406,7 +406,6 @@ SCLTimerDisplay *buttonTimer;
     [_contentView setContentSize:CGSizeMake(_contentView.frame.size.width,数量*48)];
     [UIView animateWithDuration:0.5 animations:^{
         [_contentView setContentOffset:CGPointMake(0,1) animated:YES];
-        
     }];
     
     
