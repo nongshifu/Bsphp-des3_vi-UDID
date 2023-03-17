@@ -24,7 +24,7 @@
 #define  UDID_HOST  @"https://myradar.cn/UDID/"
 
 //启动APP后多少秒开始验证 单位秒 ** 因为很多游戏有启动画面 启动动画 会刷新UI 刷掉弹窗 相当于没了验证 比如光遇 王者荣耀 等 要等启动动画结束才弹窗 自己测试时间
-#define BS延迟启动时间 3
+#define BS延迟启动时间 0
 
 
 

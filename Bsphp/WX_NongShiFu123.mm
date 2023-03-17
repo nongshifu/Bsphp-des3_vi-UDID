@@ -501,13 +501,14 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     if (!验证状态) {
                         [self jiebangTC:fuwuqijqm void:^{
                             //每次启动都弹出
+                            NSString*str=[NSString stringWithFormat:@"验证成功-到期时间\n%@",arr[4]];
                             if ([到期时间弹窗 containsString:@"YES"]) {
-                                [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
+                                [self showText:str message:nil Exit:NO];
                             }else{
                                 BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
                                 //仅仅首次激活弹窗
                                 if (!判断是否已经弹窗过) {
-                                    [self showText:@"验证成功-到期时间" message:arr[4] Exit:NO];
+                                    [self showText:str message:nil Exit:NO];
                                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
                                     //验证成功 方可执行后期功能
                                 }
@@ -696,7 +697,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             if([dataString containsString:@"成功"]){
                 [self showText:@"成功" message:dataString Exit:YES];
             }else{
-                [self showText:@"失败" message:dataString Exit:NO];
+                [self showText:@"失败" message:dataString Exit:YES];
             }
             
         }
