@@ -74,20 +74,21 @@ static NSTimer*dsq;
 }
 NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗类型,*验证公告,*到期时间;
 - (void)BSPHP{
-    BOOL NET=[self getNet];
-    if (!NET) {
-        [self showText:@"警告" message:@"网络连接失败" Exit:YES];
-    }else{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            [self getBSphpSeSsL:^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        BOOL NET=[self getNet];
+        if (!NET) {
+            [self showText:@"警告" message:@"网络连接失败" Exit:YES];
+        }else{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
-                [self getXinxi:^{
+                [self getBSphpSeSsL:^{
                     
-                    if ([验证公告 containsString:@"YES"]) {
-                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
-                    }
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self getXinxi:^{
+                        
+                        if ([验证公告 containsString:@"YES"]) {
+                            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
+                        }
+                        
                         if ([UDID_IDFV containsString:@"YES"]) {
                             [self getUDID:^{
                                 
@@ -104,13 +105,15 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                             }];
                             
                         }
-                    });
+                        
+                        
+                    }];
                     
                 }];
-                
-            }];
-        });
-    }
+            });
+        }
+    });
+    
     
 }
 - (void)YZTC:(NSString*_Nullable)string
