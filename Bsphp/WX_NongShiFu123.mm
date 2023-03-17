@@ -605,16 +605,39 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 // URL 正常
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 if ([httpResponse statusCode] == 404) {
+                    
                     //NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
                     //如果有错误 证明服务器没有 那就安装描述文件获取
                     NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@",UDID_HOST,suijiid,urlSchemes];
                     //NSLog(@"URL 地址：%@", url);
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        //跳转浏览器后退出程序
-                        exit(0);
-                    });
-                    
+                    if ([弹窗类型 containsString:@"YES"]) {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"安装描述文件-获取绑定机器码" preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:@"退出应用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            exit(0);
+                        }]];
+                        [alertController addAction:[UIAlertAction actionWithTitle:@"确定安装" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                                exit(0);
+                            }];
+                            
+                        }]];
+                        
+                        UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                        [rootViewController presentViewController:alertController animated:YES completion:nil];
+                    }else{
+                        SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                        alert.customViewColor=[UIColor systemGreenColor];
+                        alert.shouldDismissOnTapOutside = NO;
+                        [alert addButton:@"退出应用" actionBlock:^{
+                            exit(0);
+                        }];
+                        [alert addButton:@"确定安装" actionBlock:^{
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                                exit(0);
+                            }];
+                        }];
+                        [alert showQuestion:@"安装描述文件" subTitle:@"获取机器码进行卡密绑定" closeButtonTitle:nil duration:0];
+                    }
                 } else {
                     //NSLog(@"URL 正常");
                     // 打印返回值非404的html字符串
