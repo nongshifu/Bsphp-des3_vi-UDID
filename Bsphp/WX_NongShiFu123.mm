@@ -641,7 +641,10 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 - (void)shiyong:(void (^)(void))completion{
     if ([试用模式 containsString:@"YES"]) {
         //请求的url
-        NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@",shiyongURL,设备特征码];
+        NSArray *arr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
+        NSArray *arr2 = [arr[1] componentsSeparatedByString:@"&m="];
+        NSString* daihao=arr2[0];
+        NSString *requestStr = [NSString stringWithFormat:@"%@?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
         if ([htmlStr containsString:@"没查到记录"]) {
             //没查到记录 试用 随机生成15位卡密
