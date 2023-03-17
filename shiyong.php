@@ -6,21 +6,18 @@
  *****注意**** idfv.idfa 模式下 多开app修改appid标识符 刷机 升级等 串码会变 相当于无限试用 谨慎 尽量在UDID 获取描述文件获取机器码情况下使用试用功能
  */
 
-<?php
-//插件说明，当前插件是单页面插件，不需要在url传输mac参数！
-//固定头文件不用管
-//2019.6.18
+
 //引入单页文件
-include ('/Plug/Plug.php');
+include ('./Plug/Plug.php');
 $code=$_GET["code"];
-$sql = "SELECT L_key_info FROM bsphp_pattern_login WHERE L_key_info = '$code'";
+$daihao=$_GET["daihao"];
+$sql = "SELECT L_key_info FROM bsphp_pattern_login WHERE L_key_info = '$code' AND `L_daihao`='$daihao'";
 $info = plug_query_array($sql);
 if (!$info) {
     $NEWode="没查到记录";
 } else {
     $NEWode="有记录 |".$info['L_key_info'];
     //去卡密表查询
-    
     
 }
 echo $NEWode;
