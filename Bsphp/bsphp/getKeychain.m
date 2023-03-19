@@ -6,9 +6,9 @@
 //  Copyright © 2015年 shen. All rights reserved.
 //
 
-#import "GIKeychain.h"
+#import "getKeychain.h"
 
-@implementation GIKeychain
+@implementation getKeychain
 
 //创建一个基本的查询字典
 + (NSMutableDictionary *)getKeychainQuery:(NSString *)service {
@@ -31,6 +31,7 @@
     if (SecItemCopyMatching((__bridge CFDictionaryRef)keychainQuery, (CFTypeRef *)&keyData) == noErr) {
         @try {
             ret = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)keyData];
+            
         } @catch (NSException *e) {
             NSLog(@"Unarchive of %@ failed: %@",key,e);
         } @finally {
@@ -65,7 +66,7 @@
     
 }
 
-+ (void)deleteKeychainDataForKey:(NSString *)key{
++ (void)removeKeychainDataForKey:(NSString *)key{
     NSMutableDictionary *keychainQuery = [self getKeychainQuery:key];
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
 }

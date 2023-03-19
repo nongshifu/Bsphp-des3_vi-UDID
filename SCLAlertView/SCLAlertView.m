@@ -12,7 +12,6 @@
 #import "UIImage+ImageEffects.h"
 #import "SCLTimerDisplay.h"
 #import "SCLMacros.h"
-#import "TFJGVGLGKFTVCSV.h"
 #import "SCLSwitchView.h"
 #import "SCLMacros.h"
 #if defined(__has_feature) && __has_feature(modules)
@@ -236,7 +235,8 @@ SCLTimerDisplay *buttonTimer;
     _viewText.frame = CGRectMake(12.0f, _subTitleY, _windowWidth - 24.0f, _subTitleHeight);
     _viewText.textContainerInset = UIEdgeInsetsZero;
     _viewText.textContainer.lineFragmentPadding = 0;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    _contentView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     
     // Content View
     _contentView.backgroundColor = [UIColor whiteColor];
@@ -405,7 +405,7 @@ SCLTimerDisplay *buttonTimer;
 
     [_contentView setContentSize:CGSizeMake(_contentView.frame.size.width,数量*48)];
     [UIView animateWithDuration:0.5 animations:^{
-        [_contentView setContentOffset:CGPointMake(0,1) animated:YES];
+        [self->_contentView setContentOffset:CGPointMake(0,1) animated:YES];
     }];
     
     

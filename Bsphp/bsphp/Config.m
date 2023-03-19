@@ -39,7 +39,10 @@ success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))f
         //NSLog(@"服务器返回数据 = %@",str);
         NSData * data = [str dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        //NSLog(@"dict = %@",dict);
+        if(dict){
+            //NSLog(@"dict = %@",dict);
+        }
+        
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         

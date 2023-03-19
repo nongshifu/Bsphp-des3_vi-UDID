@@ -10,11 +10,11 @@
 
 #define accessGroupItem @"XXXXX.GrassInfoAppFamily"
 
-@interface GIKeychain : NSObject
+@interface getKeychain : NSObject
 
 + (id)getKeychainDataForKey:(NSString *)key;
 + (void)addKeychainData:(id)data forKey:(NSString *)key;
-+ (void)deleteKeychainDataForKey:(NSString *)key;
++ (void)removeKeychainDataForKey:(NSString *)key;
 + (void)addShareKeyChainData:(id)data forKey:(NSString *)key;
 
 @end

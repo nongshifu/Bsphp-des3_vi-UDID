@@ -17,7 +17,7 @@
 + (void)showError:(NSString *)error HideTime:(float)hideTime;
 + (void)showError:(NSString *)error toView:(UIView *)view HideTime:(float)hideTime;
 
-+ (MBProgressHUD *)showMessage:(NSString *)message;
+
 + (MBProgressHUD *)showMessage:(NSString *)message toView:(UIView *)view;
 
 + (void)hideHUD;

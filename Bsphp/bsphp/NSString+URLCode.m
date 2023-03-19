@@ -17,12 +17,14 @@
      
      */
     
-    NSString *result = ( NSString *)
-    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                              (CFStringRef)self,
-                                                              NULL,//指定了将本身为非法的URL字符不进行编码的字符集合
-                                                              CFSTR("!*();+$,%#[] "),//将本身为合法的URL字符需要进行编码的字符集合
-                                                              kCFStringEncodingUTF8));
+//    NSString *result = ( NSString *)
+//    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+//                                                              (CFStringRef)self,
+//                                                              NULL,//指定了将本身为非法的URL字符不进行编码的字符集合
+//                                                              CFSTR("!*();+$,%#[] "),//将本身为合法的URL字符需要进行编码的字符集合
+//                                                              kCFStringEncodingUTF8));
+    NSCharacterSet *allowedCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"!*();+$,%#[] "];
+    NSString *result = [self stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
     return result;
 }
 
@@ -36,11 +38,12 @@
 //    CoreFoundation框架
 //    CFURLCreateStringByReplacingPercentEscapesUsingEncoding
     
-    NSString *result = ( NSString *)
-    CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-                                                                              (CFStringRef)self,
-                                                                              CFSTR(""),//指定不进行解码的字符集
-                                                                              kCFStringEncodingUTF8));
+//    NSString *result = ( NSString *)
+//    CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+//                                                                              (CFStringRef)self,
+//                                                                              CFSTR(""),//指定不进行解码的字符集
+//                                                                              kCFStringEncodingUTF8));
+    NSString *result = [self stringByRemovingPercentEncoding];
     return result;
 }
 //md5
