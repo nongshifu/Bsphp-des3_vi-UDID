@@ -29,6 +29,7 @@ $域名="https://myradar.cn/UDID/";
 <?php
 // 以下逻辑无需修改
 $id=$_GET["id"];
+
 $openurl=$_GET["openurl"];
 $data = file_get_contents('php://input');
 $plistBegin   = '<string>';
@@ -38,6 +39,35 @@ $pos1 = strpos($data, $plistBegin);
 $pos2 = strpos($data, $plistEnd);
 $data2 = substr ($data,$pos1,$pos2-$pos1);
 $UDID = str_replace("<string>", "", $data2);
+//删除缓存-
+$rm = isset($_GET['rm']) ? trim($_GET['rm']) : '';
+
+if (strlen($rm) > 0 && strlen($rm) <= 50) {
+    $dir = '.';
+    $keyword = '/^' . preg_quote($rm, '/') . '$/';
+    $count = 0;
+
+    foreach (glob($dir . '/*.*') as $file) {
+        
+        if (is_file($file) && (strpos($file, $rm) !== false)) {
+            // echo $file."<br>";
+            if (unlink($file)) {
+                // echo "File {$file} deleted successfully\n";
+                $count++;
+            } else {
+                // echo "Failed to delete file {$file}\n";
+            }
+        }
+    }
+
+    if ($count > 0) {
+        // echo "{$count} file(s) deleted successfully.";
+    } else {
+        // echo "No file deleted.";
+    }
+} else {
+    // echo "Invalid parameter.";
+}
 
 //储存OPENURL
 if(strlen($openurl)>5){
