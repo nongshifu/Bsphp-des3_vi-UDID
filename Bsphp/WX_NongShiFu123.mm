@@ -18,6 +18,7 @@
 #import <dlfcn.h>
 #include <stdio.h>
 #import <string.h>
+
 #import <AdSupport/ASIdentifierManager.h>
 @interface WX_NongShiFu123 ()
 @property (nonatomic,strong) NSDictionary * baseDict;
@@ -39,13 +40,14 @@ static NSTimer*dsq;
  */
 
 + (void)load {
-//    [GIKeychain deleteKeychainDataForKey:@"ShiSanGeUDID"];
+    //    [GIKeychain deleteKeychainDataForKey:@"DZUDID"];
     
-//    [GIKeychain addKeychainData:@"" forKey:@"ShiSanGeUDID"];
-//    [[WX_NongShiFu123 alloc] BSPHP];
-//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
+    //    [GIKeychain addKeychainData:@"" forKey:@"DZUDID"];
+    //    [[WX_NongShiFu123 alloc] BSPHP];
+    //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
 }
 
+#pragma mark --- 验证流程
 NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗类型,*验证公告,*到期时间;
 - (void)BSPHP{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -65,7 +67,6 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                         
                         if ([UDID_IDFV containsString:@"YES"]) {
                             [self getUDID:^{
-                                
                                 [self shiyong:^{
                                     [self YZTC:@"请输入激活码"];
                                 }];
@@ -90,10 +91,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     
     
 }
-
-
 #pragma mark --- 网络状态
-
 - (BOOL)getNet {
     SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, "www.apple.com");
     SCNetworkReachabilityFlags flags;
@@ -106,104 +104,110 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     CFRelease(reachability);
     
     if (isNetworkReachable) {
-        //NSLog(@"网络可用");
+        NSLog(@"网络可用");
         return YES;
     } else {
-        //NSLog(@"网络不可用");
+        NSLog(@"网络不可用");
         return NO;
     }
     return NO;
 }
 
 
-#pragma mark --- 激活码弹窗
+
+#pragma mark --- 验证弹窗
 - (void)YZTC:(NSString*_Nullable)string
 {
-    //NSLog(@"激活码弹窗");
-    NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeKM"];
+    NSLog(@"激活码弹窗");
+    NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
     if (km.length>2) {
-        //NSLog(@"激活码弹窗KM=%@",km);
+        NSLog(@"激活码弹窗KM=%@",km);
         [self yanzhengAndUseIt:km];
     }else{
         
         if ([弹窗类型 containsString:@"YES"]) {
-            //系统弹窗
-            UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:string preferredStyle:UIAlertControllerStyleAlert];
-            [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                textField.placeholder = @"请输入激活码";
-                textField.secureTextEntry = NO;
-                textField.borderStyle = UITextBorderStyleRoundedRect;
-                textField.clearButtonMode = UITextFieldViewModeAlways;
-                textField.layer.masksToBounds=YES;
-            }];
-            UIAlertAction *cancelAction;
-            if (软件网页地址.length>5) {
-                cancelAction = [UIAlertAction actionWithTitle:@"购买" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件网页地址] options:@{} completionHandler:^(BOOL success) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //系统弹窗
+                UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:string preferredStyle:UIAlertControllerStyleAlert];
+                [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                    textField.placeholder = @"请输入激活码";
+                    textField.secureTextEntry = NO;
+                    textField.borderStyle = UITextBorderStyleRoundedRect;
+                    textField.clearButtonMode = UITextFieldViewModeAlways;
+                    textField.layer.masksToBounds=YES;
+                }];
+                UIAlertAction *cancelAction;
+                if (软件网页地址.length>5) {
+                    cancelAction = [UIAlertAction actionWithTitle:@"购买" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件网页地址] options:@{} completionHandler:^(BOOL success) {
+                            exit(0);
+                        }];
+                    }];
+                }else{
+                    cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        // 取消操作
                         exit(0);
                     }];
+                }
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    // 确定操作
+                    UITextField *textField1 = alert.textFields.firstObject;
+                    NSLog(@"输入框1：%@", textField1.text);
+                    if (textField1.text.length ==0 ) {
+                        NSLog(@"输入框内容为空");
+                        // 输入框内容为空，做出相应提示或处理
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self YZTC:@"输入内容为空"];
+                        });
+                    }else{
+                        [self yanzhengAndUseIt:textField1.text];
+                    }
+                    
                 }];
-            }else{
-               cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    // 取消操作
-                    exit(0);
-                }];
-            }
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                // 确定操作
-                UITextField *textField1 = alert.textFields.firstObject;
-                //NSLog(@"输入框1：%@", textField1.text);
-                if (textField1.text.length ==0 ) {
-                    //NSLog(@"输入框内容为空");
-                    // 输入框内容为空，做出相应提示或处理
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self YZTC:@"输入内容为空"];
-                    });
-                }else{
-                    [self yanzhengAndUseIt:textField1.text];
+                
+                [alert addAction:cancelAction];
+                [alert addAction:okAction];
+                
+                [rootViewController presentViewController:alert animated:YES completion:nil];
+            });
+            
+            
+        }else{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //SCL弹窗
+                SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                alert.customViewColor=[UIColor systemGreenColor];
+                alert.shouldDismissOnTapOutside = NO;
+                SCLTextView *textF =   [alert addTextField:@"请在30秒内填写授权码"setDefaultText:nil];
+                [alert addButton:@"粘贴" validationBlock:^BOOL{
+                    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                    textF.text =pasteboard.string;
+                    return NO;
+                }actionBlock:^{}];
+                if (软件网页地址.length>5) {
+                    [alert addButton:@"购买" actionBlock:^{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件网页地址] options:@{} completionHandler:nil];
+                    }];
                 }
                 
-            }];
-
-            [alert addAction:cancelAction];
-            [alert addAction:okAction];
-            
-            [rootViewController presentViewController:alert animated:YES completion:nil];
-
-        }else{
-            //SCL弹窗
-            SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-            alert.customViewColor=[UIColor systemGreenColor];
-            alert.shouldDismissOnTapOutside = NO;
-            SCLTextView *textF =   [alert addTextField:@"请在30秒内填写授权码"setDefaultText:nil];
-            [alert addButton:@"粘贴" validationBlock:^BOOL{
-                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                textF.text =pasteboard.string;
-                return NO;
-            }actionBlock:^{}];
-            if (软件网页地址.length>5) {
-                [alert addButton:@"购买" actionBlock:^{
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件网页地址] options:@{} completionHandler:nil];
+                [alert alertDismissAnimationIsCompleted:^{
+                    if (textF.text.length==0) {
+                        [self YZTC:@"请输入激活码"];
+                    }else{
+                        [self yanzhengAndUseIt:textF.text];
+                    }
                 }];
-            }
+                [alert showEdit:@"授权" subTitle:string closeButtonTitle:@"授权" duration:0];
+            });
             
-            [alert alertDismissAnimationIsCompleted:^{
-                if (textF.text.length==0) {
-                    [self YZTC:@"请输入激活码"];
-                }else{
-                    [self yanzhengAndUseIt:textF.text];
-                }
-            }];
-            [alert showEdit:@"授权" subTitle:string closeButtonTitle:@"授权" duration:0];
             
         }
     }
     
 }
 
-
-#pragma mark --- 获取本次打开的BSphpSeSsL 作为在线判断
+#pragma mark ---获取本次打开的BSphpSeSsL 作为在线判断
 
 - (void)getBSphpSeSsL:(void (^)(void))completion {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -221,13 +225,13 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             }
         }
     } failure:^(NSError *error) {
-        //NSLog(@"BSphpSeSsL获取失败=%@",error);
+        NSLog(@"BSphpSeSsL获取失败=%@",error);
     }];
     
 }
 
 
-#pragma mark --- 软件信息
+#pragma mark ---软件信息
 
 - (void)getXinxi:(void (^)(void))completion {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -243,7 +247,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dict) {
             软件信息=dict[@"response"][@"data"];
-            //NSLog(@"软件信息=%@",软件信息);
+            NSLog(@"软件信息=%@",软件信息);
             NSArray *arr = [软件信息 componentsSeparatedByString:@"|"];
             软件版本号=arr[0];
             软件公告=arr[1];
@@ -276,12 +280,12 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             
         }
     } failure:^(NSError *error) {
-        //NSLog(@"getMiao获取失败=%@",error);
+        NSLog(@"getMiao获取失败=%@",error);
     }];
     
 }
 
-#pragma mark --- 心跳定期验证 查询卡串状态 到期 冻结 删除 等
+#pragma mark ---心跳定期验证 查询卡串状态 到期 冻结 删除 等
 
 - (void)getXinTiao{
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -297,29 +301,29 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         if (dict) {
             NSString*DRBool = dict[@"response"][@"data"];
             if ([DRBool containsString:@"5031"]) {
-                //NSLog(@"验证正常：%@",DRBool);
+                NSLog(@"验证正常：%@",DRBool);
                 [self getXinxi:^{
                     验证状态=YES;
                     
                 }];
             }else if ([DRBool containsString:@"5030"]) {
-                //NSLog(@"验证到期：%@",DRBool);
+                NSLog(@"验证到期：%@",DRBool);
                 [self YZTC:[NSString stringWithFormat:@"卡密到期-到期时间\n%@",到期时间]];
                 验证状态=NO;
-                //NSLog(@"用户在线中-返回：%@",DRBool);
+                NSLog(@"用户在线中-返回：%@",DRBool);
             }else if ([DRBool containsString:@"1085"]) {
-                //NSLog(@"验证冻结：%@",DRBool);
+                NSLog(@"验证冻结：%@",DRBool);
                 [self YZTC:@"卡密被冻结"];
                 验证状态=NO;
-                //NSLog(@"用户在线中-返回：%@",DRBool);
+                NSLog(@"用户在线中-返回：%@",DRBool);
             }else if ([DRBool containsString:@"1079"]) {
-                //NSLog(@"被迫下线：%@",DRBool);
+                NSLog(@"被迫下线：%@",DRBool);
                 [self showText:@"被迫下线" message:@"卡密在其他设备APP登录\n设备数量-在线APP超过限制" Exit:NO];
                 验证状态=YES;
                 
             }else{
                 验证状态=NO;
-                //NSLog(@"验证失败-状态码：%@",DRBool);
+                NSLog(@"验证失败-状态码：%@",DRBool);
                 [self YZTC:[NSString stringWithFormat:@"验证失败-状态码\n%@",DRBool]];
             }
             
@@ -329,7 +333,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 }
 
 
- #pragma mark ---定期验证 查询卡串状态 到期 冻结 删除 等
+#pragma mark ---定期验证 查询卡串状态 到期 冻结 删除 等
 
 - (void)getDeng{
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -346,20 +350,19 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             NSString*DRBool = dict[@"response"][@"data"];
             if ([DRBool containsString:@"1080"]) {
                 验证状态=YES;
-                //NSLog(@"用户在线中-返回：%@",DRBool);
+                NSLog(@"用户在线中-返回：%@",DRBool);
             }else{
                 验证状态=NO;
-                //NSLog(@"用户不在在线-返回：%@",DRBool);
+                NSLog(@"用户不在在线-返回：%@",DRBool);
             }
-           
+            
         }
     } failure:^(NSError *error) {
     }];
 }
 
 
-#pragma mark --- 公告
-
+#pragma mark ---公告弹窗
 - (void)getGongGao:(void (^)(void))completion
 {
     NSString*本地公告=[[NSUserDefaults standardUserDefaults] objectForKey:@"公告"];
@@ -371,38 +374,39 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         [[NSUserDefaults standardUserDefaults] setObject:软件公告 forKey:@"公告"];
         //发生更新才弹
         if ([弹窗类型 containsString:@"YES"]) {
-            //系统弹窗
-            UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:软件公告 preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //系统弹窗
+                UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:软件公告 preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     if (completion) {
                         completion();
                     }
-                });
-                
-            }];
-            [alert addAction:cancelAction];
-            [rootViewController presentViewController:alert animated:YES completion:nil];
+                }];
+                [alert addAction:cancelAction];
+                [rootViewController presentViewController:alert animated:YES completion:nil];
+            });
+            
             
         }else{
-            //SCL弹窗
-            SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-            alert.customViewColor=[UIColor systemGreenColor];
-            alert.shouldDismissOnTapOutside = NO;
-            [alert addButton:@"确定" actionBlock:^{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //SCL弹窗
+                SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                alert.customViewColor=[UIColor systemGreenColor];
+                alert.shouldDismissOnTapOutside = NO;
+                [alert addButton:@"确定" actionBlock:^{
                     if (completion) {
                         completion();
                     }
-                });
-            }];
-            [alert showQuestion:@"公告" subTitle:软件公告 closeButtonTitle:nil duration:5];
+                }];
+                [alert showQuestion:@"公告" subTitle:软件公告 closeButtonTitle:nil duration:5];
+            });
+            
             
         }
     }
     
-   
+    
     
 }
 
@@ -414,50 +418,54 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         验证状态=NO;
         //提示版本更新
         if ([弹窗类型 containsString:@"YES"]) {
-            //系统弹窗
-            UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"发现新版" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *cancelAction;
-            if (软件url地址.length>5) {
-                cancelAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件url地址] options:@{} completionHandler:^(BOOL success) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //系统弹窗
+                UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"发现新版" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *cancelAction;
+                if (软件url地址.length>5) {
+                    cancelAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件url地址] options:@{} completionHandler:^(BOOL success) {
+                            exit(0);
+                        }];
+                    }];
+                }else{
+                    cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        // 取消操作
                         exit(0);
                     }];
-                }];
-            }else{
-               cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    // 取消操作
-                    exit(0);
-                }];
-            }
-            [alert addAction:cancelAction];
-            [rootViewController presentViewController:alert animated:YES completion:nil];
-
+                }
+                [alert addAction:cancelAction];
+                [rootViewController presentViewController:alert animated:YES completion:nil];
+            });
         }else{
-            //SCL弹窗
-            SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-            alert.customViewColor=[UIColor systemGreenColor];
-            alert.shouldDismissOnTapOutside = NO;
-            
-            if (软件url地址.length>5) {
-                [alert addButton:@"更新" actionBlock:^{
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件url地址] options:@{} completionHandler:^(BOOL success) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //SCL弹窗
+                SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                alert.customViewColor=[UIColor systemGreenColor];
+                alert.shouldDismissOnTapOutside = NO;
+                
+                if (软件url地址.length>5) {
+                    [alert addButton:@"更新" actionBlock:^{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:软件url地址] options:@{} completionHandler:^(BOOL success) {
+                            exit(0);
+                        }];
+                    }];
+                }else{
+                    [alert addButton:@"确定" actionBlock:^{
                         exit(0);
                     }];
-                }];
-            }else{
-                [alert addButton:@"确定" actionBlock:^{
-                    exit(0);
-                }];
-            }
+                }
+                
+                [alert showNotice:@"发现更新" subTitle:@"新版发布请更新" closeButtonTitle:nil duration:0];
+            });
             
-            [alert showNotice:@"发现更新" subTitle:@"新版发布请更新" closeButtonTitle:nil duration:0];
             
         }
         
     }else{
-//        //NSLog(@"版本验证通过");
+        //        NSLog(@"版本验证通过");
         if (completion) {
             completion();
         }
@@ -466,7 +474,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 }
 
 
-#pragma mark ---验证使用
+
+#pragma mark --- 验证使用
 
 - (void)yanzhengAndUseIt:(NSString*)km{
     //参数开始组包
@@ -487,7 +496,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         if (dict) {
             //这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
             if(![dict[@"response"][@"appsafecode"] isEqualToString:appsafecode]){
-                //NSLog(@"2");
+                NSLog(@"2");
                 dict[@"response"][@"data"] = @"-2000";
             }
             
@@ -498,33 +507,41 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 NSArray *arr = [dataString componentsSeparatedByString:@"|"];
                 if (arr.count >= 6)
                 {
-                    //NSLog(@"验证成功=%@",dataString);
+                    NSLog(@"验证成功=%@",dataString);
                     到期时间=arr[4];
                     NSString*fuwuqijqm=arr[2];
-                    [getKeychain addKeychainData:km forKey:@"ShiSanGeKM"];
+                    [getKeychain addKeychainData:km forKey:@"ShiSanGeDZKM"];
                     [self getGongGao:^{
                         if (!验证状态) {
                             [self jiebangTC:fuwuqijqm void:^{
                                 //每次启动都弹出
                                 NSString*str=[NSString stringWithFormat:@"验证成功-到期时间\n%@",arr[4]];
+                                NSString*dqsj=arr[4];
+                                [[NSUserDefaults standardUserDefaults] setObject:dqsj forKey:@"到期时间"];
+                                [[NSUserDefaults standardUserDefaults] setObject:km forKey:@"卡密"];
                                 if ([到期时间弹窗 containsString:@"YES"]) {
-                                    [self showText:str message:nil Exit:NO];
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                        [self showText:str message:nil Exit:NO];
+                                    });
+                                    
                                 }else{
                                     BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
                                     //仅仅首次激活弹窗
                                     if (!判断是否已经弹窗过) {
-                                        [self showText:str message:nil Exit:NO];
+                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            [self showText:str message:nil Exit:NO];
+                                        });
+                                        
                                         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
                                         //验证成功 方可执行后期功能
                                     }
-                                    
                                 }
                             }];
+                            //启动你的图标辅助
                             
                             
                         }
                         验证状态=YES;
-                        
                         static dispatch_once_t onceToken;
                         dispatch_once(&onceToken, ^{
                             dsq=[NSTimer scheduledTimerWithTimeInterval:BS_DSQ repeats:YES block:^(NSTimer * _Nonnull timer) {
@@ -540,8 +557,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     
                 }
             }else{
-                //NSLog(@"dataString=%@",dataString);
-                [getKeychain removeKeychainDataForKey:@"ShiSanGeKM"];
+                NSLog(@"dataString=%@",dataString);
+                [getKeychain removeKeychainDataForKey:@"ShiSanGeDZKM"];
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"到期弹窗"];
                 //验证失败
                 [self YZTC:dataString];
@@ -555,7 +572,6 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     
 }
 
-
 #pragma mark ---获取时间
 - (NSString *)getSystemDate{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -567,13 +583,15 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 }
 
 
-#pragma mark ---获取设备UDID码
+
+#pragma mark --- 获取UDID码
+
 - (void)getUDID:(void (^)(void))completion
 {
     //读取本地UDID
-    设备特征码=[getKeychain getKeychainDataForKey:@"ShiSanGeUDID"];
+    设备特征码=[getKeychain getKeychainDataForKey:@"DZUDID"];
     
-    //NSLog(@"ShiSanGeUDID=%@",设备特征码);
+    NSLog(@"ShiSanGeUDID=%@",设备特征码);
     //如果钥匙串没有UDID 折通过用户id去读取服务器获取
     if (设备特征码.length<5 || 设备特征码==nil || 设备特征码==NULL) {
         //判断越狱ROOT注入情况下 直接读取
@@ -582,10 +600,9 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         $MGCopyAnswer = reinterpret_cast<CFStringRef (*)(CFStringRef)>(dlsym(gestalt, "MGCopyAnswer"));
         设备特征码=(__bridge NSString *)$MGCopyAnswer(CFSTR("SerialNumber"));
         if (设备特征码.length>6 && completion) {
-            [getKeychain addKeychainData:设备特征码 forKey:@"ShiSanGeUDID"];
+            [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
             completion();
         }
-        
         //非越狱 不存在就读取服务器安装描述文件获取
         NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
         NSArray *urlTypes = dict[@"CFBundleURLTypes"];
@@ -597,21 +614,23 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         //生成随机用户ID
         NSString* suijiid;
         //读取钥匙串用户ID
-        suijiid=[getKeychain getKeychainDataForKey:@"suijiid"];
-        //NSLog(@"suijiid=%@",suijiid);
+        suijiid=[getKeychain getKeychainDataForKey:@"SJUSERID"];
+        NSLog(@"suijiid=%@",suijiid);
         //不存在就储存随机生成id并且储存钥匙串
         if (suijiid.length<=5) {
-            if (@available(iOS 14.0, *)) {
-                suijiid = [[ASIdentifierManager sharedManager] advertisingIdentifier].UUIDString;
-            } else {
-                suijiid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+            NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
+            for (int i = 0; i < 20; i++) {
+                [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
             }
-            [getKeychain addKeychainData:suijiid forKey:@"suijiid"];
-            //NSLog(@"生成随机ID=%d",a);
+            NSLog(@"随机生成的码：%@", randomString);
+            suijiid=[NSString stringWithFormat:@"%@",randomString];
+            [getKeychain addKeychainData:suijiid forKey:@"SJUSERID"];
+            NSLog(@"生成随机ID=%@",suijiid);
         }
         //通过ID读取服务器的UDID
         NSString *requestStr = [NSString stringWithFormat:@"%@udid%@.txt",UDID_HOST,suijiid];
-        //NSLog(@"requestStr=%@",requestStr);
+        NSLog(@"requestStr=%@",requestStr);
         // 创建 NSURLSession 对象
         NSURLSession *session = [NSURLSession sharedSession];
         // 创建 NSURL 对象
@@ -620,72 +639,68 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error) {
                 // URL 返回错误
-                //NSLog(@"URL 返回错误：%@", error);
+                NSLog(@"URL 返回错误：%@", error);
                 [self showText:@"UDID获取错误" message:[NSString stringWithFormat:@"%@",error] Exit:YES];
             } else {
                 // URL 正常
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 if ([httpResponse statusCode] == 404) {
                     
-                    //NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
+                    NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
                     //如果有错误 证明服务器没有 那就安装描述文件获取
                     NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@",UDID_HOST,suijiid,urlSchemes];
-                    //NSLog(@"URL 地址：%@", url);
+                    NSLog(@"URL 地址：%@", url);
                     if ([弹窗类型 containsString:@"YES"]) {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"安装描述文件-获取绑定机器码" preferredStyle:UIAlertControllerStyleAlert];
-                        [alertController addAction:[UIAlertAction actionWithTitle:@"退出应用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            exit(0);
-                        }]];
-                        [alertController addAction:[UIAlertAction actionWithTitle:@"确定安装" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"安装描述文件-获取绑定机器码" preferredStyle:UIAlertControllerStyleAlert];
+                            [alertController addAction:[UIAlertAction actionWithTitle:@"退出应用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 exit(0);
-                            }];
+                            }]];
+                            [alertController addAction:[UIAlertAction actionWithTitle:@"确定安装" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                                    exit(0);
+                                }];
+                                
+                            }]];
                             
-                        }]];
+                            UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                            [rootViewController presentViewController:alertController animated:YES completion:nil];
+                        });
                         
-                        UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                        [rootViewController presentViewController:alertController animated:YES completion:nil];
                     }else{
-                        SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-                        alert.customViewColor=[UIColor systemGreenColor];
-                        alert.shouldDismissOnTapOutside = NO;
-                        [alert addButton:@"退出应用" actionBlock:^{
-                            exit(0);
-                        }];
-                        [alert addButton:@"确定安装" actionBlock:^{
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+                            alert.customViewColor=[UIColor systemGreenColor];
+                            alert.shouldDismissOnTapOutside = NO;
+                            [alert addButton:@"退出应用" actionBlock:^{
                                 exit(0);
                             }];
-                        }];
-                        [alert showQuestion:@"安装描述文件" subTitle:@"获取机器码进行卡密绑定" closeButtonTitle:nil duration:0];
+                            [alert addButton:@"确定安装" actionBlock:^{
+                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                                    exit(0);
+                                }];
+                            }];
+                            [alert showQuestion:@"安装描述文件" subTitle:@"获取机器码进行卡密绑定" closeButtonTitle:nil duration:0];
+                        });
+                        
                     }
                 } else {
-                    //NSLog(@"URL 正常");
+                    NSLog(@"URL 正常");
                     // 打印返回值非404的html字符串
                     NSString *htmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                    //NSLog(@"URL 返回的 HTML 字符串：%@", htmlString);
+                    NSLog(@"URL 返回的 HTML 字符串：%@", htmlString);
                     //删除换行和空格
                     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
                     设备特征码 = [htmlString stringByTrimmingCharactersInSet:whitespace];
                     //如果没有错误 储存UDID到钥匙串
-                    [getKeychain addKeychainData:设备特征码 forKey:@"ShiSanGeUDID"];
-                    //删除服务器卡密
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        //请求的url
-                        NSString *requestStr = [NSString stringWithFormat:@"%@udid.php?rm=%@",UDID_HOST,suijiid];;
-                        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
-                        dispatch_async(dispatch_get_main_queue(), ^{ //回到主线程的方法
-                            NSLog(@"删除成功 :%@",htmlStr);
-                        });
-                        
-                    });
+                    [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
                     if (completion) {
                         completion();
                     }
                 }
             }
         }];
-
+        
         // 启动任务
         [dataTask resume];
         
@@ -720,10 +735,16 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             }
             NSString *dataString = dict[@"response"][@"data"];
             if([dataString containsString:@"成功"]){
-                [getKeychain removeKeychainDataForKey:@"ShiSanGeKM"];
-                [self showText:@"成功" message:dataString Exit:YES];
+                [getKeychain removeKeychainDataForKey:@"ShiSanGeDZKM"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self showText:@"成功" message:dataString Exit:YES];
+                });
+                
             }else{
-                [self showText:@"失败" message:dataString Exit:YES];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self showText:@"失败" message:dataString Exit:YES];
+                });
+                
             }
             
         }
@@ -734,20 +755,21 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     
 }
 
+
 #pragma mark ---解绑弹窗
 - (void)jiebangTC:(NSString*)fwqjqm void:(void (^)(void))completion
 {
     if ([支持解绑 containsString:@"YES"]) {
         if (![fwqjqm containsString:设备特征码]) {
             NSString*str=[NSString stringWithFormat:@"卡密绑定机器非本机\n本机序列号\n%@\n卡密绑定序号\n%@\n解绑将扣除时间\n%@秒",设备特征码,fwqjqm,解绑扣除时间];
-            //NSLog(@"解绑扣除时间=%@",解绑扣除时间);
+            NSLog(@"解绑扣除时间=%@",解绑扣除时间);
             if ([弹窗类型 containsString:@"YES"]) {
+                NSLog(@"系统弹窗时间=%@",解绑扣除时间);
+                //系统弹窗
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //NSLog(@"系统弹窗时间=%@",解绑扣除时间);
-                    //系统弹窗
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定解绑" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeKM"];
+                        NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
                         [self jiebang:km];
                     }];
                     UIAlertAction *okAction2 = [UIAlertAction actionWithTitle:@"取消退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -757,6 +779,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     [alertController addAction:okAction2];
                     UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
                     [rootViewController presentViewController:alertController animated:YES completion:nil];
+                    
                 });
             }else{
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -765,13 +788,14 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     alert.customViewColor=[UIColor systemGreenColor];
                     alert.shouldDismissOnTapOutside = NO;
                     [alert addButton:@"确定解绑" actionBlock:^{
-                        NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeKM"];
+                        NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
                         [self jiebang:km];
                     }];
                     [alert addButton:@"取消退出" actionBlock:^{
                         exit(0);
                     }];
                     [alert showQuestion:@"警告" subTitle:str closeButtonTitle:nil duration:0.0f];
+                    
                 });
             }
         }else{
@@ -783,7 +807,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }
 }
 
-#pragma mark --- 试用
+
+#pragma mark ---试用
 - (void)shiyong:(void (^)(void))completion{
     if ([试用模式 containsString:@"YES"]) {
         //请求的url
@@ -794,7 +819,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         NSString *shiyongURL=arr3[0];
         NSString *requestStr = [NSString stringWithFormat:@"%@shiyong.php?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
-        //NSLog(@"htmlStr=%@",htmlStr);
+        NSLog(@"htmlStr=%@",htmlStr);
         if ([htmlStr containsString:@"没查到记录"]) {
             //没查到记录 试用 随机生成15位卡密
             NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -802,7 +827,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             for (int i = 0; i < 15; i++) {
                 [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
             }
-            //NSLog(@"随机生成的码：%@", randomString);
+            NSLog(@"随机生成的码：%@", randomString);
             
             //开始注册卡密
             NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -821,27 +846,41 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 if (dict) {
                     NSString*dataString = dict[@"response"][@"data"];
                     if ([dataString containsString:@"|1081|"]) {
-//                        NSArray *arr = [dataString componentsSeparatedByString:@"|"];
-                        //NSLog(@"卡密注册成功：%@ 到期时间：%@  BS后台-软件配置-基础配置 首次使用送 ",randomString,arr[4]);
+                        NSArray *arr = [dataString componentsSeparatedByString:@"|"];
+                        if (arr) {
+                            
+                        }
+                        NSLog(@"卡密注册成功：%@ 到期时间：%@  BS后台-软件配置-基础配置 首次使用送 ",randomString,arr[4]);
                         //注册成功 储存到钥匙串
-                        [getKeychain addKeychainData:randomString forKey:@"ShiSanGeKM"];
-                        completion();
+                        [getKeychain addKeychainData:randomString forKey:@"ShiSanGeDZKM"];
+                        if (completion) {
+                            completion();
+                        }
                     }else{
-                        completion();
+                        if (completion) {
+                            completion();
+                        }
                     }
-                   
+                    
                 }
             } failure:^(NSError *error) {
-                //NSLog(@"注册失败：%@",error);
-                completion();
+                NSLog(@"注册失败：%@",error);
+                if (completion) {
+                    completion();
+                }
             }];
         }else{
             //有查到记录 试用失败 直接回调
-            completion();
+            if (completion) {
+                completion();
+            }
         }
         
     }else{
-        completion();
+        if (completion) {
+            completion();
+        }
+        
     }
 }
 
@@ -853,11 +892,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     设备特征码=[getKeychain getKeychainDataForKey:@"ShiSanGeIDFV"];
     if (设备特征码==NULL || 设备特征码.length<5 ) {
         //钥匙串没有就读取当前App的IDFA 并且储存为统一钥匙串
-        if (@available(iOS 14.0, *)) {
-            设备特征码 = [[ASIdentifierManager sharedManager] advertisingIdentifier].UUIDString;
-        } else {
-            设备特征码 = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        }
+        设备特征码 = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         //储存
         [getKeychain addKeychainData:设备特征码 forKey:@"ShiSanGeIDFV"];
         //最后才回调 避免读取钥匙串为空也回调null为机器码
@@ -873,35 +908,37 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     
 }
 
-#pragma mark --- 消息提示
+
+#pragma mark ---弹窗
 -(void)showText:(NSString* _Nullable)Title message:(NSString* _Nullable)message Exit:(BOOL)Exit
 {
     if ([弹窗类型 containsString:@"YES"]) {
-        //系统弹窗
-        UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            // 确定操作
-            if(Exit){
-                exit(0);
-            }
-        }];
-        [alert addAction:okAction];
-        
-        [rootViewController presentViewController:alert animated:YES completion:nil];
-
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //系统弹窗
+            UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                // 确定操作
+                if(Exit){
+                    exit(0);
+                }
+            }];
+            [alert addAction:okAction];
+            [rootViewController presentViewController:alert animated:YES completion:nil];
+        });
     }else{
-        //SCL弹窗
-        SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
-        alert.customViewColor=[UIColor systemGreenColor];
-        alert.shouldDismissOnTapOutside = NO;
-        [alert addButton:@"确定" actionBlock:^{
-            if(Exit){
-                exit(0);
-            }
-        }];
-        [alert showEdit:Title subTitle:message closeButtonTitle:nil duration:0];
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //SCL弹窗
+            SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
+            alert.customViewColor=[UIColor systemGreenColor];
+            alert.shouldDismissOnTapOutside = NO;
+            [alert addButton:@"确定" actionBlock:^{
+                if(Exit){
+                    exit(0);
+                }
+            }];
+            [alert showEdit:Title subTitle:message closeButtonTitle:nil duration:0];
+        });
     }
 }
 @end
