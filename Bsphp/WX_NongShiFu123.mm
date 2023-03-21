@@ -620,7 +620,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         if (suijiid.length<=5) {
             NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 10; i++) {
                 [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
             }
             NSLog(@"随机生成的码：%@", randomString);

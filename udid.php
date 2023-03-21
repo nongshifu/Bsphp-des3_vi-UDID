@@ -29,7 +29,7 @@
 */
 
 // 是否是需要签名 1需要 2不需要
-$签名=1;
+$签名=2;
 
 //$数据库表前缀 搭建BS 填写数据库时候的表前缀 默认bsphp_
 $数据库表前缀="bsphp_";
@@ -40,13 +40,16 @@ $数据库表前缀="bsphp_";
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 $domain = $_SERVER['HTTP_HOST'];
 $path = $_SERVER['REQUEST_URI'];
-$域名 = $protocol . $domain . $path;
-// echo "当前页面的完整域名是：" . $域名. "<br>";
+$url = $protocol . $domain . $path;
+// echo "当前页面的完整域名是：" . $url. "<br>";
+$arr = explode("udid.php", $url);
+$域名=$arr[0];
+// echo "域名是：" . $域名. "<br>";
 $数据库表前缀="bsphp_";
 $doc_root = $_SERVER['DOCUMENT_ROOT'];
 // echo "当前站点目录是：" . $doc_root. "<br>";
 //自动加载数据库
-require("$doc_root/Plug/Plug.php");
+include("$doc_root/Plug/Plug.php");
 // 以下逻辑无需修改
 $id=$_GET["id"];
 $daihao=$_GET["daihao"];
@@ -145,7 +148,7 @@ if(strlen($UDID)>5){
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>".$域名."?id=".$id."</string>
+            <string>".$域名."udid.php?id=".$id."</string>
             
             <key>DeviceAttributes</key>
             <array>
