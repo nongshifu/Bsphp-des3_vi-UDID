@@ -8,7 +8,7 @@
 //  Copyright © 2019年 xiaozhou. All rights reserved.
 //
 #import <SystemConfiguration/SystemConfiguration.h>
-#import "Config.h"11 minutes ago
+#import "Config.h"
 #import "WX_NongShiFu123.h"
 #import <UIKit/UIKit.h>
 #import "getKeychain.h"
@@ -40,11 +40,13 @@ static NSTimer*dsq;
  */
 
 + (void)load {
-    //    [GIKeychain deleteKeychainDataForKey:@"DZUDID"];
+    //测试的时候 可以取消注释 启动一次便可清除
+//    [getKeychain removeKeychainDataForKey:@"DZUDID"];//清除UDID
+//    [getKeychain removeKeychainDataForKey:@"SJUSERID"];//清除用户ID
+//    [getKeychain removeKeychainDataForKey:@"ShiSanGeDZKM"];//清除卡密
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"公告"];//清除公告
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"到期时间"];//清除到期时间
     
-    //    [GIKeychain addKeychainData:@"" forKey:@"DZUDID"];
-    //    [[WX_NongShiFu123 alloc] BSPHP];
-    //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"公告"];
 }
 
 #pragma mark --- 验证流程
@@ -126,7 +128,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }else{
         
         if ([弹窗类型 containsString:@"YES"]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
                 UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:string preferredStyle:UIAlertControllerStyleAlert];
@@ -174,7 +176,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             
             
         }else{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 //SCL弹窗
                 SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
                 alert.customViewColor=[UIColor systemGreenColor];
@@ -303,7 +305,11 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             if ([DRBool containsString:@"5031"]) {
                 NSLog(@"验证正常：%@",DRBool);
                 [self getXinxi:^{
-                    验证状态=YES;
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [self getHMD:^{
+                            验证状态=YES;
+                        }];
+                    });
                     
                 }];
             }else if ([DRBool containsString:@"5030"]) {
@@ -333,32 +339,25 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 }
 
 
-#pragma mark ---定期验证 查询卡串状态 到期 冻结 删除 等
-
-- (void)getDeng{
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    NSString *appsafecode = [self getSystemDate];//设置一次过期判断变量
-    param[@"api"] = @"getlkinfo.ic";
-    param[@"BSphpSeSsL"] = self.baseDict[@"response"][@"data"];
-    param[@"date"] = [self getSystemDate];
-    param[@"md5"] = @"";
-    param[@"mutualkey"] = BSPHP_MUTUALKEY;
-    param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
-    [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dict) {
-            NSString*DRBool = dict[@"response"][@"data"];
-            if ([DRBool containsString:@"1080"]) {
-                验证状态=YES;
-                NSLog(@"用户在线中-返回：%@",DRBool);
-            }else{
-                验证状态=NO;
-                NSLog(@"用户不在在线-返回：%@",DRBool);
-            }
+#pragma mark ---读取拉黑状态
+-(void)getHMD:(void (^)(void))completion{
+    //请求的url
+    NSString *requestStr = [NSString stringWithFormat:@"%@udid.php?code=%@",UDID_HOST,设备特征码];
+    NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //回到主线程的方法
+        if ([htmlStr containsString:@"黑名单用户"]) {
+            NSArray *strarr = [htmlStr componentsSeparatedByString:@"黑名单用户"];
+            NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"联系管理员解除"];
+            NSString*str=[NSString stringWithFormat:@"%@\n联系管理员解除",strarr2[0]];
             
+            [self showText:@"设备拉黑" message:str Exit:YES];
         }
-    } failure:^(NSError *error) {
-    }];
+        
+    });
+    if (completion) {
+        completion();
+    }
 }
 
 
@@ -374,7 +373,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         [[NSUserDefaults standardUserDefaults] setObject:软件公告 forKey:@"公告"];
         //发生更新才弹
         if ([弹窗类型 containsString:@"YES"]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
                 UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:软件公告 preferredStyle:UIAlertControllerStyleAlert];
@@ -389,7 +388,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             
             
         }else{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 //SCL弹窗
                 SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
                 alert.customViewColor=[UIColor systemGreenColor];
@@ -514,46 +513,54 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     [self getGongGao:^{
                         if (!验证状态) {
                             [self jiebangTC:fuwuqijqm void:^{
-                                //每次启动都弹出
-                                NSString*str=[NSString stringWithFormat:@"验证成功-到期时间\n%@",arr[4]];
-                                NSString*dqsj=arr[4];
-                                [[NSUserDefaults standardUserDefaults] setObject:dqsj forKey:@"到期时间"];
-                                [[NSUserDefaults standardUserDefaults] setObject:km forKey:@"卡密"];
-                                if ([到期时间弹窗 containsString:@"YES"]) {
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                        [self showText:str message:nil Exit:NO];
-                                    });
-                                    
-                                }else{
-                                    BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
-                                    //仅仅首次激活弹窗
-                                    if (!判断是否已经弹窗过) {
+                                [self getHMD:^{
+                                    //每次启动都弹出
+                                    NSString*str=[NSString stringWithFormat:@"验证成功-到期时间\n%@",arr[4]];
+                                    NSString*dqsj=arr[4];
+                                    [[NSUserDefaults standardUserDefaults] setObject:dqsj forKey:@"到期时间"];
+                                    [[NSUserDefaults standardUserDefaults] setObject:km forKey:@"卡密"];
+                                    if ([到期时间弹窗 containsString:@"YES"]) {
                                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                             [self showText:str message:nil Exit:NO];
                                         });
                                         
-                                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
-                                        //验证成功 方可执行后期功能
+                                    }else{
+                                        BOOL 判断是否已经弹窗过=[[NSUserDefaults standardUserDefaults] boolForKey:@"到期弹窗"];
+                                        //仅仅首次激活弹窗
+                                        if (!判断是否已经弹窗过) {
+                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                [self showText:str message:nil Exit:NO];
+                                            });
+                                            
+                                            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"到期弹窗"];
+                                            
+                                        }
                                     }
-                                }
+                                    验证状态=YES;
+                                    static dispatch_once_t onceToken;
+                                    dispatch_once(&onceToken, ^{
+                                        dsq=[NSTimer scheduledTimerWithTimeInterval:BS_DSQ repeats:YES block:^(NSTimer * _Nonnull timer) {
+                                            if (验证状态) {
+                                                [self getXinTiao];
+                                            }
+                                        }];
+                                        [[NSRunLoop currentRunLoop] addTimer:dsq forMode:NSRunLoopCommonModes];
+                                        
+                                        //启动你的图标辅助
+                                        
+                                        
+                                    });
+                                    
+                                    
+                                }];
+                                
                             }];
-                            //启动你的图标辅助
+                            
                             
                             
                         }
-                        验证状态=YES;
-                        static dispatch_once_t onceToken;
-                        dispatch_once(&onceToken, ^{
-                            dsq=[NSTimer scheduledTimerWithTimeInterval:BS_DSQ repeats:YES block:^(NSTimer * _Nonnull timer) {
-                                if (验证状态) {
-                                    [self getXinTiao];
-                                }
-                            }];
-                            [[NSRunLoop currentRunLoop] addTimer:dsq forMode:NSRunLoopCommonModes];
-                            
-                        });
+                        
                     }];
-                    
                     
                 }
             }else{
@@ -590,9 +597,13 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 {
     //读取本地UDID
     设备特征码=[getKeychain getKeychainDataForKey:@"DZUDID"];
-    
     NSLog(@"ShiSanGeUDID=%@",设备特征码);
     //如果钥匙串没有UDID 折通过用户id去读取服务器获取
+    //请求的url
+    NSArray *strarr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
+    NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"&m="];
+    NSString* daihao=strarr2[0];
+    
     if (设备特征码.length<5 || 设备特征码==nil || 设备特征码==NULL) {
         //判断越狱ROOT注入情况下 直接读取
         static CFStringRef (*$MGCopyAnswer)(CFStringRef);
@@ -620,7 +631,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         if (suijiid.length<=5) {
             NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 15; i++) {
                 [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
             }
             NSLog(@"随机生成的码：%@", randomString);
@@ -647,10 +658,6 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 // URL 正常
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 if ([httpResponse statusCode] == 404) {
-                    //请求的url
-                    NSArray *strarr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
-                    NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"&m="];
-                    NSString* daihao=strarr2[0];
                     NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
                     //如果有错误 证明服务器没有 那就安装描述文件获取
                     NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@&daihao=%@",UDID_HOST,suijiid,urlSchemes,daihao];
@@ -701,18 +708,29 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     NSString*NewOld=strarr[1];
                     NSString*heimingdan=strarr[2];
                     NSString*beizhu=strarr[3];
-                    设备特征码 = udidstr;
-                    //如果没有错误 储存UDID到钥匙串
-                    [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
-                    是否新用户=[NewOld containsString:@"新用户"];
                     //判断是否黑名单用户 是则拉黑提示备注内容 并且闪退
+                    NSString *remohcurl = [NSString stringWithFormat:@"%@udid.php?rm=%@",UDID_HOST,suijiid];
                     if ([heimingdan containsString:@"黑名单用户"]) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self showText:heimingdan message:beizhu Exit:YES];
-                        });
-                    }
-                    if (completion) {
-                        completion();
+                        [self remohc:remohcurl void:^{
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [getKeychain removeKeychainDataForKey:@"DZUDID"];
+                                [self showText:heimingdan message:beizhu Exit:YES];
+                            });
+                        }];
+                        
+                    }else{
+                        设备特征码 = udidstr;
+                        //如果没有错误 储存UDID到钥匙串
+                        [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
+                        是否新用户=[NewOld containsString:@"新用户"];
+                        [self remohc:remohcurl void:^{
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                if (completion) {
+                                    completion();
+                                }
+                            });
+                        }];
+                        
                     }
                 }
             }
@@ -728,7 +746,19 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }
     
 }
-
+- (void)remohc:(NSString*)url void:(void (^)(void))completion{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //请求的url
+        NSLog(@"删除缓存url=%@",url);
+        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
+        if(htmlStr){
+            if (completion) {
+                completion();
+            }
+        }
+        
+    });
+}
 #pragma mark ---解绑
 - (void)jiebang:(NSString*)km{
     //参数开始组包

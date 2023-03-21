@@ -29,14 +29,16 @@
 */
 
 // 是否是需要签名 1需要 2不需要
-$签名=2;
+$签名=1;
 
 //$数据库表前缀 搭建BS 填写数据库时候的表前缀 默认bsphp_
 $数据库表前缀="bsphp_";
 ?>
 
+
+
 <?php
-// 获取当前域名
+// 以下逻辑无需修改
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 $domain = $_SERVER['HTTP_HOST'];
 $path = $_SERVER['REQUEST_URI'];
@@ -50,21 +52,39 @@ $doc_root = $_SERVER['DOCUMENT_ROOT'];
 // echo "当前站点目录是：" . $doc_root. "<br>";
 //自动加载数据库
 include("$doc_root/Plug/Plug.php");
-// 以下逻辑无需修改
-$id=$_GET["id"];
-$daihao=$_GET["daihao"];
-$openurl=$_GET["openurl"];
+
+//获取URL参数
+$id = isset($_GET['id']) ? trim($_GET['id']) : '';
+$rm = isset($_GET['rm']) ? trim($_GET['rm']) : '';
+$openurl = isset($_GET['openurl']) ? trim($_GET['openurl']) : '';
+$daihao = isset($_GET['daihao']) ? trim($_GET['daihao']) : '';
+$code = isset($_GET['code']) ? trim($_GET['code']) : '';
+//判断是查询黑名单功能
+if(strlen($code)>5){
+    //获取udid=$code
+    $sql="SELECT * FROM `".$数据库表前缀."pattern_login` WHERE `L_key_info` LIKE '$code' AND `L_class` != 0 AND `L_beizhu` LIKE '%黑%'";
+    $info = plug_query_array($sql);
+    if($info){
+        if (strpos($info['L_beizhu'], '黑') !== false) {
+            // echo "字符串包含 '黑' 黑名单用户";
+        $code="黑名单用户".$info['L_beizhu']."联系管理员解除";
+        
+        }
+    }
+    
+    
+}
+// 获取描述文件POST 参数
 $data = file_get_contents('php://input');
 $plistBegin   = '<string>';
 $plistEnd   = '</string>';
-
 $pos1 = strpos($data, $plistBegin);
 $pos2 = strpos($data, $plistEnd);
 $data2 = substr ($data,$pos1,$pos2-$pos1);
+//解析出UDID
 $UDID = str_replace("<string>", "", $data2);
-//删除缓存-
-$rm = isset($_GET['rm']) ? trim($_GET['rm']) : '';
 
+//删除缓存-
 if (strlen($rm) > 0 && strlen($rm) <= 50) {
     $dir = '.';
     $keyword = '/^' . preg_quote($rm, '/') . '$/';
@@ -74,6 +94,7 @@ if (strlen($rm) > 0 && strlen($rm) <= 50) {
         
         if (is_file($file) && (strpos($file, $rm) !== false)) {
             // echo $file."<br>";
+            
             if (unlink($file)) {
                 // echo "File {$file} deleted successfully\n";
                 $count++;
@@ -92,40 +113,49 @@ if (strlen($rm) > 0 && strlen($rm) <= 50) {
     // echo "Invalid parameter.";
 }
 
-//储存OPENURL
+//储存OPENURL 既跳转app的链接
 if(strlen($openurl)>5){
     $fp = fopen($id.'.txt', 'w');
     fwrite($fp, $openurl);
     fclose($fp);
 }
-// UDID不为空 跳转APP打开
-if(strlen($UDID)>5){
+// UDID不为空证明获取到 跳转APP打开等后续操作
+if(strlen($UDID)>10){
     //查询是否在黑名单
     $sql="SELECT * FROM `".$数据库表前缀."pattern_login` WHERE `L_key_info` LIKE '$UDID' AND `L_class` != 0 AND `L_beizhu` LIKE '%黑%'";
     $info = plug_query_array($sql);
     if($info){
+        //读取备注
         $备注=$info['L_beizhu'];
-        if (strpos($备注, '黑') !== false) {
-            // echo "字符串包含 '黑' 黑名单用户";
-            $UDID=$UDID."|老用户|黑名单用户|".$备注;
-        } else {
-            // echo "字符串不包含 '黑' 正常用户";
-            //查询是否存在记录 存在就老用户 不存在 新用户
-            $sql = "SELECT L_key_info FROM bsphp_pattern_login WHERE L_key_info = '$UDID' AND `L_daihao`='$daihao'";
-            $info = plug_query_array($sql);
-            if($info){
-                //有记录
-                $UDID=$UDID."|老用户|正常用户|".$备注;
-            }else{
-                //有记录
-                $UDID=$UDID."|新用户|正常用户|".$备注;
-            }
+    }else{
+        //没有备注
+        $备注="";
+    }
+    //判断备注内容 包含关键字:黑 就是拉黑用户
+    if (strpos($备注, '黑') !== false) {
+        // echo "字符串包含 '黑' 黑名单用户";
+        $write=$UDID."|老用户|黑名单用户|".$备注;
+        
+    } else {
+        // echo "字符串不包含 '黑' 正常用户";
+        //查询是否存在记录 存在就老用户 不存在 新用户
+        $sql = "SELECT L_key_info FROM bsphp_pattern_login WHERE L_key_info = '$UDID' AND `L_daihao`='$daihao'";
+        $info = plug_query_array($sql);
+        if($info){
+            //有记录
+            $write=$UDID."|老用户|正常用户|".$备注;
+            
+        }else{
+            //有记录
+            $write=$UDID."|新用户|正常用户|".$备注;
+            
         }
         
     }
+        
     // 储存udid
     $fp = fopen("./udid".$id.'.txt', 'w');
-    fwrite($fp, $UDID);
+    fwrite($fp, $write);
     fclose($fp);
     
     //判断是否为空 没有openurl 则是跳转会浏览器 提示用户自行打开APP
@@ -141,7 +171,7 @@ if(strlen($UDID)>5){
     }
     
     
-}else{
+}else if(strlen($id)>5){
     // UDID为空 创建描述文件 并提示下载描述文件
     
     $str="<dict >
@@ -220,19 +250,17 @@ if(strlen($UDID)>5){
     }
 }
 
+//判断企业描述文件是否存在 1.mobileprovision 存在就提示跳转iOS设置 没有就不提示
 if(!is_file('1.mobileprovision')){
     // 文件不存
-    
     $跳转="";
-    
 }else{
     //文件存在
-    
     $跳转="./1.mobileprovision";
-    
 }
 
 ?>
+
 <html lang="zh-cmn-Hans"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
@@ -247,8 +275,8 @@ if(!is_file('1.mobileprovision')){
     </div>
     
     <div class="weui-msg__text-area">
-    <h2 class="weui-msg__title">UDID获取</h2>
-    <p id="text" class="weui-msg__desc">如果安装失败请重新打开游戏<br>UDID仅作为授权码绑定标识符作用<br>请按照步骤安装<br>
+    <h2 id="" class="weui-msg__title">UDID获取</h2>
+    <p id="text" class="weui-msg__desc">如果安装失败请重新打开游戏<br>UDID仅作为授权码绑定标识符作用<br>请按照步骤安装<br><br><?php echo $code; ?>
     </p>
     </div>
     
@@ -273,6 +301,7 @@ if(!is_file('1.mobileprovision')){
     </div>
     </div>
     </div>
+    
     <script type="text/javascript">
     var jump = function() {
         setTimeout("自动跳转()", 1000);
@@ -282,6 +311,7 @@ if(!is_file('1.mobileprovision')){
 　　    window.location.href="<?php echo $跳转; ?>";
 　　    
 　　};
+　　
 </script>
 <script type="text/javascript">
 
