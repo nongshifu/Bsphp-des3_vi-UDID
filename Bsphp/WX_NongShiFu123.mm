@@ -8,7 +8,7 @@
 //  Copyright © 2019年 xiaozhou. All rights reserved.
 //
 #import <SystemConfiguration/SystemConfiguration.h>
-#import "Config.h"
+#import "Config.h"11 minutes ago
 #import "WX_NongShiFu123.h"
 #import <UIKit/UIKit.h>
 #import "getKeychain.h"
@@ -653,7 +653,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     NSString* daihao=strarr2[0];
                     NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
                     //如果有错误 证明服务器没有 那就安装描述文件获取
-                    NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@daihao=%@",UDID_HOST,suijiid,urlSchemes,daihao];
+                    NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@&daihao=%@",UDID_HOST,suijiid,urlSchemes,daihao];
                     NSLog(@"URL 地址：%@", url);
                     if ([弹窗类型 containsString:@"YES"]) {
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
