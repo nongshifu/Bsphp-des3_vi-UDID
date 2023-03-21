@@ -153,7 +153,6 @@
 		608F6C7529B771DC0058769D /* WX_NongShiFu123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WX_NongShiFu123.h; sourceTree = "<group>"; };
 		608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WX_NongShiFu123.mm; sourceTree = "<group>"; };
 		608F6C7929B8A07D0058769D /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
-		609D315829BC878A00980E0D /* shiyong.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = shiyong.php; sourceTree = "<group>"; };
 		60AE051E29B217B7005F13F3 /* getKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getKeychain.h; sourceTree = "<group>"; };
 		60AE051F29B217B7005F13F3 /* getKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = getKeychain.m; sourceTree = "<group>"; };
 		8A1ADA3A228D9BD900DF45DD /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
@@ -199,7 +198,6 @@
 				6021E270289F866E00E2E121 /* Config.h */,
 				60531FEE28CB900000AEE837 /* 1.mobileprovision */,
 				60531FED28CB900000AEE837 /* udid.php */,
-				609D315829BC878A00980E0D /* shiyong.php */,
 				6084203A29C4523A00D06C8D /* 参数填写说明.png */,
 				6084203B29C452F100D06C8D /* 购买-更新说明图.png */,
 				6084203C29C4537700D06C8D /* BS-软件配置1.png */,

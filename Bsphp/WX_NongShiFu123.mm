@@ -24,7 +24,7 @@
 @property (nonatomic,strong) NSDictionary * baseDict;
 @end
 NSString*软件版本号,*软件公告,*软件描述,*软件网页地址,*软件url地址,*逻辑A,*逻辑B,*解绑扣除时间,*试用模式,*支持解绑;;
-bool 验证状态,过直播开关;
+bool 验证状态,过直播开关,是否新用户;
 NSString*设备特征码;
 NSString*软件信息;
 static NSTimer*dsq;
@@ -628,6 +628,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             [getKeychain addKeychainData:suijiid forKey:@"SJUSERID"];
             NSLog(@"生成随机ID=%@",suijiid);
         }
+        
+        
         //通过ID读取服务器的UDID
         NSString *requestStr = [NSString stringWithFormat:@"%@udid%@.txt",UDID_HOST,suijiid];
         NSLog(@"requestStr=%@",requestStr);
@@ -645,10 +647,13 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 // URL 正常
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 if ([httpResponse statusCode] == 404) {
-                    
+                    //请求的url
+                    NSArray *strarr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
+                    NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"&m="];
+                    NSString* daihao=strarr2[0];
                     NSLog(@"URL 返回 404 错误 提示用户安装UDID描述文件");
                     //如果有错误 证明服务器没有 那就安装描述文件获取
-                    NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@",UDID_HOST,suijiid,urlSchemes];
+                    NSString*url=[NSString stringWithFormat:@"%@udid.php?id=%@&openurl=%@daihao=%@",UDID_HOST,suijiid,urlSchemes,daihao];
                     NSLog(@"URL 地址：%@", url);
                     if ([弹窗类型 containsString:@"YES"]) {
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -691,9 +696,21 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     NSLog(@"URL 返回的 HTML 字符串：%@", htmlString);
                     //删除换行和空格
                     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-                    设备特征码 = [htmlString stringByTrimmingCharactersInSet:whitespace];
+                    NSArray *strarr = [[htmlString stringByTrimmingCharactersInSet:whitespace] componentsSeparatedByString:@"|"];
+                    NSString*udidstr=strarr[0];
+                    NSString*NewOld=strarr[1];
+                    NSString*heimingdan=strarr[2];
+                    NSString*beizhu=strarr[3];
+                    设备特征码 = udidstr;
                     //如果没有错误 储存UDID到钥匙串
                     [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
+                    是否新用户=[NewOld containsString:@"新用户"];
+                    //判断是否黑名单用户 是则拉黑提示备注内容 并且闪退
+                    if ([heimingdan containsString:@"黑名单用户"]) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self showText:heimingdan message:beizhu Exit:YES];
+                        });
+                    }
                     if (completion) {
                         completion();
                     }
@@ -812,15 +829,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 - (void)shiyong:(void (^)(void))completion{
     if ([试用模式 containsString:@"YES"]) {
         //请求的url
-        NSArray *arr = [BSPHP_HOST componentsSeparatedByString:@"appid="];
-        NSArray *arr2 = [arr[1] componentsSeparatedByString:@"&m="];
-        NSString* daihao=arr2[0];
-        NSArray *arr3 = [BSPHP_HOST componentsSeparatedByString:@"AppEn.php"];
-        NSString *shiyongURL=arr3[0];
-        NSString *requestStr = [NSString stringWithFormat:@"%@shiyong.php?code=%@&daihao=%@",shiyongURL,设备特征码,daihao];
-        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
-        NSLog(@"htmlStr=%@",htmlStr);
-        if ([htmlStr containsString:@"没查到记录"]) {
+        if (是否新用户) {
             //没查到记录 试用 随机生成15位卡密
             NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
