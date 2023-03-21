@@ -324,8 +324,9 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 NSLog(@"用户在线中-返回：%@",DRBool);
             }else if ([DRBool containsString:@"1079"]) {
                 NSLog(@"被迫下线：%@",DRBool);
-                [self showText:@"被迫下线" message:@"卡密在其他设备APP登录\n设备数量-在线APP超过限制" Exit:NO];
-                验证状态=YES;
+                [self showText:@"被迫下线" message:@"卡密在其他设备APP登录\n设备数量-在线APP超过限制" Exit:YES];
+                //被迫下线就闪退
+                验证状态=NO;
                 
             }else{
                 验证状态=NO;
