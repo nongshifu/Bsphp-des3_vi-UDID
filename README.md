@@ -1,4 +1,25 @@
+# 功能介绍
+## 支持IDFV UDID 
+## 支持远程开启关闭试用功能 -新用户自动注册生成卡密
+## 支持远程SCL弹窗和IOS弹窗 
+## 支持远程更新公告 
+## 支持远程版本管理
+## 支持远程发卡网弹窗
+## 支持远程锁定黑名单
+## 支持远程修改同卡密在线数量
+## 支持远程修改卡密多开机器量
+## 支持远程心态检测 被迫下线功能
+## 支持用户自主解绑-扣除时间远程控制
+## 一个php文件 搞定UDID 试用 黑名单 解绑
+## 完美兼容BSPHP最新版 开发定制联系:十三哥 WX:NongShiFu123  QQ:350722326
+
 # 更新日志
+2023.03.21 删除shiyong.php 增加了拉黑功能,试用,解绑,功能集合到udid.php 并且自动识别目录 udid.php可上传任意目录
+  优化了UDID逻辑 并且获取后自动删除udid缓存
+  ******注意 黑名单功能 需要BS后台-软件列表-用户分组-新建一个黑名单分组
+  ***拉黑用户说明：复制卡密-或者机器码 BS后台-软件列表-用户-搜索卡密/机器码-编辑 分组移动到黑名单分组 **并且填写一个备注 比如：你已经被拉黑-别玩了，用户那边提示你备注的信息
+  *** 特别注意 备注 必须有一个 中文的"黑"字 用来判断是否是黑名单 正常用户备注 请勿出现关键字"黑" 否则被拉黑 并且用户那边提示你备注的信息
+ 
  2023.03.15 试用功能集合至软件描述处 优化跨进程注入桌面安全模式问题 arm64e<br>
  2023.03.11 添加了试用功能 如开启 BOOL 试用模式：YES 并且shiyong.php上传至服务器站点目录下 可以是二级目录 具体打开shiyong.php看注释说明,<br>
   试用开启 新设备获取机器码查询服务器记录 没就按BS软件配置-基础设置-首次使用送 处 赠送时间 卡密随机生成<br>
@@ -28,13 +49,4 @@
 ## 修改BSPHP 的des3加密秘钥 默认是bsphp666 里面有三处都要修改 和源码Config.h里面#define gIv 一致
 <img width="1083" alt="image" src="https://user-images.githubusercontent.com/31665489/190995838-fe2bd5bc-9953-4ac2-b0ff-ca786462ab1c.png">
 <img width="887" alt="image" src="https://user-images.githubusercontent.com/31665489/190996768-bc81aa07-e05b-4fd4-97ea-97d2e3712f95.png">
-## 由于每个app 都会生成一个描述文件 和udid文件 久了就产生缓存文件过多 可以在服务器后台 如宝塔 计划任务 设置各shell脚本 每天清理
-注意这里改成你的udid目录 
-<img width="904" alt="image" src="https://user-images.githubusercontent.com/31665489/195619823-94d60047-1686-4145-956d-c09b154db05b.png">
-
-cd /www/wwwroot/myradar.cn/UDID
-
-find . -name '*.txt' -maxdepth 1 -type f -print -exec rm -rf {} \;
-
-find . -name '*.mobileconfig' -maxdepth 1 -type f -print -exec rm -rf {} \;
 
