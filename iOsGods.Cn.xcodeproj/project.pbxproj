@@ -129,6 +129,7 @@
 		6084203D29C4537700D06C8D /* BS-软件配置2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BS-软件配置2.png"; sourceTree = "<group>"; };
 		6084204029C4A01400D06C8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6084204129C4A01400D06C8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		6084227929C99AB700D06C8D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		60897A9129AC61AA00E2AA65 /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		60897A9229AC61AA00E2AA65 /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		60897A9329AC61AA00E2AA65 /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -202,6 +203,7 @@
 				6084203B29C452F100D06C8D /* 购买-更新说明图.png */,
 				6084203C29C4537700D06C8D /* BS-软件配置1.png */,
 				6084203D29C4537700D06C8D /* BS-软件配置2.png */,
+				6084227929C99AB700D06C8D /* README.md */,
 				60897A8C29AC61AA00E2AA65 /* SCLAlertView */,
 				6021E22F289F866E00E2E121 /* Bsphp */,
 				194F3B3B218327B10070F5BC /* Frameworks */,
