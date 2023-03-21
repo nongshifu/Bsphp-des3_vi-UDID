@@ -161,7 +161,7 @@ if(strlen($UDID)>10){
     //判断是否为空 没有openurl 则是跳转会浏览器 提示用户自行打开APP
     $res = file_get_contents("./".$id.'.txt');
     if (strpos($res, 'null') !== false) {
-        $url="Location: ".$域名."?id=null";
+        $url="Location: ".$域名."udid.php?id=null";
         header('HTTP/1.1 301 Moved Permanently');
         header($url);
     } else {
@@ -234,7 +234,7 @@ if(strlen($UDID)>10){
                 fclose($fp);
             }
             if (strpos($res, 'null') !== false) {
-                $url="Location: ".$域名."?id=null";
+                $url="Location: ".$域名."udid.php?id=null";
                 header('HTTP/1.1 301 Moved Permanently');
                 header($url);
                 
