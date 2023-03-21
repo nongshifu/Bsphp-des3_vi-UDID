@@ -1,15 +1,24 @@
 <?php
 
-/*
-将本文件udid.php 和1.mobileprovision 上传到域名根目录或二级目录 填写 $签名 $域名 两个配置
- 1.mobileprovision 是任意一个未掉签企业签名的描述文件 重命名为1.mobileprovision即可
- 
+/*使用说明=====
+1.将本文件udid.php 和1.mobileprovision 上传到域名根目录或任意二级目录
+2.修改 $签名  $数据库表前缀 2个参数。
+
+/*其他说明====
+1.mobileprovision 是任意一个未掉签企业签名的描述文件
+重命名为1.mobileprovision即可 如果企业掉签 则用户下载描述文件后 没法自动跳转到设置 需要手动打开iOS系统设置
+***1.mobileprovision 仅仅是为了方便打开iOS系统设置 不影响获取udid
+
+/*签名说明====
 描述文件是否需要签名 1需要2不需要
 签名不签名不影响获取UDID 只是不签名安装的时候提示描述文件未签名 红色 签名就打勾绿色
 如果需要签名 设置为1 并且准备一个ssl域名证书 如果使用宝塔面板 并且使用域名非IP
 直接打开宝塔后台 网站-设置-SSL-按要求域名解析 -使用宝塔SSL 或Let's Encrypt一键申请
 
+
+/*签名设置====
 申请成功后SSL证书后
+
 需要把密钥(KEY) 写到一个txt文本并且改后缀key  名字为key.key 放在udid.php同级目录
 
 需要把证书(PEM格式) 写到一个txt文本并且改后缀key  pem.pem 放在udid.php同级目录
@@ -18,18 +27,29 @@
 宝塔面板为例 -软件商店-已安装-PHP-设置-禁用函数 删除shell_exec()
 
 */
+
 // 是否是需要签名 1需要 2不需要
 $签名=1;
-// 填写你UDID文件的域名和目录 如你上传到域名根目录的UDID文件夹下 填写 域名/UDID/
-$域名="https://myradar.cn/UDID/";
-// 本文件可以上传到任意二级目录或网站根目录都行
-// 二级三级目录就设置好比如 $域名="https://baidu.cn/二级目录/三级目录/ 注意尾部一定有/符号
+
+//$数据库表前缀 搭建BS 填写数据库时候的表前缀 默认bsphp_
+$数据库表前缀="bsphp_";
 ?>
 
 <?php
+// 获取当前域名
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+$domain = $_SERVER['HTTP_HOST'];
+$path = $_SERVER['REQUEST_URI'];
+$域名 = $protocol . $domain . $path;
+// echo "当前页面的完整域名是：" . $域名. "<br>";
+$数据库表前缀="bsphp_";
+$doc_root = $_SERVER['DOCUMENT_ROOT'];
+// echo "当前站点目录是：" . $doc_root. "<br>";
+//自动加载数据库
+require("$doc_root/Plug/Plug.php");
 // 以下逻辑无需修改
 $id=$_GET["id"];
-
+$daihao=$_GET["daihao"];
 $openurl=$_GET["openurl"];
 $data = file_get_contents('php://input');
 $plistBegin   = '<string>';
@@ -77,14 +97,38 @@ if(strlen($openurl)>5){
 }
 // UDID不为空 跳转APP打开
 if(strlen($UDID)>5){
+    //查询是否在黑名单
+    $sql="SELECT * FROM `".$数据库表前缀."pattern_login` WHERE `L_key_info` LIKE '$UDID' AND `L_class` != 0 AND `L_beizhu` LIKE '%黑%'";
+    $info = plug_query_array($sql);
+    if($info){
+        $备注=$info['L_beizhu'];
+        if (strpos($备注, '黑') !== false) {
+            // echo "字符串包含 '黑' 黑名单用户";
+            $UDID=$UDID."|老用户|黑名单用户|".$备注;
+        } else {
+            // echo "字符串不包含 '黑' 正常用户";
+            //查询是否存在记录 存在就老用户 不存在 新用户
+            $sql = "SELECT L_key_info FROM bsphp_pattern_login WHERE L_key_info = '$UDID' AND `L_daihao`='$daihao'";
+            $info = plug_query_array($sql);
+            if($info){
+                //有记录
+                $UDID=$UDID."|老用户|正常用户|".$备注;
+            }else{
+                //有记录
+                $UDID=$UDID."|新用户|正常用户|".$备注;
+            }
+        }
+        
+    }
     // 储存udid
     $fp = fopen("./udid".$id.'.txt', 'w');
     fwrite($fp, $UDID);
     fclose($fp);
     
+    //判断是否为空 没有openurl 则是跳转会浏览器 提示用户自行打开APP
     $res = file_get_contents("./".$id.'.txt');
     if (strpos($res, 'null') !== false) {
-        $url="Location: ".$域名."udid.php?id=null";
+        $url="Location: ".$域名."?id=null";
         header('HTTP/1.1 301 Moved Permanently');
         header($url);
     } else {
@@ -101,7 +145,7 @@ if(strlen($UDID)>5){
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>".$域名."udid.php?id=".$id."</string>
+            <string>".$域名."?id=".$id."</string>
             
             <key>DeviceAttributes</key>
             <array>
@@ -157,7 +201,7 @@ if(strlen($UDID)>5){
                 fclose($fp);
             }
             if (strpos($res, 'null') !== false) {
-                $url="Location: ".$域名."udid.php?id=null";
+                $url="Location: ".$域名."?id=null";
                 header('HTTP/1.1 301 Moved Permanently');
                 header($url);
                 
