@@ -30,7 +30,8 @@
     CFDataRef keyData = NULL;
     if (SecItemCopyMatching((__bridge CFDictionaryRef)keychainQuery, (CFTypeRef *)&keyData) == noErr) {
         @try {
-            ret = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)keyData];
+            NSError *error = nil;
+            ret = [NSKeyedUnarchiver unarchivedObjectOfClass:[getKeychain class] fromData:(__bridge NSData *)keyData error:&error];
             
         } @catch (NSException *e) {
             NSLog(@"Unarchive of %@ failed: %@",key,e);
@@ -48,7 +49,8 @@
     //Delete old item before add new item
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
     //Add new object to search dictionary(Attention:the data format)
-    [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data] forKey:(__bridge id)kSecValueData];
+    NSError*error;
+    [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data requiringSecureCoding:YES error:&error] forKey:(__bridge id)kSecValueData];
     //Add item to keychain with the search dictionary
     SecItemAdd((__bridge CFDictionaryRef)keychainQuery, NULL);
 }
@@ -59,8 +61,8 @@
     [keychainQuery setObject:accessGroupItem forKey:(id)kSecAttrAccessGroup];
     //在添加新项目之前删除旧项目
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
-    //添加新对象到搜索词典（注意：数据格式）
-    [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data] forKey:(__bridge id)kSecValueData];
+    NSError*error;
+    [keychainQuery setObject:[NSKeyedArchiver archivedDataWithRootObject:data requiringSecureCoding:YES error:&error] forKey:(__bridge id)kSecValueData];
     //使用搜索词典将项目添加到钥匙串
     SecItemAdd((__bridge CFDictionaryRef)keychainQuery, NULL);
     
