@@ -69,7 +69,7 @@ udid.php 上传至BS站点目录下 可以是二级目录 修改里面的$签名
 <img width="750" alt="image" src="https://user-images.githubusercontent.com/31665489/226641554-aa4d61c2-ccf5-4d27-af49-d55d0cc1bae3.png">
 
 ### 5.BS输出输入加密秘钥修改
-源码里面Config.h里#define gIv 处 bs新安装默认是bsphp666
+源码里面Config.h里#define gIv 处 bs新安装默认是bsphp666 **注意 仅限8位数
 <img width="976" alt="image" src="https://user-images.githubusercontent.com/31665489/226642176-99e62280-207e-47e0-98f1-72ef758e4420.png">
 
 建议修改掉 在BS 站点目录/include/applibapi/encryption/ 下的bsphp_3des_vi.php 里 
