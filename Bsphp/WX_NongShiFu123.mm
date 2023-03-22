@@ -40,13 +40,6 @@ static NSTimer*dsq;
  */
 
 + (void)load {
-    //测试的时候 可以取消注释 启动一次便可清除
-//    [getKeychain removeKeychainDataForKey:@"DZUDID"];//清除UDID
-//    [getKeychain removeKeychainDataForKey:@"SJUSERID"];//清除用户ID
-//    [getKeychain removeKeychainDataForKey:@"ShiSanGeDZKM"];//清除卡密
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"公告"];//清除公告
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"到期时间"];//清除到期时间
-    
 }
 
 #pragma mark --- 验证流程
@@ -66,7 +59,6 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                                 [self shiyong:^{
                                     [self YZTC:@"请输入激活码"];
                                 }];
-                                
                             }];
                         }else{
                             [self getIDFV:^{
@@ -723,10 +715,12 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     //删除换行和空格
                     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
                     NSArray *strarr = [[htmlString stringByTrimmingCharactersInSet:whitespace] componentsSeparatedByString:@"|"];
+                    NSLog(@"URL 返回的 strarr字符串：%@", strarr);
                     NSString*udidstr=strarr[0];
                     NSString*NewOld=strarr[1];
                     NSString*heimingdan=strarr[2];
                     NSString*beizhu=strarr[3];
+                    NSLog(@"URL 返回的 udidstr：%@", udidstr);
                     //判断是否黑名单用户 是则拉黑提示备注内容 并且闪退
                     NSString *remohcurl = [NSString stringWithFormat:@"%@udid.php?rm=%@",UDID_HOST,suijiid];
                     if ([heimingdan containsString:@"黑名单用户"]) {
@@ -742,12 +736,21 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                         //如果没有错误 储存UDID到钥匙串
                         [getKeychain addKeychainData:设备特征码 forKey:@"DZUDID"];
                         是否新用户=[NewOld containsString:@"新用户"];
+                        if (是否新用户) {
+                            NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                            NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
+                            for (int i = 0; i < 25; i++) {
+                                [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
+                            }
+                            NSLog(@"随机生成的码：%@", randomString);
+                            NSString*SJKM=[NSString stringWithFormat:@"%@",randomString];
+                            [getKeychain addKeychainData:SJKM forKey:@"ShiSanGeDZKM"];
+                        }
+                        
                         [self remohc:remohcurl void:^{
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                if (completion) {
-                                    completion();
-                                }
-                            });
+                            if (completion) {
+                                completion();
+                            }
                         }];
                         
                     }
@@ -889,14 +892,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 - (void)shiyong:(void (^)(void))completion{
     if ([试用模式 containsString:@"YES"]) {
         //请求的url
+        NSLog(@"开始试用");
         if (是否新用户) {
-            //没查到记录 试用 随机生成15位卡密
-            NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            NSMutableString *randomString = [NSMutableString stringWithCapacity:15];
-            for (int i = 0; i < 15; i++) {
-                [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform((unsigned int)[letters length])]];
-            }
-            NSLog(@"随机生成的码：%@", randomString);
             //开始注册卡密
             NSMutableDictionary *param = [NSMutableDictionary dictionary];
             NSString *appsafecode = [self getSystemDate];//设置一次过期判断变量
@@ -908,23 +905,23 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
             param[@"maxoror"] = 设备特征码;//多开控制
             param[@"key"] = 设备特征码;//必填,建议让用户填QQ或者联系方式这样方便联系用户(自己想象)
-            param[@"carid"] = randomString;//必填,建议让用户填QQ或者联系方式这样方便联系用户(自己想象)
+            param[@"carid"] = [getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];//必填,建议让用户填QQ或者联系方式这样方便联系用户(自己想象)
             [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
                 if (dict) {
                     NSString*dataString = dict[@"response"][@"data"];
+                    NSLog(@"dataString=%@",dataString);
                     if ([dataString containsString:@"|1081|"]) {
                         NSArray *arr = [dataString componentsSeparatedByString:@"|"];
                         if (arr) {
                             
                         }
-                        NSLog(@"卡密注册成功：%@ 到期时间：%@  BS后台-软件配置-基础配置 首次使用送 ",randomString,arr[4]);
-                        //注册成功 储存到钥匙串
-                        [getKeychain addKeychainData:randomString forKey:@"ShiSanGeDZKM"];
+                        NSLog(@"试用成功 到期时间：%@  BS后台-软件配置-基础配置 首次使用送 ",arr[4]);
                         if (completion) {
                             completion();
                         }
                     }else{
+                        NSLog(@"bus1081");
                         if (completion) {
                             completion();
                         }

@@ -30,7 +30,6 @@
 
 // 是否是需要签名 1需要 2不需要
 $签名=1;
-
 //$数据库表前缀 搭建BS 填写数据库时候的表前缀 默认bsphp_
 $数据库表前缀="bsphp_";
 ?>
@@ -113,14 +112,20 @@ if (strlen($rm) > 0 && strlen($rm) <= 50) {
     // echo "Invalid parameter.";
 }
 
-//储存OPENURL 既跳转app的链接
+//储存OPENURL 既跳转app的链接 和软件代号 到 用户id.txt
 if(strlen($openurl)>5){
     $fp = fopen($id.'.txt', 'w');
-    fwrite($fp, $openurl);
+    fwrite($fp, $openurl."|".$daihao);
     fclose($fp);
 }
 // UDID不为空证明获取到 跳转APP打开等后续操作
 if(strlen($UDID)>10){
+    //接收描述文件POST过来的数据
+    $res = file_get_contents("./".$id.'.txt');//读取txt
+    $keywords_array = explode("|", $res);//拆分openurl 和 软件代号
+    $openurl=$keywords_array[0];
+    $daihao=$keywords_array[1];
+    $备注="";
     //查询是否在黑名单
     $sql="SELECT * FROM `".$数据库表前缀."pattern_login` WHERE `L_key_info` LIKE '$UDID' AND `L_class` != 0 AND `L_beizhu` LIKE '%黑%'";
     $info = plug_query_array($sql);
@@ -159,19 +164,18 @@ if(strlen($UDID)>10){
     fclose($fp);
     
     //判断是否为空 没有openurl 则是跳转会浏览器 提示用户自行打开APP
-    $res = file_get_contents("./".$id.'.txt');
     if (strpos($res, 'null') !== false) {
         $url="Location: ".$域名."udid.php?id=null";
         header('HTTP/1.1 301 Moved Permanently');
         header($url);
     } else {
-        $url="Location: ".$res."://";
+        $url="Location: ".$openurl."://";
         header('HTTP/1.1 301 Moved Permanently');
         header($url);
     }
     
     
-}else if(strlen($id)>5){
+}else{
     // UDID为空 创建描述文件 并提示下载描述文件
     
     $str="<dict >
