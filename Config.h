@@ -15,10 +15,11 @@
 #define JN_VERSION @"2.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致 BS安装默认为bsphp666
-#define gIv   @"Asd7480547"
+//**注意 仅限8位数
+#define gIv   @"bsphp666"
 
 //定期验证 单位为秒 可以设置10分钟 几分钟看个人需求 用于动态检测版本更新 公告更新 检测是否到期 检测是否冻结 时间太短 用户多会增加服务器压力
-#define  BS_DSQ 10
+#define  BS_DSQ 600
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
 #define  UDID_HOST  @"https://myradar.cn/UDID/"
