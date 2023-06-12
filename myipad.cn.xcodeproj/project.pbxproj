@@ -83,7 +83,7 @@
 
 /* Begin PBXFileReference section */
 		187BE2852270D52100033424 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		194F3B39218327B10070F5BC /* iOsGods.Cn.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = iOsGods.Cn.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		194F3B39218327B10070F5BC /* myipad.cn.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = myipad.cn.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		194F3B3C218327B10070F5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		194F3BA6218328020070F5BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		194F3BA7218328020070F5BC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -214,7 +214,7 @@
 		194F3B3A218327B10070F5BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				194F3B39218327B10070F5BC /* iOsGods.Cn.dylib */,
+				194F3B39218327B10070F5BC /* myipad.cn.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,6 +248,7 @@
 			children = (
 				608F6C7529B771DC0058769D /* WX_NongShiFu123.h */,
 				608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */,
+				6021E27C289F866E00E2E121 /* Config.m */,
 				6084204429C4A02600D06C8D /* MBProgressHUD */,
 				6021E269289F866E00E2E121 /* bsphp */,
 				6021E28B289F866E00E2E121 /* AFNetworking */,
@@ -274,7 +275,6 @@
 				6021E282289F866E00E2E121 /* NSString+MD5.m */,
 				6021E288289F866E00E2E121 /* NSString+URLCode.h */,
 				6021E278289F866E00E2E121 /* NSString+URLCode.m */,
-				6021E27C289F866E00E2E121 /* Config.m */,
 			);
 			path = bsphp;
 			sourceTree = "<group>";
@@ -375,9 +375,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		194F3B38218327B10070F5BC /* iOsGods.Cn */ = {
+		194F3B38218327B10070F5BC /* myipad.cn */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 194F3B4C218327B10070F5BC /* Build configuration list for PBXNativeTarget "iOsGods.Cn" */;
+			buildConfigurationList = 194F3B4C218327B10070F5BC /* Build configuration list for PBXNativeTarget "myipad.cn" */;
 			buildPhases = (
 				194F3B34218327B10070F5BC /* Sources */,
 				194F3B35218327B10070F5BC /* Frameworks */,
@@ -388,9 +388,9 @@
 			);
 			dependencies = (
 			);
-			name = iOsGods.Cn;
+			name = myipad.cn;
 			productName = HackMenu;
-			productReference = 194F3B39218327B10070F5BC /* iOsGods.Cn.dylib */;
+			productReference = 194F3B39218327B10070F5BC /* myipad.cn.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -406,7 +406,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 194F3B33218327B10070F5BC /* Build configuration list for PBXProject "iOsGods.Cn" */;
+			buildConfigurationList = 194F3B33218327B10070F5BC /* Build configuration list for PBXProject "myipad.cn" */;
 			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -419,7 +419,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				194F3B38218327B10070F5BC /* iOsGods.Cn */,
+				194F3B38218327B10070F5BC /* myipad.cn */,
 			);
 		};
 /* End PBXProject section */
@@ -605,7 +605,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOsGods.Cn-Prefix.pch";
+				GCC_PREFIX_HEADER = "myipad.cn-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -648,7 +648,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOsGods.Cn-Prefix.pch";
+				GCC_PREFIX_HEADER = "myipad.cn-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -677,7 +677,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		194F3B33218327B10070F5BC /* Build configuration list for PBXProject "iOsGods.Cn" */ = {
+		194F3B33218327B10070F5BC /* Build configuration list for PBXProject "myipad.cn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				194F3B4A218327B10070F5BC /* Release */,
@@ -686,7 +686,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		194F3B4C218327B10070F5BC /* Build configuration list for PBXNativeTarget "iOsGods.Cn" */ = {
+		194F3B4C218327B10070F5BC /* Build configuration list for PBXNativeTarget "myipad.cn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				194F3B4D218327B10070F5BC /* Release */,

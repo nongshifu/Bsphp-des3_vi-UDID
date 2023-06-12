@@ -48,7 +48,8 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         BOOL NET=[self getNet];
         if (!NET) {
-            [self showText:@"警告" message:@"网络连接失败" Exit:YES];
+            
+            [self showText:@"警告" message:@"网络连接失败" Exit:NO];
         }else{
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
@@ -558,7 +559,12 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                                         [[NSRunLoop currentRunLoop] addTimer:dsq forMode:NSRunLoopCommonModes];
                                         
                                         //启动你的图标辅助
-                                        
+                                        if(验证状态==YES){
+                                            //验证成功 启动外挂代码在这 比如启动图标 启动菜单 其他某个功能 启动防封 等等
+                                            
+                                        }else{
+                                            //验证失败==傻逼 先验证
+                                        }
                                         
                                     });
                                     
@@ -592,6 +598,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 
 #pragma mark ---获取时间
 - (NSString *)getSystemDate{
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans_CN"];
     dateFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierISO8601];
