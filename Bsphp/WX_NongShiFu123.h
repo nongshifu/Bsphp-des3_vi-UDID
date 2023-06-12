@@ -13,7 +13,7 @@ extern bool 验证状态,过直播开关;
 extern NSString*设备特征码;
 extern NSString*到期时间;
 extern NSString*软件信息;
-@interface WX_NongShiFu123 : UIViewController<UIAlertViewDelegate>
+@interface WX_NongShiFu123 : UIAlertController<UIAlertViewDelegate>
 - (void)BSPHP;
 @property (strong, nonatomic) NSMutableData *receivedData;
 @end

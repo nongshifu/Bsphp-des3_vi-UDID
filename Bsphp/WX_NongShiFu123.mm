@@ -118,7 +118,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
                 UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:string preferredStyle:UIAlertControllerStyleAlert];
+                WX_NongShiFu123 *alert = [WX_NongShiFu123 alertControllerWithTitle:nil message:string preferredStyle:UIAlertControllerStyleAlert];
                 [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                     textField.placeholder = @"请输入激活码";
                     textField.secureTextEntry = NO;
@@ -385,7 +385,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
                 UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:软件公告 preferredStyle:UIAlertControllerStyleAlert];
+                WX_NongShiFu123 *alert = [WX_NongShiFu123 alertControllerWithTitle:nil message:软件公告 preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     if (completion) {
                         completion();
@@ -429,7 +429,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
                 UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"发现新版" preferredStyle:UIAlertControllerStyleAlert];
+                WX_NongShiFu123 *alert = [WX_NongShiFu123 alertControllerWithTitle:nil message:@"发现新版" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *cancelAction;
                 if (软件url地址.length>5) {
@@ -682,7 +682,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                     NSLog(@"URL 地址：%@", url);
                     if ([弹窗类型 containsString:@"YES"]) {
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"安装描述文件-获取绑定机器码" preferredStyle:UIAlertControllerStyleAlert];
+                            WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:nil message:@"安装描述文件-获取绑定机器码" preferredStyle:UIAlertControllerStyleAlert];
                             [alertController addAction:[UIAlertAction actionWithTitle:@"退出应用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 exit(0);
                             }]];
@@ -850,7 +850,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 NSLog(@"系统弹窗时间=%@",解绑扣除时间);
                 //系统弹窗
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
+                    WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"换绑到本机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
                         [self jiebang:km Text:str];
@@ -988,7 +988,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         dispatch_async(dispatch_get_main_queue(), ^{
             //系统弹窗
             UIViewController * rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:message preferredStyle:UIAlertControllerStyleAlert];
+            WX_NongShiFu123 *alert = [WX_NongShiFu123 alertControllerWithTitle:Title message:message preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 // 确定操作
                 if(Exit){
@@ -1010,6 +1010,31 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 }
             }];
             [alert showEdit:Title subTitle:message closeButtonTitle:nil duration:0];
+        });
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // UIAlertController 显示在最前面
+    NSLog(@"UIAlertController 显示在最前面");
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // 检测 UIAlertController 是否被隐藏或移除
+    if (self.isBeingDismissed || self.isMovingFromParentViewController) {
+        // UIAlertController 被其他视图控制器覆盖，重新弹窗
+        NSLog(@"UIAlertController 被其他视图控制器覆盖，重新弹窗");
+        
+        // 在这里添加你的处理代码，例如暂停定时器或隐藏 UIAlertController 等
+        if (验证状态)return;
+        // 重新弹窗
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+            [rootViewController presentViewController:self animated:YES completion:nil];
         });
     }
 }
