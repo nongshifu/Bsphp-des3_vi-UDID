@@ -6,6 +6,12 @@
 #import "NSString+MD5.h"
 #import "NSString+URLCode.h"
 
+#define ConfigLog(fmt, ...) \
+if (Config_NSLog_ENABLED) { \
+ConfigLog((@"ConfigLog: " fmt), ##__VA_ARGS__); \
+}
+//是否打印
+#define Config_NSLog_ENABLED NO
 
 @implementation NetTool : NSObject
 + (NSURLSessionDataTask *)__attribute__((optnone))Post_AppendURL:(NSString *)appendURL
@@ -21,7 +27,7 @@ success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))f
         
         NSString * sginstr = [BSPHP_INSGIN stringByReplacingOccurrencesOfString:@"[KEY]"withString:desString];
         NSString * sginstrMD5 = [sginstr md5:sginstr];
-        NSLog(@"replaceStr=%@",sginstrMD5);
+        ConfigLog(@"replaceStr=%@",sginstrMD5);
         parameters[@"sgin"] = sginstrMD5;
         desString = [desString URLEncodedString];
         parameters[@"parameter"] = desString;
@@ -34,13 +40,13 @@ success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))f
         NSString *str = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSString *md5String = [BSPHP_PASSWORD md5:BSPHP_PASSWORD];
         str = [DES3Util decrypt:str gkey:md5String];
-        NSLog(@"请求网址 = %@",appendURL);
-        NSLog(@"parameters = %@",parameters);
-        NSLog(@"服务器返回数据 = %@",str);
+        ConfigLog(@"请求网址 = %@",appendURL);
+        ConfigLog(@"parameters = %@",parameters);
+        ConfigLog(@"服务器返回数据 = %@",str);
         NSData * data = [str dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if(dict){
-            NSLog(@"dict = %@",dict);
+            ConfigLog(@"dict = %@",dict);
         }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
@@ -52,10 +58,10 @@ success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))f
         NSString * sginstrMD5 = json[@"response"][@"sgin"];
         if([md5String isEqualToString:sginstrMD5]){
             //success(data);
-            NSLog(@"签名验证通过\n");
+            ConfigLog(@"签名验证通过\n");
             
         }else{
-            NSLog(@"签名验证未通过\n");
+            ConfigLog(@"签名验证未通过\n");
             
             
             NSData *testData = [@"-1000" dataUsingEncoding: NSUTF8StringEncoding];
@@ -66,7 +72,7 @@ success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))f
         
         success(data);
     }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
+        ConfigLog(@"%@",error);
         failure(error);
     }];
     
