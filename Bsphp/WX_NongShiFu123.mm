@@ -5,6 +5,8 @@
 //  承接软件APP开发 UDID定制 验证加密二改 PHP JS HTML5开发 辅助开发
 //  WX:NongShiFu123 QQ350722326
 //  Created by MRW on 2022/11/14.
+//  GitHub:http://github.com/nongshifu/
+//  开源Q群: 398423911
 //  Copyright © 2019年 xiaozhou. All rights reserved.
 //
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -113,7 +115,9 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
         MyLog(@"激活码弹窗KM=%@",km);
         [self yanzhengAndUseIt:km];
     }else{
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            exit(0);
+        });
         if ([弹窗类型 containsString:@"YES"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //系统弹窗
@@ -311,9 +315,9 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 MyLog(@"用户在线中-返回：%@",DRBool);
             }else if ([DRBool containsString:@"1079"]) {
                 MyLog(@"被迫下线：%@",DRBool);
-                [self showText:@"被迫下线" message:@"卡密在其他设备APP登录\n设备数量-在线APP超过限制" Exit:YES];
-                //被迫下线就闪退
-                验证状态=NO;
+//                [self showText:@"被迫下线" message:@"卡密在其他设备APP登录\n设备数量-在线APP超过限制" Exit:YES];
+//                //被迫下线就闪退
+//                验证状态=NO;
                 
             }else{
                 验证状态=NO;
@@ -850,7 +854,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 MyLog(@"系统弹窗时间=%@",解绑扣除时间);
                 //系统弹窗
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:@"警告" message:str 。:UIAlertControllerStyleAlert];
+                    WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"换绑到本机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
                         [self jiebang:km Text:str];
@@ -1004,12 +1008,14 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
             alert.customViewColor=[UIColor systemGreenColor];
             alert.shouldDismissOnTapOutside = NO;
-            [alert addButton:@"确定" actionBlock:^{
-                if(Exit){
-                    exit(0);
-                }
+            [alert addButton:@"aaa" actionBlock:^{
+                
             }];
-            [alert showEdit:Title subTitle:message closeButtonTitle:nil duration:0];
+            [alert addButton:@"bbbb" actionBlock:^{
+                
+            }];
+            
+            [alert showSuccess:Title subTitle:message closeButtonTitle:nil duration:0];
         });
     }
 }

@@ -1,28 +1,37 @@
+//  BSPHPOC
+//  BSPHP 魔改UDID 技术团队 十三哥工作室
+//  承接软件APP开发 UDID定制 验证加密二改 PHP JS HTML5开发 辅助开发
+//  WX:NongShiFu123 QQ350722326
+//  Created by MRW on 2022/11/14.
+//  GitHub:http://github.com/nongshifu/
+//  开源Q群: 398423911
+//  Copyright © 2019年 xiaozhou. All rights reserved.
+//
 #import <Foundation/Foundation.h>
 
 //服务器地址
-#define  BSPHP_HOST  @"https://myradar.cn/AppEn.php?appid=467645342&m=9e8ac707e317651e741a5131be49df7d"
+#define  BSPHP_HOST  @"https://bsphp.beidaiku.top/AppEn.php?appid=98765429&m=fb37b9243733dd87fbd785c6b3eb2c83"
 //通信认证Key
-#define BSPHP_MUTUALKEY @"7c316f815214a1f86a18e62394528414"
+#define BSPHP_MUTUALKEY @"4f36540f68ac1e7c15c04a0903103a01"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]RHHGFGSNGRG"
+#define BSPHP_INSGIN @"[KEY]435FDGHBVBRV"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]RHHGFGSNGRG"
+#define BSPHP_TOSGIN @"[KEY]435FDGHBVBRV"
 //数据加密密码
-#define BSPHP_PASSWORD @"6IrQ34YSce9hrFb2X1"
+#define BSPHP_PASSWORD @"XGjuVBzl1fXB3RWbk2"
 
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致 BS安装默认为bsphp666
 //**注意 仅限8位数
-#define gIv   @"NongShiF"
+#define gIv   @"bsphp666"
 
 //定期验证 单位为秒 可以设置5分钟 几分钟看个人需求 用于动态检测版本更新 公告更新 检测是否到期 检测是否冻结 时间太短 用户多会增加服务器压力
 #define  BS_DSQ 500
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
-#define  UDID_HOST  @"http://39.106.20.25/udid/"
+#define  UDID_HOST  @"https://bsphp.beidaiku.top/udid/"
 
 //启动APP后多少秒开始验证 单位秒 ** 因为很多游戏有启动画面 启动动画 会刷新UI 刷掉弹窗 相当于没了验证 比如光遇 王者荣耀 等 要等启动动画结束才弹窗 自己测试时间
 #define BS延迟启动时间 2

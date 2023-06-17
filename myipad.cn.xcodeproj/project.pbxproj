@@ -47,23 +47,6 @@
 		6021E34C289F87CE00E2E121 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6021E34B289F87CE00E2E121 /* AVFoundation.framework */; };
 		6084204229C4A01400D06C8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6084204029C4A01400D06C8D /* MBProgressHUD.m */; };
 		6084204329C4A01400D06C8D /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 6084204129C4A01400D06C8D /* MBProgressHUD.h */; };
-		60897AA829AC61AA00E2AA65 /* SCLAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9129AC61AA00E2AA65 /* SCLAlertView.h */; };
-		60897AA929AC61AA00E2AA65 /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9229AC61AA00E2AA65 /* SCLAlertView.m */; };
-		60897AAA29AC61AA00E2AA65 /* SCLAlertViewResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9329AC61AA00E2AA65 /* SCLAlertViewResponder.h */; };
-		60897AAB29AC61AA00E2AA65 /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9429AC61AA00E2AA65 /* SCLAlertViewResponder.m */; };
-		60897AAC29AC61AA00E2AA65 /* SCLAlertViewStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9529AC61AA00E2AA65 /* SCLAlertViewStyleKit.h */; };
-		60897AAD29AC61AA00E2AA65 /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9629AC61AA00E2AA65 /* SCLAlertViewStyleKit.m */; };
-		60897AAE29AC61AA00E2AA65 /* SCLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9729AC61AA00E2AA65 /* SCLButton.h */; };
-		60897AAF29AC61AA00E2AA65 /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9829AC61AA00E2AA65 /* SCLButton.m */; };
-		60897AB029AC61AA00E2AA65 /* SCLMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9929AC61AA00E2AA65 /* SCLMacros.h */; };
-		60897AB129AC61AA00E2AA65 /* SCLSwitchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9A29AC61AA00E2AA65 /* SCLSwitchView.h */; };
-		60897AB229AC61AA00E2AA65 /* SCLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9B29AC61AA00E2AA65 /* SCLSwitchView.m */; };
-		60897AB329AC61AA00E2AA65 /* SCLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9C29AC61AA00E2AA65 /* SCLTextView.h */; };
-		60897AB429AC61AA00E2AA65 /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9D29AC61AA00E2AA65 /* SCLTextView.m */; };
-		60897AB529AC61AA00E2AA65 /* SCLTimerDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897A9E29AC61AA00E2AA65 /* SCLTimerDisplay.h */; };
-		60897AB629AC61AA00E2AA65 /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897A9F29AC61AA00E2AA65 /* SCLTimerDisplay.m */; };
-		60897AB929AC61AA00E2AA65 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 60897AA229AC61AA00E2AA65 /* UIImage+ImageEffects.h */; };
-		60897ABA29AC61AA00E2AA65 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 60897AA329AC61AA00E2AA65 /* UIImage+ImageEffects.m */; };
 		608EF17B28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 608EF17928AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m */; };
 		608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */; };
 		608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */; };
@@ -71,6 +54,23 @@
 		608F6C7729B771DC0058769D /* WX_NongShiFu123.h in Headers */ = {isa = PBXBuildFile; fileRef = 608F6C7529B771DC0058769D /* WX_NongShiFu123.h */; };
 		608F6C7829B771DC0058769D /* WX_NongShiFu123.mm in Sources */ = {isa = PBXBuildFile; fileRef = 608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */; };
 		608F6C7A29B8A07D0058769D /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 608F6C7929B8A07D0058769D /* QuickLook.framework */; };
+		60AB6BF32A569C56002806D7 /* SCLAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BE22A569C56002806D7 /* SCLAlertView.h */; };
+		60AB6BF42A569C56002806D7 /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BE32A569C56002806D7 /* SCLAlertView.m */; };
+		60AB6BF52A569C56002806D7 /* SCLAlertViewResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BE42A569C56002806D7 /* SCLAlertViewResponder.h */; };
+		60AB6BF62A569C56002806D7 /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BE52A569C56002806D7 /* SCLAlertViewResponder.m */; };
+		60AB6BF72A569C56002806D7 /* SCLAlertViewStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BE62A569C56002806D7 /* SCLAlertViewStyleKit.h */; };
+		60AB6BF82A569C56002806D7 /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BE72A569C56002806D7 /* SCLAlertViewStyleKit.m */; };
+		60AB6BF92A569C56002806D7 /* SCLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BE82A569C56002806D7 /* SCLButton.h */; };
+		60AB6BFA2A569C56002806D7 /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BE92A569C56002806D7 /* SCLButton.m */; };
+		60AB6BFB2A569C56002806D7 /* SCLMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BEA2A569C56002806D7 /* SCLMacros.h */; };
+		60AB6BFC2A569C56002806D7 /* SCLSwitchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BEB2A569C56002806D7 /* SCLSwitchView.h */; };
+		60AB6BFD2A569C56002806D7 /* SCLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BEC2A569C56002806D7 /* SCLSwitchView.m */; };
+		60AB6BFE2A569C56002806D7 /* SCLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BED2A569C56002806D7 /* SCLTextView.h */; };
+		60AB6BFF2A569C56002806D7 /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BEE2A569C56002806D7 /* SCLTextView.m */; };
+		60AB6C002A569C56002806D7 /* SCLTimerDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BEF2A569C56002806D7 /* SCLTimerDisplay.h */; };
+		60AB6C012A569C56002806D7 /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BF02A569C56002806D7 /* SCLTimerDisplay.m */; };
+		60AB6C022A569C56002806D7 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AB6BF12A569C56002806D7 /* UIImage+ImageEffects.h */; };
+		60AB6C032A569C56002806D7 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB6BF22A569C56002806D7 /* UIImage+ImageEffects.m */; };
 		60AE052029B217B7005F13F3 /* getKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 60AE051E29B217B7005F13F3 /* getKeychain.h */; };
 		60AE052129B217B7005F13F3 /* getKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE051F29B217B7005F13F3 /* getKeychain.m */; };
 		8A1ADA3B228D9BD900DF45DD /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1ADA3A228D9BD900DF45DD /* libc.tbd */; };
@@ -130,23 +130,6 @@
 		6084204029C4A01400D06C8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6084204129C4A01400D06C8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6084227929C99AB700D06C8D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		60897A9129AC61AA00E2AA65 /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
-		60897A9229AC61AA00E2AA65 /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
-		60897A9329AC61AA00E2AA65 /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
-		60897A9429AC61AA00E2AA65 /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
-		60897A9529AC61AA00E2AA65 /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
-		60897A9629AC61AA00E2AA65 /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
-		60897A9729AC61AA00E2AA65 /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
-		60897A9829AC61AA00E2AA65 /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
-		60897A9929AC61AA00E2AA65 /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
-		60897A9A29AC61AA00E2AA65 /* SCLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLSwitchView.h; sourceTree = "<group>"; };
-		60897A9B29AC61AA00E2AA65 /* SCLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLSwitchView.m; sourceTree = "<group>"; };
-		60897A9C29AC61AA00E2AA65 /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
-		60897A9D29AC61AA00E2AA65 /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
-		60897A9E29AC61AA00E2AA65 /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
-		60897A9F29AC61AA00E2AA65 /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
-		60897AA229AC61AA00E2AA65 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		60897AA329AC61AA00E2AA65 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		608EF17928AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StichingStringkeyValue.m"; sourceTree = "<group>"; };
 		608EF17A28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StichingStringkeyValue.h"; sourceTree = "<group>"; };
 		608EF17D28AD01C3003E0E45 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
@@ -154,6 +137,23 @@
 		608F6C7529B771DC0058769D /* WX_NongShiFu123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WX_NongShiFu123.h; sourceTree = "<group>"; };
 		608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WX_NongShiFu123.mm; sourceTree = "<group>"; };
 		608F6C7929B8A07D0058769D /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		60AB6BE22A569C56002806D7 /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
+		60AB6BE32A569C56002806D7 /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
+		60AB6BE42A569C56002806D7 /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
+		60AB6BE52A569C56002806D7 /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
+		60AB6BE62A569C56002806D7 /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
+		60AB6BE72A569C56002806D7 /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
+		60AB6BE82A569C56002806D7 /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
+		60AB6BE92A569C56002806D7 /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
+		60AB6BEA2A569C56002806D7 /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
+		60AB6BEB2A569C56002806D7 /* SCLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLSwitchView.h; sourceTree = "<group>"; };
+		60AB6BEC2A569C56002806D7 /* SCLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLSwitchView.m; sourceTree = "<group>"; };
+		60AB6BED2A569C56002806D7 /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
+		60AB6BEE2A569C56002806D7 /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
+		60AB6BEF2A569C56002806D7 /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
+		60AB6BF02A569C56002806D7 /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
+		60AB6BF12A569C56002806D7 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		60AB6BF22A569C56002806D7 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		60AE051E29B217B7005F13F3 /* getKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getKeychain.h; sourceTree = "<group>"; };
 		60AE051F29B217B7005F13F3 /* getKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = getKeychain.m; sourceTree = "<group>"; };
 		8A1ADA3A228D9BD900DF45DD /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
@@ -204,7 +204,6 @@
 				6084203C29C4537700D06C8D /* BS-软件配置1.png */,
 				6084203D29C4537700D06C8D /* BS-软件配置2.png */,
 				6084227929C99AB700D06C8D /* README.md */,
-				60897A8C29AC61AA00E2AA65 /* SCLAlertView */,
 				6021E22F289F866E00E2E121 /* Bsphp */,
 				194F3B3B218327B10070F5BC /* Frameworks */,
 				194F3B3A218327B10070F5BC /* Products */,
@@ -246,6 +245,7 @@
 		6021E22F289F866E00E2E121 /* Bsphp */ = {
 			isa = PBXGroup;
 			children = (
+				60AB6BE12A569C56002806D7 /* SCLAlertView */,
 				608F6C7529B771DC0058769D /* WX_NongShiFu123.h */,
 				608F6C7629B771DC0058769D /* WX_NongShiFu123.mm */,
 				6021E27C289F866E00E2E121 /* Config.m */,
@@ -310,29 +310,29 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		60897A8C29AC61AA00E2AA65 /* SCLAlertView */ = {
+		60AB6BE12A569C56002806D7 /* SCLAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				60897A9129AC61AA00E2AA65 /* SCLAlertView.h */,
-				60897A9229AC61AA00E2AA65 /* SCLAlertView.m */,
-				60897A9329AC61AA00E2AA65 /* SCLAlertViewResponder.h */,
-				60897A9429AC61AA00E2AA65 /* SCLAlertViewResponder.m */,
-				60897A9529AC61AA00E2AA65 /* SCLAlertViewStyleKit.h */,
-				60897A9629AC61AA00E2AA65 /* SCLAlertViewStyleKit.m */,
-				60897A9729AC61AA00E2AA65 /* SCLButton.h */,
-				60897A9829AC61AA00E2AA65 /* SCLButton.m */,
-				60897A9929AC61AA00E2AA65 /* SCLMacros.h */,
-				60897A9A29AC61AA00E2AA65 /* SCLSwitchView.h */,
-				60897A9B29AC61AA00E2AA65 /* SCLSwitchView.m */,
-				60897A9C29AC61AA00E2AA65 /* SCLTextView.h */,
-				60897A9D29AC61AA00E2AA65 /* SCLTextView.m */,
-				60897A9E29AC61AA00E2AA65 /* SCLTimerDisplay.h */,
-				60897A9F29AC61AA00E2AA65 /* SCLTimerDisplay.m */,
-				60897AA229AC61AA00E2AA65 /* UIImage+ImageEffects.h */,
-				60897AA329AC61AA00E2AA65 /* UIImage+ImageEffects.m */,
+				60AB6BE22A569C56002806D7 /* SCLAlertView.h */,
+				60AB6BE32A569C56002806D7 /* SCLAlertView.m */,
+				60AB6BE42A569C56002806D7 /* SCLAlertViewResponder.h */,
+				60AB6BE52A569C56002806D7 /* SCLAlertViewResponder.m */,
+				60AB6BE62A569C56002806D7 /* SCLAlertViewStyleKit.h */,
+				60AB6BE72A569C56002806D7 /* SCLAlertViewStyleKit.m */,
+				60AB6BE82A569C56002806D7 /* SCLButton.h */,
+				60AB6BE92A569C56002806D7 /* SCLButton.m */,
+				60AB6BEA2A569C56002806D7 /* SCLMacros.h */,
+				60AB6BEB2A569C56002806D7 /* SCLSwitchView.h */,
+				60AB6BEC2A569C56002806D7 /* SCLSwitchView.m */,
+				60AB6BED2A569C56002806D7 /* SCLTextView.h */,
+				60AB6BEE2A569C56002806D7 /* SCLTextView.m */,
+				60AB6BEF2A569C56002806D7 /* SCLTimerDisplay.h */,
+				60AB6BF02A569C56002806D7 /* SCLTimerDisplay.m */,
+				60AB6BF12A569C56002806D7 /* UIImage+ImageEffects.h */,
+				60AB6BF22A569C56002806D7 /* UIImage+ImageEffects.m */,
 			);
 			path = SCLAlertView;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -341,31 +341,31 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60897AB529AC61AA00E2AA65 /* SCLTimerDisplay.h in Headers */,
-				60897AAA29AC61AA00E2AA65 /* SCLAlertViewResponder.h in Headers */,
-				60897AAC29AC61AA00E2AA65 /* SCLAlertViewStyleKit.h in Headers */,
-				60897AA829AC61AA00E2AA65 /* SCLAlertView.h in Headers */,
 				608EF17F28AD01C4003E0E45 /* MF_Base64Additions.h in Headers */,
 				6021E31E289F866E00E2E121 /* AFURLSessionManager.h in Headers */,
-				60897AB129AC61AA00E2AA65 /* SCLSwitchView.h in Headers */,
-				60897AB329AC61AA00E2AA65 /* SCLTextView.h in Headers */,
 				6021E301289F866E00E2E121 /* Config.h in Headers */,
+				60AB6BFE2A569C56002806D7 /* SCLTextView.h in Headers */,
 				6021E303289F866E00E2E121 /* DES3Util.h in Headers */,
 				EA203AED28EE15D40008CF79 /* MBProgressHUD+NJ.h in Headers */,
+				60AB6BF32A569C56002806D7 /* SCLAlertView.h in Headers */,
 				6021E319289F866E00E2E121 /* NSString+URLCode.h in Headers */,
 				6084204329C4A01400D06C8D /* MBProgressHUD.h in Headers */,
 				6021E31C289F866E00E2E121 /* AFSecurityPolicy.h in Headers */,
+				60AB6C002A569C56002806D7 /* SCLTimerDisplay.h in Headers */,
 				6021E31F289F866E00E2E121 /* AFURLRequestSerialization.h in Headers */,
 				608EF17C28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.h in Headers */,
+				60AB6BF52A569C56002806D7 /* SCLAlertViewResponder.h in Headers */,
+				60AB6BF72A569C56002806D7 /* SCLAlertViewStyleKit.h in Headers */,
+				60AB6C022A569C56002806D7 /* UIImage+ImageEffects.h in Headers */,
 				6021E322289F866E00E2E121 /* AFURLResponseSerialization.h in Headers */,
 				6021E31D289F866E00E2E121 /* AFNetworkReachabilityManager.h in Headers */,
-				60897AB029AC61AA00E2AA65 /* SCLMacros.h in Headers */,
 				6021E328289F866E00E2E121 /* AFHTTPSessionManager.h in Headers */,
+				60AB6BFB2A569C56002806D7 /* SCLMacros.h in Headers */,
 				6021E325289F866E00E2E121 /* AFNetworking.h in Headers */,
-				60897AAE29AC61AA00E2AA65 /* SCLButton.h in Headers */,
+				60AB6BFC2A569C56002806D7 /* SCLSwitchView.h in Headers */,
 				6021E302289F866E00E2E121 /* NetWorkingApiClient.h in Headers */,
 				6021E30C289F866E00E2E121 /* NSString+Tools.h in Headers */,
-				60897AB929AC61AA00E2AA65 /* UIImage+ImageEffects.h in Headers */,
+				60AB6BF92A569C56002806D7 /* SCLButton.h in Headers */,
 				6021E306289F866E00E2E121 /* NSString+MD5.h in Headers */,
 				60AE052029B217B7005F13F3 /* getKeychain.h in Headers */,
 				608F6C7729B771DC0058769D /* WX_NongShiFu123.h in Headers */,
@@ -445,31 +445,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60897ABA29AC61AA00E2AA65 /* UIImage+ImageEffects.m in Sources */,
 				6021E321289F866E00E2E121 /* AFHTTPSessionManager.m in Sources */,
-				60897AAF29AC61AA00E2AA65 /* SCLButton.m in Sources */,
 				EA203AEB28EE15D40008CF79 /* MBProgressHUD+NJ.m in Sources */,
-				60897AAB29AC61AA00E2AA65 /* SCLAlertViewResponder.m in Sources */,
-				60897AB229AC61AA00E2AA65 /* SCLSwitchView.m in Sources */,
-				60897AB429AC61AA00E2AA65 /* SCLTextView.m in Sources */,
 				60AE052129B217B7005F13F3 /* getKeychain.m in Sources */,
 				6021E317289F866E00E2E121 /* NetWorkingApiClient.m in Sources */,
 				6021E30D289F866E00E2E121 /* Config.m in Sources */,
+				60AB6C032A569C56002806D7 /* UIImage+ImageEffects.m in Sources */,
 				6021E324289F866E00E2E121 /* AFURLRequestSerialization.m in Sources */,
+				60AB6BFA2A569C56002806D7 /* SCLButton.m in Sources */,
 				6021E320289F866E00E2E121 /* AFURLResponseSerialization.m in Sources */,
 				6021E2FB289F866E00E2E121 /* NSString+Tools.m in Sources */,
+				60AB6BF62A569C56002806D7 /* SCLAlertViewResponder.m in Sources */,
 				6084204229C4A01400D06C8D /* MBProgressHUD.m in Sources */,
 				608EF18028AD01C4003E0E45 /* MF_Base64Additions.m in Sources */,
-				60897AA929AC61AA00E2AA65 /* SCLAlertView.m in Sources */,
-				60897AB629AC61AA00E2AA65 /* SCLTimerDisplay.m in Sources */,
+				60AB6BF42A569C56002806D7 /* SCLAlertView.m in Sources */,
 				6021E309289F866E00E2E121 /* NSString+URLCode.m in Sources */,
+				60AB6BFF2A569C56002806D7 /* SCLTextView.m in Sources */,
+				60AB6C012A569C56002806D7 /* SCLTimerDisplay.m in Sources */,
 				6021E313289F866E00E2E121 /* NSString+MD5.m in Sources */,
 				6021E323289F866E00E2E121 /* AFURLSessionManager.m in Sources */,
+				60AB6BF82A569C56002806D7 /* SCLAlertViewStyleKit.m in Sources */,
+				60AB6BFD2A569C56002806D7 /* SCLSwitchView.m in Sources */,
 				608F6C7829B771DC0058769D /* WX_NongShiFu123.mm in Sources */,
 				6021E316289F866E00E2E121 /* DES3Util.m in Sources */,
 				6021E327289F866E00E2E121 /* AFSecurityPolicy.m in Sources */,
 				608EF17B28AD014F003E0E45 /* NSDictionary+StichingStringkeyValue.m in Sources */,
-				60897AAD29AC61AA00E2AA65 /* SCLAlertViewStyleKit.m in Sources */,
 				6021E326289F866E00E2E121 /* AFNetworkReachabilityManager.m in Sources */,
 				6021E348289F866F00E2E121 /* main.m in Sources */,
 			);
