@@ -850,7 +850,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 MyLog(@"系统弹窗时间=%@",解绑扣除时间);
                 //系统弹窗
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:@"警告" message:str 。:UIAlertControllerStyleAlert];
+                    WX_NongShiFu123 *alertController = [WX_NongShiFu123 alertControllerWithTitle:@"警告" message:str preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"换绑到本机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         NSString*km=[getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
                         [self jiebang:km Text:str];

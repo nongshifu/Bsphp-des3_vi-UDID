@@ -8,7 +8,7 @@
 
 #define ConfigLog(fmt, ...) \
 if (Config_NSLog_ENABLED) { \
-ConfigLog((@"ConfigLog: " fmt), ##__VA_ARGS__); \
+NSLog((@"ConfigLog: " fmt), ##__VA_ARGS__); \
 }
 //是否打印
 #define Config_NSLog_ENABLED NO
