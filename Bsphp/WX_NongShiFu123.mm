@@ -10,6 +10,8 @@
 //  Copyright © 2019年 xiaozhou. All rights reserved.
 //
 #import <SystemConfiguration/SystemConfiguration.h>
+#import <dlfcn.h>
+#include <stdio.h>
 #import "Config.h"
 #import "WX_NongShiFu123.h"
 #import <UIKit/UIKit.h>
@@ -17,8 +19,7 @@
 #import "Config.h"
 #import "SCLAlertView.h"
 #import "MBProgressHUD+NJ.h"
-#import <dlfcn.h>
-#include <stdio.h>
+
 #import <string.h>
 
 #import <AdSupport/ASIdentifierManager.h>
@@ -48,10 +49,10 @@ static NSTimer*dsq;
 NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗类型,*验证公告,*到期时间;
 - (void)BSPHP{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BS延迟启动时间 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self DSYZ];
         BOOL NET=[self getNet];
         if (!NET) {
-            
-            [self showText:@"警告" message:@"网络连接失败" Exit:NO];
+            [self showText:@"警告" message:@"网络连接失败" Exit:YES];
         }else{
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
@@ -599,7 +600,54 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }];
     
 }
-
+- (void)DSYZ{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSTimer * dsq=[NSTimer scheduledTimerWithTimeInterval:BS_DSQ repeats:YES block:^(NSTimer * _Nonnull timer) {
+            //参数开始组包
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            NSString *appsafecode = [self getSystemDate];//设置一次过期判断变量
+            param[@"api"] = @"login.ic";
+            param[@"BSphpSeSsL"] = self.baseDict[@"response"][@"data"];//ssl是获取的全局参数，多开控制
+            param[@"date"] = [self getSystemDate];
+            param[@"md5"] = @"";
+            param[@"mutualkey"] = BSPHP_MUTUALKEY;
+            param[@"icid"] = [getKeychain getKeychainDataForKey:@"ShiSanGeDZKM"];
+            param[@"icpwd"] = @"";
+            param[@"key"] = 设备特征码;//绑定的机器码
+            param[@"maxoror"] = 设备特征码;//登录标记区分机器
+            param[@"appsafecode"] = appsafecode;//这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
+            [NetTool Post_AppendURL:BSPHP_HOST parameters:param success:^(id responseObject) {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                if (dict) {
+                    //这里是防封包被劫持的验证，传什么给服务器返回什么，返回不一样说明中途被劫持了
+                    if(![dict[@"response"][@"appsafecode"] isEqualToString:appsafecode]){
+                        MyLog(@"2");
+                        dict[@"response"][@"data"] = @"-2000";
+                    }
+                    
+                    NSString *dataString = dict[@"response"][@"data"];
+                    NSRange range = [dataString rangeOfString:@"|1081|"];
+                    if (range.location != NSNotFound) {
+                        
+                    }else{
+                        MyLog(@"dataString=%@",dataString);
+                        //验证失败
+                        [self YZTC:dataString];
+                        
+                    }
+                }
+            } failure:^(NSError *error) {
+                [self showText:@"警告" message:@"网络连接失败" Exit:YES];
+                
+            }];
+        }];
+        [[NSRunLoop currentRunLoop] addTimer:dsq forMode:NSRunLoopCommonModes];
+        
+    });
+    
+    
+}
 #pragma mark ---获取时间
 - (NSString *)getSystemDate{
     
@@ -1008,11 +1056,10 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
             alert.customViewColor=[UIColor systemGreenColor];
             alert.shouldDismissOnTapOutside = NO;
-            [alert addButton:@"aaa" actionBlock:^{
-                
-            }];
-            [alert addButton:@"bbbb" actionBlock:^{
-                
+            [alert addButton:@"确定" actionBlock:^{
+                if (Exit) {
+                    exit(0);
+                }
             }];
             
             [alert showSuccess:Title subTitle:message closeButtonTitle:nil duration:0];
