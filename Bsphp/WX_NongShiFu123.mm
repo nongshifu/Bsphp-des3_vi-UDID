@@ -264,12 +264,17 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 过直播开关=YES;
             }
             [self getVV:^{
-                [self getGongGao:^{
-                    // 调用回调函数
-                    if (completion) {
-                        completion();
-                    }
-                }];
+                if(软件公告.length>2){
+                    [self getGongGao:^{
+                        // 调用回调函数
+                        if (completion) {
+                            completion();
+                        }
+                    }];
+                }else{
+                    completion();
+                }
+                
             }];
             
         }
@@ -595,8 +600,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
             }
         }
     } failure:^(NSError *error) {
-        
-        
+        [self showText:@"警告" message:@"网络连接失败" Exit:YES];
     }];
     
 }
