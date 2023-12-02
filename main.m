@@ -6,7 +6,7 @@
 //  GitHub:http://github.com/nongshifu/
 //  开源Q群: 398423911
 //  Copyright © 2019年 xiaozhou. All rights reserved.
-//
+//com.rileytestut.Delta.Beta
 #import "WX_NongShiFu123.h"
 #import "getKeychain.h"
 @implementation NSObject (mian)

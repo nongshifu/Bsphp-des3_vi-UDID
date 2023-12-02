@@ -13,6 +13,7 @@
 #import <dlfcn.h>
 #include <stdio.h>
 #import "Config.h"
+
 #import "WX_NongShiFu123.h"
 #import <UIKit/UIKit.h>
 #import "getKeychain.h"
@@ -43,6 +44,10 @@ static NSTimer*dsq;
  */
 
 + (void)load {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+    });
+    
 }
 
 #pragma mark --- 验证流程
@@ -896,6 +901,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 
 
 #pragma mark ---解绑弹窗
+
 - (void)jiebangTC:(NSString*)fwqjqm void:(void (^)(void))completion
 {
     if ([支持解绑 containsString:@"YES"]) {

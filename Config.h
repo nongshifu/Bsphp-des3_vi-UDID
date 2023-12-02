@@ -10,15 +10,15 @@
 #import <Foundation/Foundation.h>
 
 //服务器地址
-#define  BSPHP_HOST  @"https://ooo.leoe.top/AppEn.php?appid=9876533&m=6bb6b55a7f08f6f3d9e0055f84503431"
+#define  BSPHP_HOST  @"https://bsphp.leoe.top/AppEn.php?appid=4289402&m=9843e1398aa4ea7c41fb63768d24d203"
 //通信认证Key
-#define BSPHP_MUTUALKEY @"bd050c96484d0b7e85e46b78f5437f10"
+#define BSPHP_MUTUALKEY @"4b3d9b4ae98befdb51db726aadd0d1f5"
 //接收Sgin验证 注意必须填写 并且有[KEY]
 #define BSPHP_INSGIN @"[KEY]FAGWEAFAEHGFES"
 //输出Sgin验证 注意必须填写 并且有[KEY]
 #define BSPHP_TOSGIN @"[KEY]FAGWEAFAEHGFES"
 //数据加密密码
-#define BSPHP_PASSWORD @"isEfPKoPMubc0mMtNz"
+#define BSPHP_PASSWORD @"1y1bRB0XAzM0jrmJn5"
 
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
@@ -31,7 +31,7 @@
 #define  BS_DSQ 500
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
-#define  UDID_HOST  @"https://ooo.leoe.top/udid/"
+#define  UDID_HOST  @"https://bsphp.leoe.top/udid/"
 
 //启动APP后多少秒开始验证 单位秒 ** 因为很多游戏有启动画面 启动动画 会刷新UI 刷掉弹窗 相当于没了验证 比如光遇 王者荣耀 等 要等启动动画结束才弹窗 自己测试时间
 #define BS延迟启动时间 2
