@@ -9,16 +9,18 @@
 //
 #import <Foundation/Foundation.h>
 
+#import <Foundation/Foundation.h>
+
 //服务器地址
-#define  BSPHP_HOST  @"https://bsphp.leoe.top/AppEn.php?appid=4289402&m=9843e1398aa4ea7c41fb63768d24d203"
+#define  BSPHP_HOST  @"http://39.100.249.84/AppEn.php?appid=22334459&m=6178973ec8133d21a0156c650cb114a5"
 //通信认证Key
-#define BSPHP_MUTUALKEY @"4b3d9b4ae98befdb51db726aadd0d1f5"
+#define BSPHP_MUTUALKEY @"eeed1eb17dd960153b23ddeaad5c768d"
 //接收Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_INSGIN @"[KEY]FAGWEAFAEHGFES"
+#define BSPHP_INSGIN @"[KEY]HDJFHDJQHDY"
 //输出Sgin验证 注意必须填写 并且有[KEY]
-#define BSPHP_TOSGIN @"[KEY]FAGWEAFAEHGFES"
+#define BSPHP_TOSGIN @"[KEY]HDJFHDJQHDY"
 //数据加密密码
-#define BSPHP_PASSWORD @"1y1bRB0XAzM0jrmJn5"
+#define BSPHP_PASSWORD @"3XIytAFfgR2qt5ne36"
 
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
@@ -27,15 +29,14 @@
 //**注意 仅限8位数
 #define gIv   @"bsphp666"
 
-//定期验证 单位为秒 可以设置5分钟 几分钟看个人需求 用于动态检测版本更新 公告更新 检测是否到期 检测是否冻结 时间太短 用户多会增加服务器压力
-#define  BS_DSQ 500
+//定期验证 单位为秒 可以设置10分钟 几分钟看个人需求 用于动态检测版本更新 公告更新 检测是否到期 检测是否冻结 时间太短 用户多会增加服务器压力
+#define  BS_DSQ 600
 
 //如果使用udid获取描述文件 需要udid.php上传到域名指定目录
-#define  UDID_HOST  @"https://bsphp.leoe.top/udid/"
+#define  UDID_HOST  @"https://udid.zzmy001.com/udid/"
 
 //启动APP后多少秒开始验证 单位秒 ** 因为很多游戏有启动画面 启动动画 会刷新UI 刷掉弹窗 相当于没了验证 比如光遇 王者荣耀 等 要等启动动画结束才弹窗 自己测试时间
-#define BS延迟启动时间 2
-
+#define BS延迟启动时间 0
 
 
 

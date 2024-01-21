@@ -178,7 +178,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
                 SCLAlertView *alert =  [[SCLAlertView alloc] initWithNewWindow];
                 alert.customViewColor=[UIColor systemGreenColor];
                 alert.shouldDismissOnTapOutside = NO;
-                SCLTextView *textF =   [alert addTextField:@"请在30秒内填写授权码"setDefaultText:nil];
+                SCLTextView *textF =   [alert addTextField:@"请在30秒内填写授权码" setDefaultText:nil];
                 [alert addButton:@"粘贴" validationBlock:^BOOL{
                     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
                     textF.text =pasteboard.string;
@@ -365,20 +365,22 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 
 #pragma mark ---读取拉黑状态
 -(void)getHMD:(void (^)(void))completion{
-    //请求的url
-    NSString *requestStr = [NSString stringWithFormat:@"%@udid.php?code=%@",UDID_HOST,设备特征码];
-    NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //回到主线程的方法
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //请求的url
+        NSString *requestStr = [NSString stringWithFormat:@"%@udid.php?code=%@",UDID_HOST,设备特征码];
+        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestStr] encoding:NSUTF8StringEncoding error:nil];
         if ([htmlStr containsString:@"黑名单用户"]) {
-            NSArray *strarr = [htmlStr componentsSeparatedByString:@"黑名单用户"];
-            NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"联系管理员解除"];
-            NSString*str=[NSString stringWithFormat:@"%@\n联系管理员解除",strarr2[0]];
-            
-            [self showText:@"设备拉黑" message:str Exit:YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSArray *strarr = [htmlStr componentsSeparatedByString:@"黑名单用户"];
+                NSArray *strarr2 = [strarr[1] componentsSeparatedByString:@"联系管理员解除"];
+                NSString*str=[NSString stringWithFormat:@"%@\n联系管理员解除",strarr2[0]];
+                
+                [self showText:@"设备拉黑" message:str Exit:YES];
+            });
         }
         
     });
+    
     if (completion) {
         completion();
     }
@@ -609,6 +611,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     }];
     
 }
+
 - (void)DSYZ{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -657,6 +660,7 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
     
     
 }
+
 #pragma mark ---获取时间
 - (NSString *)getSystemDate{
     
@@ -836,15 +840,12 @@ NSString* 到期时间弹窗,*UDID_IDFV,*验证版本,*验证过直播,*弹窗�
 }
 
 - (void)remohc:(NSString*)url void:(void (^)(void))completion{
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //请求的url
         MyLog(@"删除缓存url=%@",url);
         NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
-        if(htmlStr){
-            if (completion) {
-                completion();
-            }
-        }
+        
         if (completion) {
             completion();
         }

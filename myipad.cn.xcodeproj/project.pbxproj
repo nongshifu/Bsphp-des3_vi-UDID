@@ -282,19 +282,19 @@
 		6021E28B289F866E00E2E121 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				6021E28C289F866E00E2E121 /* AFSecurityPolicy.h */,
-				6021E28D289F866E00E2E121 /* AFNetworkReachabilityManager.h */,
-				6021E28E289F866E00E2E121 /* AFURLSessionManager.h */,
-				6021E28F289F866E00E2E121 /* AFURLRequestSerialization.h */,
-				6021E290289F866E00E2E121 /* AFURLResponseSerialization.m */,
-				6021E291289F866E00E2E121 /* AFHTTPSessionManager.m */,
-				6021E292289F866E00E2E121 /* AFURLResponseSerialization.h */,
-				6021E293289F866E00E2E121 /* AFURLSessionManager.m */,
-				6021E294289F866E00E2E121 /* AFURLRequestSerialization.m */,
-				6021E295289F866E00E2E121 /* AFNetworking.h */,
-				6021E296289F866E00E2E121 /* AFNetworkReachabilityManager.m */,
-				6021E297289F866E00E2E121 /* AFSecurityPolicy.m */,
 				6021E298289F866E00E2E121 /* AFHTTPSessionManager.h */,
+				6021E291289F866E00E2E121 /* AFHTTPSessionManager.m */,
+				6021E295289F866E00E2E121 /* AFNetworking.h */,
+				6021E28D289F866E00E2E121 /* AFNetworkReachabilityManager.h */,
+				6021E296289F866E00E2E121 /* AFNetworkReachabilityManager.m */,
+				6021E28C289F866E00E2E121 /* AFSecurityPolicy.h */,
+				6021E297289F866E00E2E121 /* AFSecurityPolicy.m */,
+				6021E28F289F866E00E2E121 /* AFURLRequestSerialization.h */,
+				6021E294289F866E00E2E121 /* AFURLRequestSerialization.m */,
+				6021E292289F866E00E2E121 /* AFURLResponseSerialization.h */,
+				6021E290289F866E00E2E121 /* AFURLResponseSerialization.m */,
+				6021E28E289F866E00E2E121 /* AFURLSessionManager.h */,
+				6021E293289F866E00E2E121 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
 			sourceTree = "<group>";
